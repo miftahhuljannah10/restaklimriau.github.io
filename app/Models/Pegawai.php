@@ -11,7 +11,8 @@ class Pegawai extends Model
     protected $table = 'pegawai';
     protected $fillable = [
         'nama',
-        'ttl',
+        'tempat_lahir',
+        'tanggal_lahir',
         'NIP',
         'golongan',
         'jabatan',

@@ -50,19 +50,26 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'role_id' => 'required',
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6',
+            'role_id' => 'required|exists:roles,id',
         ]);
 
-        $user = User::findOrFail($user->id);
-        $user->update($request->only(['name', 'email', 'role_id']));
+        $data = [
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'role_id' => $validated['role_id'],
+        ];
 
-        // $validated = $request->all();
-        // $user->update($validated);
+        if (!empty($validated['password'])) {
+            $data['password'] = Hash::make($validated['password']);
+        }
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        $user->update($data);
+
+        return redirect()->route('users.index')->with('success', 'Pegawai berhasil diperbarui');
     }
     public function destroy(User $user)
     {

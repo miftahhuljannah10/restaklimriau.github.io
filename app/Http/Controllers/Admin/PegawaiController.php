@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PegawaiController extends Controller
 {
@@ -31,45 +32,31 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+
+        $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'tempat_lahir' => 'required|string|max:128',
+            'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',
-            'nip' => 'required|string|max:128|unique:pegawai,nip',
-            'golongan' => 'required|string|max:128',
-            'jabatan' => 'required|string|max:128',
-            'kompetensi' => 'required|string|max:128',
-            'email' => 'required|email|max:128|unique:pegawai,email',
-            'pendidikan' => 'required|string|max:128',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'publikasi' => 'nullable|string|max:1000',
+            'NIP' => 'required|string',
+            'golongan' => 'required|string',
+            'jabatan' => 'required|string',
+            'pendidikan' => 'required|string',
+            'kompetensi' => 'required|string',
+            'email' => 'required|email|unique:pegawai,email',
+            'publikasi' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
-        // if ($request->hasFile('foto')) {
-        //     $path = $request->file('foto')->store('pegawai', 'public');
-        // } else {
-        //     $path = null;
-        // }
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
-        $path = 'images/' . $imageName;
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $filename = time() . '_' . Str::slug($request->nama) . '.' . $foto->getClientOriginalExtension();
+            $foto->move(public_path('foto_pegawai'), $filename);
+            $validated['foto'] = 'foto_pegawai/' . $filename;
+        }
 
+        Pegawai::create($validated);
 
-        Pegawai::create([
-            'nama' => $request->nama,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'nip' => $request->nip,
-            'golongan' => $request->golongan,
-            'jabatan' => $request->jabatan,
-            'kompetensi' => $request->kompetensi,
-            'email' => $request->email,
-            'pendidikan' => $request->pendidikan,
-            'foto' => $path,
-            'publikasi' => $request->publikasi,
-        ]);
-
-        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan!');
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan.');
     }
 
     /**
@@ -85,7 +72,8 @@ class PegawaiController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pegawai = Pegawai::findOrFail($id);
+        return view('admin.pegawai.edit', compact('pegawai'));
     }
 
     /**
@@ -93,14 +81,64 @@ class PegawaiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validasi input
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'NIP' => 'required|string',
+            'golongan' => 'required|string',
+            'jabatan' => 'required|string',
+            'pendidikan' => 'required|string',
+            'kompetensi' => 'required|string',
+            'email' => 'required|email|unique:pegawai,email,' . $id, // Menambahkan pengecekan untuk email di update
+            'publikasi' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+        ]);
+
+        // Temukan pegawai berdasarkan ID
+        $pegawai = Pegawai::findOrFail($id);
+
+        // Cek apakah ada file foto baru yang diupload
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($pegawai->foto && file_exists(public_path($pegawai->foto))) {
+                unlink(public_path($pegawai->foto)); // Menghapus foto lama
+            }
+
+            // Upload foto baru
+            $foto = $request->file('foto');
+            $filename = time() . '_' . Str::slug($request->nama) . '.' . $foto->getClientOriginalExtension();
+            $foto->move(public_path('foto_pegawai'), $filename);
+            $validated['foto'] = 'foto_pegawai/' . $filename;
+        } else {
+            // Jika tidak ada foto baru, tetap pakai foto yang lama
+            $validated['foto'] = $pegawai->foto;
+        }
+
+        // Update data pegawai
+        $pegawai->update($validated);
+
+        // Redirect ke halaman daftar pegawai dengan pesan sukses
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(string $id) {
+        // Temukan pegawai berdasarkan ID
+        $pegawai = Pegawai::findOrFail($id);
+
+        // Hapus foto jika ada
+        if ($pegawai->foto && file_exists(public_path($pegawai->foto))) {
+            unlink(public_path($pegawai->foto)); // Menghapus foto
+        }
+
+        // Hapus pegawai dari database
+        $pegawai->delete();
+
+        // Redirect ke halaman daftar pegawai dengan pesan sukses
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
 }

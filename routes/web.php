@@ -21,4 +21,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'role:pemimpin'])->group(function () {
     Route::resource('/admin/users', UserController::class);
     Route::resource('/admin/pegawai', PegawaiController::class);
+    // crud pegawai
+
+
 });
