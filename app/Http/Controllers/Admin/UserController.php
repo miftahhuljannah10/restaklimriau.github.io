@@ -11,11 +11,27 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('role')->get();
-        return view('admin.users.index', compact(var_name: 'users'));
+        $query = User::with('role');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhereHas('role', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        }
+
+        $users = $query->paginate(10)->withQueryString();
+
+        return view('admin.users.index', compact('users'));
     }
+
 
     public function create()
     {

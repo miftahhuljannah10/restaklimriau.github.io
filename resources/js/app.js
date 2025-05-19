@@ -24,3 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sidebar.classList.toggle("hidden");
     });
 });
+
+
+import { createIcons } from 'lucide'
+createIcons()

@@ -18,6 +18,9 @@ module.exports = {
                 warning: "#F59E0B",
                 success: "#10B981",
             },
+            fontFamily: {
+                poppins: ["Poppins", "sans-serif"],
+            },
         },
     },
     variants: {

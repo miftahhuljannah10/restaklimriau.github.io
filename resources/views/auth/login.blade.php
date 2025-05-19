@@ -1,50 +1,60 @@
+{{-- resources/views/auth/login.blade.php --}}
 <!DOCTYPE html>
-<html lang="id">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Administrator Stasiun Klimatologi Riau - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Stasiun Klimatologi</title>
-    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
+    @vite('resources/css/app.css')
 </head>
+<body class="bg-gray-100 font-sans antialiased">
 
-<body class="bg-light d-flex align-items-center justify-content-center" style="height: 100vh;">
+    <div class="flex min-h-screen items-center justify-center bg-cover bg-center" style="background-image: url('/image/stasiun-bg.png')">
+        <div class="bg-white shadow-xl rounded-3xl w-full max-w-md p-10">
+            <h2 class="text-sm text-gray-700 mb-1">Welcome to</h2>
+            <h1 class="text-blue-600 font-semibold text-md mb-4">Administrator Stasiun Klimatologi Riau</h1>
+            <h2 class="text-3xl font-bold text-black mb-6">Sign in</h2>
 
-    <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
-        <h4 class="text-center mb-4">Login Stasiun Klimatologi</h4>
+            @if (session('status'))
+                <div class="mb-4 text-green-600 text-sm">
+                    {{ session('status') }}
+                </div>
+            @endif
 
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
+            @if ($errors->any())
+                <div class="mb-4 text-red-600 text-sm">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-        <form action="{{ route('login.process') }}" method="POST">
-            @csrf
+            <form method="POST" action="{{ route('login.process') }}" class="space-y-5">
+                @csrf
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="form-control"
-                    placeholder="Masukkan email" required>
-                @error('email')
-                    <div class="text-danger small">{{ $message }}</div>
-                @enderror
-            </div>
+                <div>
+                    <label for="email" class="block text-sm mb-1 text-gray-600">Enter your email address</label>
+                    <input type="email" name="email" id="email" required autofocus
+                        class="w-full px-4 py-3 border border-blue-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Username or email address" />
+                </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
-                @error('password')
-                    <div class="text-danger small">{{ $message }}</div>
-                @enderror
-            </div>
+                <div>
+                    <label for="password" class="block text-sm mb-1 text-gray-600">Enter your password</label>
+                    <input type="password" name="password" id="password" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Enter your password" />
+                </div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-        </form>
+                <button type="submit"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl transition duration-300">
+                    Sign in
+                </button>
+            </form>
+        </div>
     </div>
 
 </body>
-
 </html>
