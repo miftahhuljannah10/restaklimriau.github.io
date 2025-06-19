@@ -21,6 +21,37 @@
                         </button>
                     </a>
                 </div>
+                <!-- Tombol untuk membuka modal -->
+                {{-- <button @click="openModal = true"
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm">
+                    + Tambah URL
+                </button> --}}
+
+                <!-- Modal -->
+                {{-- <div x-data="{ openModal: false }" x-show="openModal"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div @click.outside="openModal = false" class="bg-white w-full max-w-lg p-6 rounded shadow-lg">
+                        <h2 class="text-xl font-semibold mb-4">Tambah URL</h2>
+                        <form action="{{ route('url.store', $type) }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label for="url" class="block text-sm font-medium text-gray-700">URL</label>
+                                <input type="url" name="url" id="url" required
+                                    class="w-full border border-gray-300 rounded p-2">
+                            </div>
+                            <div class="mb-4">
+                                <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                                <textarea name="deskripsi" id="deskripsi" class="w-full border border-gray-300 rounded p-2"></textarea>
+                            </div>
+                            <div class="flex justify-end gap-2">
+                                <button type="button" @click="openModal = false"
+                                    class="bg-gray-500 text-white px-4 py-2 rounded">Batal</button>
+                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div> --}}
+
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full text-sm text-left text-gray-700 border">
@@ -38,8 +69,7 @@
                                 <td class="px-3 py-2 border">{{ $urls->firstItem() + $index }}</td>
                                 <td class="px-3 py-2 border">{{ $url->url }}</td>
                                 <td class="px-3 py-2 border">{{ $url->deskripsi }}</td>
-                                {{-- <td class="px-3 py-2 border">{{ $url->menu_type }}</td> --}}
-                                {{-- <td class="px-3 py-2 border">{{ $url->deskripsi }}</td> --}}
+
                                 <td class="px-3 py-2 border text-center">
                                     <div class="flex justify-center gap-2">
                                         <a href="{{ route('url.edit', ['type' => $type, 'id' => $url->id]) }}"

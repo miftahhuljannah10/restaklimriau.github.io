@@ -10,7 +10,6 @@ class Url extends Model
 
     protected $fillable = [
         'url',
-        'short_url',
         'menu_type',
         'deskripsi',
     ];

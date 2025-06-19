@@ -37,13 +37,11 @@ class UrlController extends Controller
 
         $request->validate([
             'url' => 'required|url',
-            'short_url' => 'required|unique:url_tabel,short_url',
             'deskripsi' => 'nullable|string|max:255',
         ]);
 
         Url::create([
             'url' => $request->url,
-            'short_url' => $request->short_url,
             'menu_type' => $type,
             'deskripsi' => $request->deskripsi,
         ]);
@@ -62,7 +60,7 @@ class UrlController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id, $type)
+    public function edit($type, string $id)
     {
         abort_unless(array_key_exists($type, Url::getMenuTypes()), 404);
 
@@ -82,13 +80,11 @@ class UrlController extends Controller
 
         $request->validate([
             'url' => 'required|url|unique:url_tabel,url,' . $url->id,
-            'short_url' => 'required|string|unique:url_tabel,short_url,' . $url->id,
             'deskripsi' => 'nullable|string',
         ]);
 
         $url->update([
             'url' => $request->url,
-            'short_url' => $request->short_url,
             'deskripsi' => $request->deskripsi,
         ]);
 
@@ -98,7 +94,7 @@ class UrlController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id, $type)
+    public function destroy($type, string $id )
     {
         abort_unless(array_key_exists($type, Url::getMenuTypes()), 404);
 

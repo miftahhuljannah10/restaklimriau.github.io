@@ -28,14 +28,17 @@
                     required>
             </div>
 
-            <div class="mb-6">
+            <div class="mb-4">
                 <label class="block text-gray-700">Role:</label>
                 <select name="role_id"
                     class="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
                     required>
-                    <option value="2">Pegawai</option>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    @endforeach
                 </select>
             </div>
+
 
             <div class="flex justify-end">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded shadow">

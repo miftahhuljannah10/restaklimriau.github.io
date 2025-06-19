@@ -4,17 +4,9 @@
     <div class="p-6">
         <div class="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
             <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-                <div class="mb-2 md:mb-0">
-                    <label for="entries" class="mr-2 text-sm text-gray-700">Tampilkan</label>
-                    <select id="entries" class="border rounded px-2 py-1 text-sm">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </select>
-                </div>
+
                 <div class="flex items-center gap-2">
-                    <label for="search" class="text-sm text-gray-700">Cari:</label>
-                    <x-main.table.search :route="route('users.index')" />
+
                     <a href="{{ route('users.create') }}">
                         <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm">
                             + Tambah Pegawai
@@ -24,7 +16,7 @@
             </div>
 
             <div class="overflow-x-auto">
-                <table class="min-w-full text-sm text-left text-gray-700 border">
+                <table class="min-w-full text-sm text-left text-gray-700 border" id="usersTable">
                     <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
                         <tr>
                             <th class="px-3 py-2 border">No</th>
@@ -75,4 +67,16 @@
             </div>
         </div>
     </div>
+    {{-- <div class="mt-4">
+        <a href="{{ route('dashboard') }}"
+            class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+            Kembali ke Dashboard
+        </a>
+    </div> --}}
+    {{-- dataTable --}}
+    <script>
+        $(document).ready(function() {
+            $('#usersTable').DataTable();
+        });
+    </script>
 @endsection

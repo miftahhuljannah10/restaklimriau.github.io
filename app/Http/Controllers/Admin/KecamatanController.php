@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
 use Illuminate\Http\Request;
+use App\Models\Provinsi;
+
 
 class KecamatanController extends Controller
 {
@@ -12,7 +16,8 @@ class KecamatanController extends Controller
      */
     public function index()
     {
-        //
+        $kecamatans = Kecamatan::with(['kabupaten', 'provinsi'])->paginate(10);
+        return view('admin.kecamatan.index', compact('kecamatans'));
     }
 
     /**
@@ -20,7 +25,9 @@ class KecamatanController extends Controller
      */
     public function create()
     {
-        //
+        // $provinsi = Provinsi::all();
+        $kabupatens = Kabupaten::all();
+        return view('admin.kecamatan.create', compact('kabupatens'));
     }
 
     /**
@@ -28,7 +35,20 @@ class KecamatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kabupaten_id' => 'required|exists:kabupaten,id',
+            'nama_kecamatan' => 'required|string|max:100',
+        ]);
+
+        // $kabupaten = Kabupaten::findOrFail($request->kabupaten_id);
+
+        Kecamatan::create([
+            'provinsi_id' => 1, // default provinsi (Riau)
+            'kabupaten_id' => $request->kabupaten_id,
+            'nama_kecamatan' => $request->nama_kecamatan,
+        ]);
+
+        return redirect()->route('kecamatan.index')->with('success', 'Data kecamatan berhasil ditambahkan.');
     }
 
     /**
@@ -44,22 +64,38 @@ class KecamatanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $kecamatans = Kecamatan::findOrFail($id);
+        $kabupatens = Kabupaten::all();
+        return view('admin.kecamatan.edit', compact('kecamatans', 'kabupatens'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Kecamatan $kecamatan)
     {
-        //
+        $request->validate([
+            'kabupaten_id' => 'required|exists:kabupaten,id',
+            'nama_kecamatan' => 'required|string|max:100',
+        ]);
+
+        // $kabupaten = Kabupaten::findOrFail($request->kabupaten_id);
+
+        $kecamatan->update([
+            'provinsi_id' => 1, // default provinsi (Riau)
+            'kabupaten_id' => $request->kabupaten_id,
+            'nama_kecamatan' => $request->nama_kecamatan,
+        ]);
+
+        return redirect()->route('kecamatan.index')->with('success', 'Data kecamatan berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(kecamatan $kecamatan)
     {
-        //
+        $kecamatan->delete();
+        return redirect()->route('kecamatan.index')->with('success', 'Data kecamatan berhasil dihapus.');
     }
 }

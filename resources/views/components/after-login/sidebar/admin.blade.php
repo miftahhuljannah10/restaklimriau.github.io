@@ -13,6 +13,20 @@
  <x-after-login.sidebar.item-icon icon="dollar-sign" name="Tarif PNBP" route="#" />
  <x-after-login.sidebar.item-icon icon="zero" name="Nol Rupiah" route="#" />
 
+ <li class="text-xs text-gray-400 uppercase mt-4 px-2">Feedback</li>
+ <x-after-login.sidebar.item-icon
+    icon="message-square"
+    name="Pertanyaan"
+    :route="route('admin.feedback.questions.index')"
+    :active="request()->routeIs('admin.feedback.questions.*')"
+/>
+ <x-after-login.sidebar.item-icon
+    icon="message-circle"
+    name="Respon"
+    :route="route('admin.feedback.responses.index')"
+    :active="request()->routeIs('admin.feedback.responses.*')"
+/>
+
  <li class="text-xs text-gray-400 uppercase mt-4 px-2">Media</li>
  {{-- berita --}}
  <x-after-login.sidebar.item-icon icon="newspaper" name="Berita" route="#" />

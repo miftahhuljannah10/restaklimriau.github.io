@@ -11,12 +11,22 @@ class Provinsi extends Model
         'nama_provinsi',
     ];
 
-    public function kabupatens()
-    {
-        return $this->hasMany(Kabupaten::class);
-    }
     public function kecamatan()
     {
         return $this->hasManyThrough(Kecamatan::class, Kabupaten::class);
+    }
+    public function alats()
+    {
+        return $this->hasManyThrough(Alat::class, Kabupaten::class);
+    }
+
+    public function kabupatens()
+    {
+        // Menggunakan kecamatan sebagai perantara
+        return Kabupaten::whereIn('id', function ($query) {
+            $query->select('kabupaten_id')
+                ->from('kecamatan')
+                ->whereIn('provinsi_id', [$this->id]);
+        })->get();
     }
 }
