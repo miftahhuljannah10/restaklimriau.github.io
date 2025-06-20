@@ -65,7 +65,7 @@ class BeritaArtikel extends Model
     public function thumbnail()
     {
         return $this->hasOne(MediaBeritaArtikel::class, 'berita_artikel_id')
-            ->where('tipe', 'thumbnail');
+            ->where('tipe', 'thumbnail')->orderBy('urutan');
     }
 
     /**
@@ -74,7 +74,7 @@ class BeritaArtikel extends Model
     public function header()
     {
         return $this->hasOne(MediaBeritaArtikel::class, 'berita_artikel_id')
-            ->where('tipe', 'header');
+            ->where('tipe', 'header')->orderBy('urutan');
     }
 
     /**

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\KategoriBeritaArtikel;
+use App\Models\BeritaArtikel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class KategoriBeritaArtikelController extends Controller
 {
@@ -38,7 +40,17 @@ class KategoriBeritaArtikelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:100|unique:kategori_berita_artikel,nama',
+        ]);
+
+        $category = new KategoriBeritaArtikel();
+        $category->nama = $request->nama;
+        $category->slug = Str::slug($request->nama);
+        $category->save();
+
+        return redirect()->route('admin.kategori-berita-artikel.index')
+            ->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     /**
@@ -46,7 +58,7 @@ class KategoriBeritaArtikelController extends Controller
      */
     public function show(KategoriBeritaArtikel $kategoriBeritaArtikel)
     {
-        //
+        return view('admin.media.kategori-show', compact('kategoriBeritaArtikel'));
     }
 
     /**
@@ -54,7 +66,7 @@ class KategoriBeritaArtikelController extends Controller
      */
     public function edit(KategoriBeritaArtikel $kategoriBeritaArtikel)
     {
-        //
+        return view('admin.media.kategori-edit', compact('kategoriBeritaArtikel'));
     }
 
     /**
@@ -62,7 +74,16 @@ class KategoriBeritaArtikelController extends Controller
      */
     public function update(Request $request, KategoriBeritaArtikel $kategoriBeritaArtikel)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:100|unique:kategori_berita_artikel,nama,' . $kategoriBeritaArtikel->id,
+        ]);
+
+        $kategoriBeritaArtikel->nama = $request->nama;
+        $kategoriBeritaArtikel->slug = Str::slug($request->nama);
+        $kategoriBeritaArtikel->save();
+
+        return redirect()->route('admin.kategori-berita-artikel.index')
+            ->with('success', 'Kategori berhasil diperbarui.');
     }
 
     /**
@@ -70,6 +91,15 @@ class KategoriBeritaArtikelController extends Controller
      */
     public function destroy(KategoriBeritaArtikel $kategoriBeritaArtikel)
     {
-        //
+        // Check if category has any associated content
+        $contentCount = BeritaArtikel::where('kategori_id', $kategoriBeritaArtikel->id)->count();
+
+        if ($contentCount > 0) {
+            return back()->with('error', 'Kategori tidak dapat dihapus karena masih memiliki berita atau artikel terkait.');
+        }
+
+        $kategoriBeritaArtikel->delete();
+        return redirect()->route('admin.kategori-berita-artikel.index')
+            ->with('success', 'Kategori berhasil dihapus.');
     }
 }

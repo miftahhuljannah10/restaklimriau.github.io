@@ -47,11 +47,23 @@
                 :active="request()->routeIs('admin.feedback.responses.*')" />
 
 
-            <li class="text-xs text-gray-400 uppercase mt-4 px-2">Media</li>
-            {{-- <x-after-login.sidebar.item-icon icon="newspaper" name="Berita" :route="route('berita.index', 'berita')" /> --}}
+            {{-- <li class="text-xs text-gray-400 uppercase mt-4 px-2">Media</li>
+            <x-after-login.sidebar.item-icon icon="folder" name="Kategori Berita & Artikel" :route="route('admin.kategori-berita-artikel.index')"
+                :active="request()->routeIs('admin.kategori-berita-artikel.*')" />
             <x-after-login.sidebar.item-icon icon="newspaper" name="Berita" route="#" />
             <x-after-login.sidebar.item-icon icon="book" name="Buletin" route="#" />
             <x-after-login.sidebar.item-icon icon="file-text" name="Artikel" route="#" />
+            <x-after-login.sidebar.item-icon icon="file-text" name="Profile Perusahaan" route="#" /> --}}
+
+
+
+            {{-- Media section --}}
+            <li class="text-xs text-gray-400 uppercase mt-4 px-2">Media</li>
+            <x-after-login.sidebar.item-icon icon="folder" name="Kategori Berita & Artikel" :route="route('admin.kategori-berita-artikel.index')"
+                :active="request()->routeIs('admin.kategori-berita-artikel.*')" />
+            <x-after-login.sidebar.item-icon icon="newspaper" name="Berita" :route="route('admin.media.berita.index', 'berita')" :active="request()->routeIs('admin.media.berita.*') && request()->segment(3) == 'berita'" />
+            <x-after-login.sidebar.item-icon icon="file-text" name="Artikel" :route="route('admin.media.berita.index', 'artikel')" :active="request()->routeIs('admin.media.berita.*') && request()->segment(3) == 'artikel'" />
+            <x-after-login.sidebar.item-icon icon="book" name="Buletin" route="#" />
             <x-after-login.sidebar.item-icon icon="file-text" name="Profile Perusahaan" route="#" />
 
             {{-- profile --}}

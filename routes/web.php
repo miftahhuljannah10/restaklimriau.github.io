@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\KategoriProdukController;
 use App\Http\Controllers\Admin\ProdukController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\BeritaArtikelController;
+use App\Http\Controllers\Admin\KategoriBeritaArtikelController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -59,8 +60,51 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
     });
     Route::post('/admin/produk/upload-image', [ProdukController::class, 'uploadImage'])->name('produk.upload-image');
 
+    // Berita dan Artikel Management Routes
+    // Kategori Berita & Artikel Routes
+    Route::resource('/admin/kategori-berita-artikel', KategoriBeritaArtikelController::class)
+        ->names([
+            'index' => 'admin.kategori-berita-artikel.index',
+            'create' => 'admin.kategori-berita-artikel.create',
+            'store' => 'admin.kategori-berita-artikel.store',
+            'show' => 'admin.kategori-berita-artikel.show',
+            'edit' => 'admin.kategori-berita-artikel.edit',
+            'update' => 'admin.kategori-berita-artikel.update',
+            'destroy' => 'admin.kategori-berita-artikel.destroy',
+        ]);
 
+    // Add these routes to your web.php file in the admin middleware group
+    Route::prefix('admin/berita')->name('admin.media.berita.')->middleware(['auth', 'role:pemimpin'])->group(function () {
+        // List all berita or artikel
+        Route::get('/{type?}', [BeritaArtikelController::class, 'index'])->name('index');
 
+        // Create form
+        Route::get('/{type}/create', [BeritaArtikelController::class, 'create'])->name('create');
+
+        // Store
+        Route::post('admin/{type}', [BeritaArtikelController::class, 'store'])->name('store');
+
+        // Show
+        Route::get('/{type}/{id}', [BeritaArtikelController::class, 'show'])->name('show');
+
+        // Edit form
+        Route::get('/{type}/{id}/edit', [BeritaArtikelController::class, 'edit'])->name('edit');
+
+        // Update
+        Route::put('/{type}/{id}', [BeritaArtikelController::class, 'update'])->name('update');
+
+        // Delete
+        Route::delete('/{type}/{id}', [BeritaArtikelController::class, 'destroy'])->name('destroy');
+
+        // Toggle featured status
+        Route::patch('/{type}/{id}/toggle-featured', [BeritaArtikelController::class, 'toggleFeatured'])->name('toggle-featured');
+
+        // Update publication status
+        Route::patch('/{type}/{id}/status', [BeritaArtikelController::class, 'updateStatus'])->name('update-status');
+
+        // Upload image for CKEditor
+        Route::post('/upload-image', [BeritaArtikelController::class, 'uploadImage'])->name('upload-image');
+    });
 
     Route::resource('/admin/kecamatan', KecamatanController::class);
     Route::resource('/admin/metadata-alat', MetadataAlatController::class);
@@ -72,10 +116,6 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
         Route::resource('questions', FeedbackQuestionController::class);
         Route::resource('responses', FeedbackResponseController::class)->only(['index', 'show', 'destroy']);
     });
-
-    // berita artikel
-    Route::resource('/admin/berita-artikel', BeritaArtikelController::class)
-        ->except(['show']);
 
     Route::patch('/admin/feedback/questions/{question}/toggle', [FeedbackQuestionController::class, 'toggle'])
         ->name('admin.feedback.questions.toggle');
