@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ProdukController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\BeritaArtikelController;
 use App\Http\Controllers\Admin\KategoriBeritaArtikelController;
+use App\Http\Controllers\Admin\MediaBuletinController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -105,6 +106,17 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
         // Upload image for CKEditor
         Route::post('/upload-image', [BeritaArtikelController::class, 'uploadImage'])->name('upload-image');
     });
+
+    Route::resource('/admin/media/buletin', MediaBuletinController::class)
+        ->names([
+            'index' => 'admin.media.buletin.index',
+            'create' => 'admin.media.buletin.create',
+            'store' => 'admin.media.buletin.store',
+            'show' => 'admin.media.buletin.show',
+            'edit' => 'admin.media.buletin.edit',
+            'update' => 'admin.media.buletin.update',
+            'destroy' => 'admin.media.buletin.destroy',
+        ]);
 
     Route::resource('/admin/kecamatan', KecamatanController::class);
     Route::resource('/admin/metadata-alat', MetadataAlatController::class);
