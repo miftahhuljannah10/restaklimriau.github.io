@@ -27,6 +27,7 @@
             <li class="text-xs text-gray-400 uppercase mt-4 px-2">Instrumentasi</li>
             <x-after-login.sidebar.item-icon icon="thermometer" name="Metadata Alat" :route="route('metadata-alat.index')" />
             <x-after-login.sidebar.item-icon icon="map" name="Wilayah Administrasi" :route="route('kecamatan.index')" />
+            <x-after-login.sidebar.item-icon icon="cloud-rain" name="Alat Curah Hujan" :route="route('admin.alat-curah-hujan.index')" />
 
             <li class="text-xs text-gray-400 uppercase mt-4 px-2">Layanan Publik</li>
             {{-- <x-after-login.sidebar.item-icon icon="globe" name="Umum" route="#" />

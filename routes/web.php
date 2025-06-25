@@ -16,7 +16,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\BeritaArtikelController;
 use App\Http\Controllers\Admin\KategoriBeritaArtikelController;
 use App\Http\Controllers\Admin\MediaBuletinController;
-
+use App\Http\Controllers\Admin\AlatCurahHujanController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -128,6 +128,16 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
         Route::resource('questions', FeedbackQuestionController::class);
         Route::resource('responses', FeedbackResponseController::class)->only(['index', 'show', 'destroy']);
     });
+    Route::get('/admin/alat-curah-hujan/full', [AlatCurahHujanController::class, 'full'])->name('admin.alat-curah-hujan.full');
+    Route::resource('/admin/alat-curah-hujan', AlatCurahHujanController::class)->names([
+        'index' => 'admin.alat-curah-hujan.index',
+        'create' => 'admin.alat-curah-hujan.create',
+        'store' => 'admin.alat-curah-hujan.store',
+        'show' => 'admin.alat-curah-hujan.show',
+        'edit' => 'admin.alat-curah-hujan.edit',
+        'update' => 'admin.alat-curah-hujan.update',
+        'destroy' => 'admin.alat-curah-hujan.destroy',
+    ]);
 
     Route::patch('/admin/feedback/questions/{question}/toggle', [FeedbackQuestionController::class, 'toggle'])
         ->name('admin.feedback.questions.toggle');
