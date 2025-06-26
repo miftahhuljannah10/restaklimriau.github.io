@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased">
 
-    <div class="flex min-h-screen items-center justify-center bg-cover bg-center" style="background-image: url('/image/stasiun-bg.png')">
+    <div class="flex min-h-screen items-center justify-center bg-cover bg-center" style="background-image: url('/images/stasiun-bg.png')">
         <div class="bg-white shadow-xl rounded-3xl w-full max-w-md p-10">
             <h2 class="text-sm text-gray-700 mb-1">Welcome to</h2>
             <h1 class="text-blue-600 font-semibold text-md mb-4">Administrator Stasiun Klimatologi Riau</h1>

@@ -2,7 +2,7 @@
 <div class="w-full py-12 bg-white">
   <div class="max-w-[1441px] mx-auto px-4 sm:px-6 md:px-8 lg:px-[120px]">
     <!-- Section Title -->
-    <div class="mb-8 md:mb-12">
+    <div class="mb-8 md:mb-8">
       <h2 class="text-black text-2xl sm:text-3xl font-bold font-montserrat">
         Informasi Hari Ini
       </h2>
@@ -14,7 +14,7 @@
         <div class="w-full relative p-4 sm:p-5 md:p-6">
           <!-- Warning Icon - Mobile: Top Center, Desktop: Left Side -->
           <div class="flex sm:hidden justify-center w-full mb-3">
-            <img src="{{ asset('image/ikon/ikon-warning.png') }}" alt="Warning Icon" class="w-8 h-8" />
+            <img src="assets/images/ikon-warning.png" alt="Warning Icon" class="w-8 h-8" />
           </div>
 
           <div class="hidden sm:block absolute left-6 top-1/2 transform -translate-y-1/2">

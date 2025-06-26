@@ -1,155 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Stasiun Klimatologi Riau</title>
-
-    <!-- Tailwind CSS -->
-    {{-- vite --}}
+    <title>@yield('title', 'BMKG Stasiun Klimatologi Riau')</title>
+    @yield('meta')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts - Montserrat, Nunito & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    <!-- Tailwind Config -->
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
 
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #164e87, #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-dot {
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: linear-gradient(135deg, #164e87, #0ea5e9);
+            transform: scale(1.2);
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .timeline-line {
+            background: linear-gradient(to bottom, #164e87, #0ea5e9, #06b6d4);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .sticky-nav {
+            position: fixed;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            z-index: 40;
+        }
+
+        @media (max-width: 768px) {
+            .sticky-nav {
+                display: none;
+            }
+        }
+
+        .content-section {
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .content-section.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .content-section.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+    @stack('styles')
 </head>
 
-{{-- body then call header component before-login --}}
+<body class="bg-gradient-to-br from-slate-50 to-blue-50 font-montserrat">
+    @include('components.before-login.header')
 
-<body>
-    <div id="loading-screen" class="fixed inset-0 bg-white flex items-center justify-center z-50">
-        <div class="text-center">
-            <div class="loading-spinner rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-6"></div>
-            <h2 class="text-xl font-semibold text-gray-800 mb-2">BMKG Riau</h2>
-            <p class="text-gray-600">Memuat halaman...</p>
-            <div class="mt-4">
-                <div class="w-48 bg-gray-200 rounded-full h-2 mx-auto">
-                    <div class="bg-blue-600 h-2 rounded-full loading-progress" style="width: 0%"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <x-before-login.header />
-
-    <main class="flex-grow">
+    <main>
         @yield('content')
     </main>
 
-    <x-before-login.footer />
-
-    <script>
-        let loadingProgress = 0;
-
-        function updateLoadingProgress(progress) {
-            loadingProgress = progress;
-            const progressBar = document.querySelector('.loading-progress');
-            if (progressBar) {
-                progressBar.style.width = `${progress}%`;
-            }
-        }
-
-        async function loadComponent(url, targetId) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
-                document.getElementById(targetId).innerHTML = html;
-                console.log(`✅ Component loaded: ${url}`);
-                return true;
-            } catch (error) {
-                console.error(`❌ Error loading component from ${url}:`, error);
-                document.getElementById(targetId).innerHTML = `
-                    <div class="p-4 bg-red-100 text-red-700 rounded">
-                        <strong>Error loading component:</strong> ${error.message}
-                        <button onclick="loadComponent('${url}', '${targetId}')" class="ml-2 px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700">
-                            Coba Lagi
-                        </button>
-                    </div>
-                `;
-                return false;
-            }
-        }
-
-        function hideLoadingScreen() {
-            const loadingScreen = document.getElementById('loading-screen');
-            if (loadingScreen) {
-                loadingScreen.style.opacity = '0';
-                loadingScreen.style.transition = 'opacity 0.5s ease-out';
-
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 500);
-            }
-        }
-
-        // Update navigation active state
-        function updateNavigation() {
-            setTimeout(() => {
-                const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    link.classList.remove('text-sky-500');
-                    link.classList.add('text-slate-600');
-                    if (link.textContent.trim() === 'Beranda' || link.getAttribute('href') ===
-                        'index.html') {
-                        link.classList.add('active');
-                        link.classList.remove('text-slate-600');
-                        link.classList.add('text-sky-500');
-                        link.classList.add('font-medium');
-                    }
-                });
-            }, 100);
-        }
-
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log('🚀 Starting BMKG homepage initialization...');
-
-            try {
-                // Load header component
-                updateLoadingProgress(25);
-                const headerLoaded = await loadComponent('components/header.html', 'header-container');
-
-                // Load hero component
-                updateLoadingProgress(50);
-                const heroLoaded = await loadComponent('components/hero.html', 'hero-container');
-
-                // Load informasi component
-                updateLoadingProgress(75);
-                const informasiLoaded = await loadComponent('components/informasi.html', 'informasi-container');
-
-                // Load footer component
-                updateLoadingProgress(90);
-                const footerLoaded = await loadComponent('components/footer.html', 'footer-container');
-
-                updateLoadingProgress(95);
-                await new Promise(resolve => setTimeout(resolve, 200));
-
-                if (headerLoaded && heroLoaded && informasiLoaded && footerLoaded) {
-                    // Trigger components loaded event
-                    window.dispatchEvent(new Event('componentsLoaded'));
-
-                    // Update navigation after components are loaded
-                    updateNavigation();
-
-                    console.log('✅ All homepage components loaded successfully!');
-                } else {
-                    console.warn('⚠️ Some components failed to load');
-                }
-
-                updateLoadingProgress(100);
-                await new Promise(resolve => setTimeout(resolve, 300));
-
-                // Hide loading screen
-                hideLoadingScreen();
-
-            } catch (error) {
-                console.error('❌ Critical error during homepage initialization:', error);
-                hideLoadingScreen();
-            }
-        });
-    </script>
-
+    @include('components.before-login.footer')
+    @stack('scripts')
 </body>
 
 </html>

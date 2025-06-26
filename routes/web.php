@@ -20,12 +20,60 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {
-    return view('masyarakat.home');
+    return view('masyarakat.index');
+});
+Route::get('/artikel', function () {    
+    return view('masyarakat.artikel');
+});
+Route::get('/artikel-detail', function () {
+    return view('masyarakat.artikel-detail');
+});
+Route::get('/berita', function () {
+    return view('masyarakat.berita');
+});
+Route::get('/berita-detail', function () {
+    return view('masyarakat.berita-detail');
+});
+Route::get('/buletin', function () {
+    return view('masyarakat.buletin');
+});
+Route::get('/form-layanan', function () {
+    return view('masyarakat.form-layanan');
+});
+Route::get('/iklim-terapan', function () {
+    return view('masyarakat.iklim-terapan');
+});
+Route::get('/kontak', function () {
+    return view('masyarakat.kontak');
+});
+Route::get('/layanan', function () {
+    return view('masyarakat.layanan');
+});
+Route::get('/media', function () {
+    return view('masyarakat.media');
+});
+Route::get('/produk', function () {
+    return view('masyarakat.produk');
+});
+Route::get('/profil', function (\Illuminate\Http\Request $request) {
+    $section = $request->query('section', 'tentang');
+    return view('masyarakat.profil', [
+        'activeSection' => $section
+    ]);
+})->name('profil');
+Route::get('/profil-detail', function () {
+    return view('masyarakat.profil-detail');
+});
+Route::get('/tarif-pnbp', function () {
+    return view('masyarakat.tarif-pnbp');
+});
+Route::get('/cek-ketersediaan-data', function () {
+    return view('masyarakat.cek-ketersediaan-data');
 });
 
 // layanan publik
 Route::get('/layanan', function () {
-    return view('masyarakat.layanan.layanan-utama');
+    return view('masyarakat.layanan');
 })->name('layanan.utama');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

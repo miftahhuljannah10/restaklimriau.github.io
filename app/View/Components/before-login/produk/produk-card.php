@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\before-login\layanan;
+namespace App\View\Components\before-login\produk;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class hero extends Component
+class produk-card extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class hero extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.before-login.layanan.hero');
+        return view('components.before-login.produk.produk-card');
     }
 }

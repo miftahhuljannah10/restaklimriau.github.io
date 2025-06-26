@@ -756,3 +756,1269 @@ span.flatpickr-weekday,
 }
 
 
+@import 'tailwindcss';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+
+/* ========================================
+   BMKG Website - All Styles Combined
+   ======================================== */
+
+/* ========================================
+   GLOBAL STYLES
+   ======================================== */
+
+/* Font Configuration */
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.font-montserrat {
+  font-family: "Montserrat", sans-serif;
+}
+
+.font-nunito {
+  font-family: "Nunito", sans-serif;
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
+
+/* =========================
+   Profil Service Offices Tabs
+   ========================= */
+.tab-container {
+    background-color: #f3f4f6;
+    border-radius: 12px;
+    padding: 4px;
+    display: inline-flex;
+}
+.service-tab {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: transparent;
+    color: #6b7280;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+.service-tab.active {
+    background-color: #ffffff;
+    color: #0ea5e9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.service-tab:not(.active):hover {
+    color: #374151;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+.tab-content {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+.tab-content.hidden {
+    display: none;
+    opacity: 0;
+}
+
+/* ========================================
+     HEADER STYLES
+     ======================================== */
+
+/* BMKG Logo Styling */
+.bmkg-logo {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.bmkg-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Fallback logo styling */
+.fallback-logo {
+  background: linear-gradient(to bottom, #1e40af 40%, #fff 40%, #fff 42%, #15803d 42%, #15803d 80%, #000 80%);
+  position: relative;
+  overflow: hidden;
+}
+
+.fallback-logo::after {
+  content: "BMKG";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 8px;
+  font-weight: bold;
+}
+
+/* Navigation Links */
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background-color: #0ea5e9;
+  border-radius: 1px;
+}
+
+/* Mobile Navigation */
+.mobile-menu {
+  transition: all 0.3s ease-in-out;
+  transform-origin: top;
+}
+
+.mobile-menu.hidden {
+  transform: scaleY(0);
+  opacity: 0;
+}
+
+.mobile-menu:not(.hidden) {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.mobile-nav-link {
+  transition: all 0.2s ease;
+  padding: 8px 0;
+  border-left: 3px solid transparent;
+  padding-left: 12px;
+}
+
+.mobile-nav-link:hover {
+  border-left-color: #0ea5e9;
+  background-color: #f8fafc;
+  padding-left: 16px;
+}
+
+.mobile-nav-link.active {
+  border-left-color: #0ea5e9;
+  background-color: #eff6ff;
+}
+
+/* Contact Button */
+.shadow-custom {
+  box-shadow: 0px 8px 32px 0px rgba(100, 116, 139, 0.06);
+}
+
+.contact-icon {
+  transition: all 0.3s ease;
+}
+
+#contact-btn:hover .contact-icon {
+  background-color: #0ea5e9;
+  border-radius: 2px;
+}
+
+/* ========================================
+     HERO SECTION STYLES
+     ======================================== */
+
+/* Hero Section Base */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background Animation */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(29, 78, 216, 0.1), rgba(6, 182, 212, 0.1));
+  animation: gradientShift 8s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Hero Text Animations */
+.hero-title {
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.hero-subtitle {
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+     FEEDBACK COMPONENT STYLES
+     ======================================== */
+
+/* Feedback Component - Simple with Popup */
+.feedback-component {
+  position: relative;
+  cursor: pointer;
+}
+
+.feedback-component #feedback {
+  position: relative;
+  display: block;
+}
+
+.feedback-component #feedback a {
+  display: block;
+  transition: all 0.3s ease;
+}
+
+/* Feedback Image - Keep Original Style */
+.feedback-image {
+  display: block;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* Simple hover effect - just slight movement */
+.feedback-component:hover {
+  transform: translateX(-3px);
+}
+
+.feedback-component:hover .feedback-image {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+}
+
+/* ========================================
+     FEEDBACK POPUP STYLES
+     ======================================== */
+
+/* Popup Container */
+.feedback-popup {
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Show popup on hover */
+.feedback-component:hover .feedback-popup {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(-8px);
+}
+
+/* Popup Content */
+.feedback-popup > div {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  animation: popupSlideIn 0.3s ease-out;
+}
+
+/* Popup Animation */
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Arrow styling */
+.feedback-popup .absolute.left-full {
+  filter: drop-shadow(-1px 0 1px rgba(0, 0, 0, 0.1));
+}
+
+/* Focus state for accessibility */
+.feedback-component #feedback a:focus {
+  outline: 2px solid rgba(245, 158, 11, 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.feedback-component #feedback a:focus + .feedback-popup {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(-8px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .feedback-component {
+    transform: scale(0.9);
+  }
+
+  .feedback-popup {
+    transform: scale(0.9) translateY(-50%);
+  }
+
+  .feedback-component:hover .feedback-popup {
+    transform: scale(0.9) translateY(-50%) translateX(-8px);
+  }
+}
+
+@media (max-width: 768px) {
+  .feedback-component {
+    transform: scale(0.8);
+  }
+
+  .feedback-popup {
+    transform: scale(0.8) translateY(-50%);
+    min-width: 180px;
+  }
+
+  .feedback-component:hover .feedback-popup {
+    transform: scale(0.8) translateY(-50%) translateX(-8px);
+  }
+
+  /* Adjust popup content for mobile */
+  .feedback-popup h4 {
+    font-size: 0.75rem;
+  }
+
+  .feedback-popup p {
+    font-size: 0.625rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .feedback-component {
+    transform: scale(0.7);
+  }
+
+  .feedback-popup {
+    transform: scale(0.7) translateY(-50%);
+    min-width: 160px;
+  }
+
+  .feedback-component:hover .feedback-popup {
+    transform: scale(0.7) translateY(-50%) translateX(-8px);
+  }
+}
+
+/* Hide popup on touch devices to prevent issues */
+@media (hover: none) {
+  .feedback-popup {
+    display: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .feedback-component {
+    display: none;
+  }
+}
+
+/* ========================================
+     FEEDBACK MODAL STYLES
+     ======================================== */
+
+/* Custom scrollbar for feedback modal */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(203, 213, 225, 0.5) transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(203, 213, 225, 0.5);
+  border-radius: 20px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.7);
+}
+
+/* Modal animation */
+#feedback-modal > div {
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Improved focus styles for form elements */
+#feedback-form input:focus,
+#feedback-form select:focus,
+#feedback-form textarea:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+#feedback-form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+/* ========================================
+     ANIMATIONS
+     ======================================== */
+
+/* Loading Animation */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fade In Animation */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cloud-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+.animate-cloud-float { animation: cloud-float 7s ease-in-out infinite; }
+@keyframes sun-pulse {
+  0%, 100% { filter: drop-shadow(0 0 0 #fde047); }
+  50% { filter: drop-shadow(0 0 24px #fde047); }
+}
+.animate-sun-pulse { animation: sun-pulse 3s ease-in-out infinite; }
+@keyframes sun-rays {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+.animate-sun-rays { animation: sun-rays 2.5s ease-in-out infinite; }
+@keyframes sun-move {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-10px) scale(1.04); }
+  60% { transform: translateY(6px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); }
+}
+.animate-sun-move { animation: sun-move 7s ease-in-out infinite, sun-pulse 3s ease-in-out infinite; }
+@keyframes rain {
+  0% { opacity: 0.7; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0.1; transform: translateY(18px); }
+}
+.animate-rain line {
+  animation: rain 1.6s linear infinite;
+}
+.animate-rain line:nth-child(2) { animation-delay: 0.4s; }
+.animate-rain line:nth-child(3) { animation-delay: 0.8s; }
+.animate-rain line:nth-child(4) { animation-delay: 1.2s; }
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-up { animation: slide-up 0.8s cubic-bezier(0.4,0,0.2,1) both; }
+.animate-fade-in { animation: fade-in 1.2s cubic-bezier(0.4,0,0.2,1) both; }
+.animate-slide-in-right { animation: slide-in-right 1s cubic-bezier(0.4,0,0.2,1) both; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* ========================================
+     RESPONSIVE DESIGN
+     ======================================== */
+
+/* Mobile First Approach */
+@media (max-width: 768px) {
+  .mobile-optimized {
+    padding: 0.5rem;
+  }
+
+  .text-responsive {
+    font-size: 0.875rem;
+  }
+
+  /* Hero Responsive */
+  .hero-section {
+    height: 350px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tablet-optimized {
+    padding: 1rem;
+  }
+
+  /* Hero Tablet */
+  .hero-section {
+    height: 400px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .desktop-optimized {
+    padding: 1.5rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .hero-section {
+    height: 300px;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* ========================================
+     INFORMASI SECTION STYLES
+     ======================================== */
+
+/* Weather Alert Card */
+.weather-alert-card {
+  transition: all 0.3s ease;
+}
+
+.weather-alert-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
+}
+
+/* Alert Animation */
+@keyframes alertPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.alert-active {
+  animation: alertPulse 2s ease-in-out infinite;
+}
+
+/* Weather Detail Modal */
+.weather-detail-modal {
+  backdrop-filter: blur(4px);
+}
+
+.weather-detail-modal > div {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Info Cards Hover Effects */
+.info-card {
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.info-card:hover .info-icon {
+  transform: scale(1.1);
+}
+
+.info-icon {
+  transition: transform 0.3s ease;
+}
+
+/* Responsive Design for Informasi Section */
+@media (max-width: 768px) {
+  .weather-alert-card {
+    margin: 0 1rem;
+  }
+
+  .info-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .weather-alert-card {
+    margin: 0 0.5rem;
+    padding: 1rem;
+  }
+
+  .weather-alert-title {
+    font-size: 1rem;
+  }
+
+  .weather-alert-description {
+    font-size: 0.75rem;
+  }
+}
+
+/* Loading state for weather data */
+.weather-loading {
+  background: linear-gradient(90deg, #fef3c7 25%, #fde68a 50%, #fef3c7 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+/* Status indicators */
+.status-active {
+  position: relative;
+}
+
+.status-active::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  animation: statusBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes statusBlink {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+/* Enhanced focus states for informasi section */
+.read-more-link:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+/* Print styles for informasi section */
+@media print {
+  .weather-alert-card {
+    border: 2px solid #f59e0b;
+    background: #fef3c7;
+  }
+
+  .info-cards-grid {
+    display: none;
+  }
+}
+
+/* ========================================
+     WEATHER CAROUSEL RESPONSIVE STYLES
+     ======================================== */
+
+.weather-carousel-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.weather-card {
+  min-width: 275px;
+  flex-shrink: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .weather-card {
+    min-width: 250px;
+  }
+
+  #weather-prev-btn,
+  #weather-next-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  #weather-prev-btn {
+    margin-left: 8px;
+  }
+
+  #weather-next-btn {
+    margin-right: 8px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .weather-card {
+    min-width: 260px;
+  }
+}
+
+/* Ensure smooth transitions */
+#weather-track {
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
+}
+
+/* ========================================
+     UTILITY CLASSES
+     ======================================== */
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.border-gradient {
+  border-image: linear-gradient(45deg, #0ea5e9, #3b82f6) 1;
+}
+
+/* Loading States */
+.hero-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ========================================
+     ACCESSIBILITY
+     ======================================== */
+
+#feedback-tab:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Focus styles for navigation */
+.nav-link:focus,
+.mobile-nav-link:focus {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .hero-section {
+    background: linear-gradient(to bottom right, #1e3a8a, #0891b2);
+  }
+
+  #feedback-tab {
+    border: 2px solid #000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .feedback-popup,
+  .feedback-component,
+  .feedback-image {
+    animation: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+}
+
+/* ========================================
+     PRINT STYLES
+     ======================================== */
+
+@media print {
+  #feedback-tab {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: none;
+  }
+
+  .hero-section {
+    background: #f8fafc;
+    color: #000;
+  }
+
+  .hero-title,
+  .hero-subtitle {
+    color: #000;
+  }
+}
+
+/* ========================================
+     DARK MODE SUPPORT (Future)
+     ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Dark mode styles can be added here in the future */
+}
+
+/* ========================================
+     MEDIA SECTION STYLES
+     ======================================== */
+
+/* Media Section Base */
+.media-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Media Cards Hover Effects */
+.media-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.media-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.media-card:hover .media-overlay {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+}
+
+.media-card:hover .media-title {
+  transform: scale(1.05);
+}
+
+/* Media Overlay */
+.media-overlay {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+  transition: all 0.3s ease;
+}
+
+.media-title {
+  transition: transform 0.3s ease;
+}
+
+/* Featured Media Card */
+.featured-media {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-media::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.3), rgba(6, 182, 212, 0.3));
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.featured-media:hover::before {
+  opacity: 0.8;
+}
+
+/* Responsive Design for Media Section */
+@media (max-width: 1024px) {
+  .media-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .media-sidebar {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .media-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .media-card {
+    min-height: 200px;
+  }
+}
+
+/* ========================================
+     FOOTER STYLES
+     ======================================== */
+
+/* Footer Base */
+.footer {
+  background: #1e3a8a;
+  position: relative;
+}
+
+/* Footer Links */
+.footer-link {
+  transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #60a5fa;
+  transform: translateX(2px);
+}
+
+/* Social Media Icons */
+.social-icon {
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-icon:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Logo */
+.footer-logo {
+  transition: transform 0.3s ease;
+}
+
+.footer-logo:hover {
+  transform: scale(1.05);
+}
+
+/* QR Code */
+.qr-code {
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.qr-code:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
+}
+
+/* Contact Icons */
+.contact-icon {
+  transition: all 0.3s ease;
+}
+
+.contact-icon:hover {
+  color: #60a5fa;
+  transform: scale(1.1);
+}
+
+/* Responsive Footer */
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .footer-section {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 1rem;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+
+  .qr-code {
+    margin: 0 auto;
+  }
+}
+
+/* ========================================
+     MEDIA PAGE SPECIFIC STYLES
+     ======================================== */
+
+/* Page Transitions */
+.page-transition {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Media Category Badges */
+.category-badge {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Loading States for Media */
+.media-loading {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+/* Print Styles for Media Page */
+@media print {
+  .media-section {
+    background: white;
+    color: black;
+  }
+
+  .media-overlay {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .footer {
+    background: #f3f4f6;
+    color: black;
+  }
+}
+
+/* Mobile Menu Animations */
+.slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Menu Styles */
+#mobile-menu {
+  transition: all 0.3s ease-in-out;
+}
+
+#mobile-menu.hidden {
+  display: none !important;
+}
+
+#mobile-menu:not(.hidden) {
+  display: block !important;
+}
+
+/* Mobile Menu Button */
+#mobile-menu-btn {
+  transition: all 0.2s ease-in-out;
+}
+
+#mobile-menu-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#mobile-menu-btn:active {
+  transform: scale(0.95);
+}
+
+/* Ensure mobile menu appears above other content */
+#mobile-menu {
+  position: relative;
+  z-index: 40;
+}
+
+@layer utilities {
+  .from-bmkg-blue { --tw-gradient-from: #164E87; --tw-gradient-to: rgb(22 78 135 / 0); }
+  .via-bmkg-light-blue { --tw-gradient-stops: var(--tw-gradient-from), #0ea5e9, var(--tw-gradient-to, rgb(14 165 233 / 0)); }
+  .to-bmkg-cyan { --tw-gradient-to: #06b6d4; }
+  .bg-bmkg-blue { background-color: #164E87 !important; }
+  .bg-bmkg-light-blue { background-color: #0ea5e9 !important; }
+  .bg-bmkg-cyan { background-color: #06b6d4 !important; }
+  .text-bmkg-blue { color: #164E87 !important; }
+  .text-bmkg-light-blue { color: #0ea5e9 !important; }
+  .text-bmkg-cyan { color: #06b6d4 !important; }
+  .border-bmkg-blue { border-color: #164E87 !important; }
+  .border-bmkg-light-blue { border-color: #0ea5e9 !important; }
+  .border-bmkg-cyan { border-color: #06b6d4 !important; }
+}
+
+/* ========================================
+   FEEDBACK BUTTON & MODAL STYLES
+   ======================================== */
+.feedback-fab-vertical {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 40;
+  background: linear-gradient(180deg, #0ea5e9 0%, #22d3ee 100%);
+  color: #fff;
+  border-radius: 1.2rem 0 0 1.2rem;
+  padding: 0.7rem 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 4px 24px 0 rgba(0, 160, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 44px;
+  min-height: 90px;
+  height: auto;
+}
+.feedback-fab-vertical:hover {
+  background: linear-gradient(180deg, #0284c7 0%, #06b6d4 100%);
+  box-shadow: 0 8px 32px 0 rgba(0, 160, 255, 0.22);
+}
+.feedback-fab-vertical .icon {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.feedback-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+/* purgecss end ignore */
+.section-nav-btn {
+  background: none !important;
+  box-shadow: none !important;
+  color: #334155 !important;
+}
+.section-nav-btn.active {
+  color: #fff !important;
+  background: linear-gradient(to bottom, #0ea5e9 0%, #06b6d4 100%) !important;
+  background-color: #0ea5e9 !important;
+  transition: background 0.4s cubic-bezier(.4,0,.2,1);
+  box-shadow: none !important;
+}

@@ -4,22 +4,16 @@
     <div class="bg-blue-950 w-full">
         <div class="max-w-[1440px] mx-auto px-4 lg:px-10 h-10 flex items-center justify-between text-xs">
             <!-- Date -->
-            <div class="text-white uppercase tracking-wide" id="current-date">
-                Jumat, 11 April 2025
-            </div>
+            <div class="text-white uppercase tracking-wide" id="current-date"></div>
 
             <!-- Time Section -->
             <div class="hidden lg:flex items-center space-x-4 text-xs">
                 <span class="text-white uppercase tracking-wide">
                     Standar Waktu Indonesia
                 </span>
-                <span class="text-green-300 uppercase tracking-wide" id="wib-time">
-                    10 : 58 : 32 WIB
-                </span>
+                <span class="text-green-300 uppercase tracking-wide" id="wib-time"></span>
                 <span class="text-white">/</span>
-                <span class="text-green-300 uppercase tracking-wide" id="utc-time">
-                    10 : 58 : 32 UTC
-                </span>
+                <span class="text-green-300 uppercase tracking-wide" id="utc-time"></span>
             </div>
         </div>
     </div>
@@ -30,8 +24,12 @@
             <!-- Logo and Title -->
             <div class="flex items-center gap-2.5">
                 <!-- BMKG Logo -->
-                <img src="/image/logo-staklim.png" alt="Logo BMKG" class="w-12 h-12 object-contain"
-                    onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='block';">
+                <img
+                    src="assets/images/bmkg-logo.png"
+                    alt="Logo BMKG"
+                    class="w-12 h-12 object-contain"
+                    onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='block';"
+                >
 
                 <!-- Fallback Logo jika gambar tidak load -->
                 <div id="fallback-logo" class="w-12 h-12 rounded fallback-logo" style="display: none;"></div>
@@ -49,26 +47,19 @@
 
             <!-- Navigation - Desktop -->
             <nav class="hidden lg:flex items-center space-x-8">
-                <a href="index.html"
-                    class="nav-link text-slate-600 text-sm font-normal leading-tight hover:text-sky-500 transition-colors">
+                <a href="/" class="nav-link text-sm font-normal leading-tight transition-colors {{ request()->is('/') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">
                     Home
                 </a>
-                <a href="profil.html"
-                    class="nav-link text-slate-600 text-sm font-normal leading-tight hover:text-sky-500 transition-colors">
+                <a href="/profil" class="nav-link text-sm font-normal leading-tight transition-colors {{ request()->is('profil*') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">
                     Profile
                 </a>
-                {{-- arahkan ke routes layanan /layanan-publik not html--}}
-                <a href="layanan.html"
-                    class="nav-link text-slate-600 text-sm font-normal leading-tight hover:text-sky-500 transition-colors">
+                <a href="/layanan" class="nav-link text-sm font-normal leading-tight transition-colors {{ request()->is('layanan*') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">
                     Layanan
                 </a>
-
-                <a href="produk.html"
-                    class="nav-link text-slate-600 text-sm font-normal leading-tight hover:text-sky-500 transition-colors">
+                <a href="/produk" class="nav-link text-sm font-normal leading-tight transition-colors {{ request()->is('produk*') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">
                     Produk
                 </a>
-                <a href="media.html"
-                    class="nav-link text-slate-600 text-sm font-normal leading-tight hover:text-sky-500 transition-colors">
+                <a href="/media" class="nav-link text-sm font-normal leading-tight transition-colors {{ request()->is('media*') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">
                     Media
                 </a>
             </nav>
@@ -76,8 +67,7 @@
             <!-- Contact Button & Mobile Menu -->
             <div class="flex items-center gap-4">
                 <!-- Contact Button -->
-                <a href="kontak.html"
-                    class="hidden lg:flex px-3.5 py-2 bg-white rounded-lg shadow-[0px_8px_32px_0px_rgba(100,116,139,0.06)] border border-slate-200 items-center gap-2 hover:shadow-lg transition-shadow">
+                <a href="/kontak" class="hidden lg:flex px-3.5 py-2 bg-white rounded-lg shadow-[0px_8px_32px_0px_rgba(100,116,139,0.06)] border border-slate-200 items-center gap-2 hover:shadow-lg transition-shadow">
                     <div class="w-4 h-4 bg-slate-600 rounded-sm flex items-center justify-center">
                         <i class="fas fa-phone text-white text-xs"></i>
                     </div>
@@ -96,22 +86,16 @@
         <!-- Mobile Navigation -->
         <div class="lg:hidden hidden bg-white border-t border-slate-200" id="mobile-menu">
             <div class="px-4 py-4 space-y-4">
-                <a href="index.html"
-                    class="mobile-nav-link block text-slate-600 text-sm font-normal hover:text-sky-500 py-2 border-b border-slate-100">Home</a>
-                <a href="profil.html"
-                    class="mobile-nav-link block text-slate-600 text-sm font-normal hover:text-sky-500 py-2 border-b border-slate-100">Profile</a>
-                <a href="layanan.html"
-                    class="mobile-nav-link block text-slate-600 text-sm font-normal hover:text-sky-500 py-2 border-b border-slate-100">Layanan</a>
-                <a href="produk.html"
-                    class="mobile-nav-link block text-slate-600 text-sm font-normal hover:text-sky-500 py-2 border-b border-slate-100">Produk</a>
-                <a href="media.html"
-                    class="mobile-nav-link block text-slate-600 text-sm font-normal hover:text-sky-500 py-2 border-b border-slate-100">Media</a>
+                <a href="/" class="mobile-nav-link block text-sm font-normal py-2 border-b border-slate-100 transition-colors {{ request()->is('/') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">Home</a>
+                <a href="/profil" class="mobile-nav-link block text-sm font-normal py-2 border-b border-slate-100 transition-colors {{ request()->is('profil*') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">Profile</a>
+                <a href="/layanan" class="mobile-nav-link block text-sm font-normal py-2 border-b border-slate-100 transition-colors {{ request()->is('layanan*') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">Layanan</a>
+                <a href="/produk" class="mobile-nav-link block text-sm font-normal py-2 border-b border-slate-100 transition-colors {{ request()->is('produk*') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">Produk</a>
+                <a href="/media" class="mobile-nav-link block text-sm font-normal py-2 border-b border-slate-100 transition-colors {{ request()->is('media*') ? 'text-sky-500 font-bold' : 'text-slate-600 hover:text-sky-500' }}">Media</a>
+
 
 
                 <!-- Mobile Contact Button -->
-                <a href="kontak.html"
-                    class="w-full mt-4 px-3.5 py-3 bg-white rounded-lg shadow-[0px_8px_32px_0px_rgba(100,116,139,0.06)] border border-slate-200 flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-200 active:scale-95"
-                    id="mobile-contact-btn">
+                <a href="/kontak" class="w-full mt-4 px-3.5 py-3 bg-white rounded-lg shadow-[0px_8px_32px_0px_rgba(100,116,139,0.06)] border border-slate-200 flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-200 active:scale-95" id="mobile-contact-btn">
                     <div class="w-4 h-4 bg-slate-600 rounded-sm flex items-center justify-center">
                         <i class="fas fa-phone text-white text-xs"></i>
                     </div>
@@ -121,3 +105,5 @@
         </div>
     </div>
 </header>
+
+<!-- JS dipindahkan ke app.js -->

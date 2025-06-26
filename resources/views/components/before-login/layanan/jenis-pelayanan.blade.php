@@ -12,9 +12,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 max-w-[1290px] mx-auto">
 
             <!-- Form Layanan -->
-            <div onclick="handleServiceClick('Form Layanan')"
-                class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] border flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer"
-                tabindex="0" role="button" aria-label="Klik untuk membuka Form Layanan">
+            <div onclick="handleServiceClick('Form Layanan')" class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer" tabindex="0" role="button" aria-label="Klik untuk membuka Form Layanan">
                 <!-- Icon -->
                 <div class="w-20 h-20 mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
                     <div class="w-20 h-20 bg-sky-500 rounded-lg flex items-center justify-center">
@@ -33,8 +31,7 @@
 
                     <!-- Description -->
                     <div>
-                        <p
-                            class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
+                        <p class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
                             Merupakan Layanan Jasa MKKuG
                         </p>
                     </div>
@@ -42,9 +39,7 @@
             </div>
 
             <!-- Survey Kepuasan Masyarakat -->
-            <div onclick="handleServiceClick('Survey Kepuasan Masyarakat')"
-                class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] border flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer"
-                tabindex="0" role="button" aria-label="Klik untuk membuka Survey Kepuasan Masyarakat">
+            <div onclick="handleServiceClick('Survey Kepuasan Masyarakat')" class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer" tabindex="0" role="button" aria-label="Klik untuk membuka Survey Kepuasan Masyarakat">
                 <!-- Icon -->
                 <div class="w-20 h-20 mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
                     <div class="w-20 h-20 bg-sky-500 rounded-lg flex items-center justify-center">
@@ -63,8 +58,7 @@
 
                     <!-- Description -->
                     <div>
-                        <p
-                            class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
+                        <p class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
                             Pengisian Survey berdasarkan kualitas pelayanan Stasiun Klimatologi Riau
                         </p>
                     </div>
@@ -72,9 +66,7 @@
             </div>
 
             <!-- Tarif PNBP -->
-            <div onclick="handleServiceClick('Tarif PNBP')"
-                class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] border flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer"
-                tabindex="0" role="button" aria-label="Klik untuk membuka Tarif PNBP">
+            <div onclick="handleServiceClick('Tarif PNBP')" class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer" tabindex="0" role="button" aria-label="Klik untuk membuka Tarif PNBP">
                 <!-- Icon -->
                 <div class="w-20 h-20 mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
                     <div class="w-20 h-20 bg-sky-500 rounded-lg flex items-center justify-center">
@@ -93,8 +85,7 @@
 
                     <!-- Description -->
                     <div>
-                        <p
-                            class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
+                        <p class="text-black text-sm md:text-base lg:text-2xl font-normal font-montserrat leading-relaxed">
                             Daftar Tarif PNBP sesuai PP Nomor 47 Tahun 2018
                         </p>
                     </div>
@@ -102,9 +93,7 @@
             </div>
 
             <!-- Surat 0 Rupiah -->
-            <div onclick="handleServiceClick('Surat 0 Rupiah')"
-                class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] border  flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer"
-                tabindex="0" role="button" aria-label="Klik untuk membuka Surat 0 Rupiah">
+            <div onclick="handleServiceClick('Surat 0 Rupiah')" class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer" tabindex="0" role="button" aria-label="Klik untuk membuka Surat 0 Rupiah">
                 <!-- Icon -->
                 <div class="w-20 h-20 mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
                     <div class="w-20 h-20 bg-sky-500 rounded-lg flex items-center justify-center">
@@ -123,8 +112,7 @@
 
                     <!-- Description -->
                     <div>
-                        <p
-                            class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
+                        <p class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
                             Pengisian Surat 0 Rupiah hanya berlaku untuk pengajuan Mahasiswa
                         </p>
                     </div>
@@ -134,4 +122,3 @@
         </div>
     </div>
 </section>
-
