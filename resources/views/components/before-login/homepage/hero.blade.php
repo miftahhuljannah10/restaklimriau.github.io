@@ -1,7 +1,7 @@
 <!-- Hero Section Component - HANYA HTML -->
 <section class="w-full h-[488px] relative overflow-hidden">
     <!-- Background Image hero-bg.jpg -->
-    <img src="{{ asset('image/hero-bg.jpg') }}" alt="Hero Background"
+    <img src="{{ asset('images/hero-bg.jpg') }}" alt="Hero Background"
          class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.style.display='none';">
 
   <!-- Main Hero Content -->

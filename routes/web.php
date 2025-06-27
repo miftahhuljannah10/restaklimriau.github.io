@@ -18,6 +18,9 @@ use App\Http\Controllers\Admin\KategoriBeritaArtikelController;
 use App\Http\Controllers\Admin\MediaBuletinController;
 use App\Http\Controllers\Admin\AlatCurahHujanController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\KlasifikasiSuratController;
+use App\Http\Controllers\Admin\SuratMasukController;
+use App\Http\Controllers\Admin\SuratKeluarController;
 
 
 Route::get('/', function () {
@@ -76,7 +79,7 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
 
     // Add these routes to your web.php file in the admin middleware group
     Route::prefix('admin/berita')->name('admin.media.berita.')->middleware(['auth', 'role:pemimpin'])->group(function () {
-        // List all berita or artikel
+
         Route::get('/{type?}', [BeritaArtikelController::class, 'index'])->name('index');
 
         // Create form
@@ -138,6 +141,52 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
         'update' => 'admin.alat-curah-hujan.update',
         'destroy' => 'admin.alat-curah-hujan.destroy',
     ]);
+
+    Route::resource('/admin/tata-usaha/klasifikasi-surat', KlasifikasiSuratController::class)
+        ->names([
+            'index' => 'admin.tata-usaha.klasifikasi-surat.index',
+            'create' => 'admin.tata-usaha.klasifikasi-surat.create',
+            'store' => 'admin.tata-usaha.klasifikasi-surat.store',
+            'show' => 'admin.tata-usaha.klasifikasi-surat.show',
+            'edit' => 'admin.tata-usaha.klasifikasi-surat.edit',
+            'update' => 'admin.tata-usaha.klasifikasi-surat.update',
+            'destroy' => 'admin.tata-usaha.klasifikasi-surat.destroy',
+        ]);
+    Route::post('/admin/tata-usaha/klasifikasi-surat/ajax', [KlasifikasiSuratController::class, 'addKlasifikasiAjax'])
+        ->name('admin.tata-usaha.klasifikasi-surat.ajax');
+
+    // Surat Masuk Routes
+    Route::resource('/admin/tata-usaha/surat-masuk', SuratMasukController::class)
+        ->names([
+            'index' => 'admin.tata-usaha.surat-masuk.index',
+            'create' => 'admin.tata-usaha.surat-masuk.create',
+            'store' => 'admin.tata-usaha.surat-masuk.store',
+            'show' => 'admin.tata-usaha.surat-masuk.show',
+            'edit' => 'admin.tata-usaha.surat-masuk.edit',
+            'update' => 'admin.tata-usaha.surat-masuk.update',
+            'destroy' => 'admin.tata-usaha.surat-masuk.destroy',
+        ]);
+    Route::get('/admin/tata-usaha/surat-masuk/export', [SuratMasukController::class, 'export'])
+        ->name('admin.tata-usaha.surat-masuk.export');
+    Route::get('/admin/tata-usaha/surat-masuk/{suratMasuk}/download', [SuratMasukController::class, 'downloadScan'])
+        ->name('admin.tata-usaha.surat-masuk.download');
+
+    // Surat Keluar Routes
+    Route::resource('/admin/tata-usaha/surat-keluar', SuratKeluarController::class)
+        ->names([
+            'index' => 'admin.tata-usaha.surat-keluar.index',
+            'create' => 'admin.tata-usaha.surat-keluar.create',
+            'store' => 'admin.tata-usaha.surat-keluar.store',
+            'show' => 'admin.tata-usaha.surat-keluar.show',
+            'edit' => 'admin.tata-usaha.surat-keluar.edit',
+            'update' => 'admin.tata-usaha.surat-keluar.update',
+            'destroy' => 'admin.tata-usaha.surat-keluar.destroy',
+        ]);
+    Route::get('/admin/tata-usaha/surat-keluar/export', [SuratKeluarController::class, 'export'])
+        ->name('admin.tata-usaha.surat-keluar.export');
+    Route::get('/admin/tata-usaha/surat-keluar/{suratKeluar}/download', [SuratKeluarController::class, 'downloadScan'])
+        ->name('admin.tata-usaha.surat-keluar.download');
+
 
     Route::patch('/admin/feedback/questions/{question}/toggle', [FeedbackQuestionController::class, 'toggle'])
         ->name('admin.feedback.questions.toggle');
