@@ -1,13 +1,13 @@
 <!-- Service Offices Section -->
-<section class="py-8 bg-white">
+<section>
     <div class="max-w-[1440px] mx-auto px-4 lg:px-10">
         <!-- Tab Navigation -->
         <div class="flex justify-center mb-12">
-            <div class="tab-container">
+            <div class="tab-container flex gap-3">
                 <!-- Administrative Office Tab -->
                 <button
                     id="admin-tab"
-                    class="service-tab active px-8 py-4 text-sm font-semibold font-montserrat rounded-lg transition-all duration-300"
+                    class="service-tab active px-8 py-3 text-sm font-semibold font-montserrat rounded-lg transition-all duration-300 bg-sky-500 text-white shadow"
                     type="button"
                 >
                     Kantor Pelayanan Administrasi
@@ -16,7 +16,7 @@
                 <!-- Operational Office Tab -->
                 <button
                     id="operational-tab"
-                    class="service-tab px-8 py-4 text-sm font-semibold font-montserrat rounded-lg transition-all duration-300 text-gray-600"
+                    class="service-tab px-8 py-3 text-sm font-semibold font-montserrat rounded-lg transition-all duration-300 bg-sky-50 text-sky-600"
                     type="button"
                 >
                     Kantor Pelayanan Operasional

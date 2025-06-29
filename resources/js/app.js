@@ -1262,22 +1262,23 @@ function showServiceContent(type) {
     if (instansi) instansi.classList.add('hidden');
     if (mahasiswa) mahasiswa.classList.add('hidden');
     if (formEmbed) formEmbed.classList.add('hidden');
-    if (umumCard) umumCard.classList.remove('border-sky-500');
-    if (instansiCard) instansiCard.classList.remove('border-sky-500');
-    if (mahasiswaCard) mahasiswaCard.classList.remove('border-sky-500');
-    // Tampilkan konten sesuai pilihan
+    // Reset semua card ke default
+    if (umumCard) umumCard.className = umumCard.className.replace(/border-sky-500/g, '').replace(/  +/g, ' ') + ' border-zinc-300';
+    if (instansiCard) instansiCard.className = instansiCard.className.replace(/border-sky-500/g, '').replace(/  +/g, ' ') + ' border-zinc-300';
+    if (mahasiswaCard) mahasiswaCard.className = mahasiswaCard.className.replace(/border-sky-500/g, '').replace(/  +/g, ' ') + ' border-zinc-300';
+    // Tampilkan konten & highlight card sesuai pilihan
     if(type === 'umum') {
         if (umum) umum.classList.remove('hidden');
         if (formEmbed) formEmbed.classList.remove('hidden');
-        if (umumCard) umumCard.classList.add('border-sky-500');
+        if (umumCard) umumCard.className = umumCard.className.replace(/border-zinc-300/g, '').replace(/  +/g, ' ') + ' border-sky-500';
     } else if(type === 'instansi') {
         if (instansi) instansi.classList.remove('hidden');
         if (formEmbed) formEmbed.classList.remove('hidden');
-        if (instansiCard) instansiCard.classList.add('border-sky-500');
+        if (instansiCard) instansiCard.className = instansiCard.className.replace(/border-zinc-300/g, '').replace(/  +/g, ' ') + ' border-sky-500';
     } else if(type === 'mahasiswa') {
         if (mahasiswa) mahasiswa.classList.remove('hidden');
         if (formEmbed) formEmbed.classList.remove('hidden');
-        if (mahasiswaCard) mahasiswaCard.classList.add('border-sky-500');
+        if (mahasiswaCard) mahasiswaCard.className = mahasiswaCard.className.replace(/border-zinc-300/g, '').replace(/  +/g, ' ') + ' border-sky-500';
     }
 }
 

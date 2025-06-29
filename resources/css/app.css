@@ -70,6 +70,15 @@
     background: #f3f4f6;
     border-radius: 8px;
   }
+  .animate-sun-move {
+    animation: sunMove 6s ease-in-out infinite alternate;
+  }
+  .animate-cloud-float {
+    animation: cloudFloat 8s ease-in-out infinite alternate;
+  }
+  .animate-rain {
+    animation: rainDrop 1.2s linear infinite;
+  }
 }
 
 body {
@@ -2090,4 +2099,17 @@ body {
   background-color: #0ea5e9 !important;
   transition: background 0.4s cubic-bezier(.4,0,.2,1);
   box-shadow: none !important;
+}
+@keyframes sunMove {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(12px) scale(1.04); }
+}
+@keyframes cloudFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-16px); }
+}
+@keyframes rainDrop {
+  0% { opacity: 1; transform: translateY(0);}
+  80% { opacity: 1;}
+  100% { opacity: 0; transform: translateY(16px);}
 }
