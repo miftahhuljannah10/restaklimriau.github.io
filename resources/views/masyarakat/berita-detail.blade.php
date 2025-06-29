@@ -12,5 +12,5 @@
 @section('content')
     @include('components.before-login.media.berita-detail-header')
     @include('components.before-login.media.berita-detail-content')
-    @include('components.before-login.media.berita-related')
+    @include('components.before-login.media.berita-detail-related')
 @endsection

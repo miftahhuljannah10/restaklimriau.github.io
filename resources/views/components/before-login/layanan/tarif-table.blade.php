@@ -12,7 +12,7 @@
 
         <!-- Page Title -->
         <div class="text-center mb-8 md:mb-12">
-            <h1 class="text-black text-2xl md:text-3xl font-semibold font-montserrat mb-4">
+            <h1 class="text-black text-2xl md:text-3xl font-bold font-montserrat mb-4">
                 Tarif Pelayanan dan Jasa MKKuG dan Standar Pelayanan Minimum
             </h1>
             <p class="text-gray-600 text-base md:text-lg">

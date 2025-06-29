@@ -9,8 +9,6 @@ module.exports = {
         extend: {
             fontFamily: {
                 'montserrat': ['Montserrat', 'sans-serif'],
-                'nunito': ['Nunito', 'sans-serif'],
-                'inter': ['Inter', 'sans-serif'],
             },
             colors: {
                 primary: {

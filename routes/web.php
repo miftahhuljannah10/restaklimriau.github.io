@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('masyarakat.index');
 });
-Route::get('/artikel', function () {    
+Route::get('/artikel', function () {
     return view('masyarakat.artikel');
 });
 Route::get('/artikel-detail', function () {
@@ -69,6 +69,18 @@ Route::get('/tarif-pnbp', function () {
 });
 Route::get('/cek-ketersediaan-data', function () {
     return view('masyarakat.cek-ketersediaan-data');
+});
+Route::get('/perubahan-iklim', function () {
+    return view('masyarakat.perubahan-iklim');
+});
+Route::get('/informasi-iklim', function () {
+    return view('masyarakat.informasi-iklim');
+});
+Route::get('/kualitas-udara', function () {
+    return view('masyarakat.kualitas-udara');
+});
+Route::get('/cuaca', function () {
+    return view('masyarakat.cuaca');
 });
 
 // layanan publik

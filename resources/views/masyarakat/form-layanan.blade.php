@@ -15,47 +15,6 @@
 @endsection
 
 @push('scripts')
-<script>
-// Tampilkan konten Umum secara default
-window.addEventListener('DOMContentLoaded', function() {
-    showServiceContent('umum');
-    document.getElementById('umum-card').classList.add('border-sky-500');
-});
-
-function showServiceContent(type) {
-    // Sembunyikan semua konten
-    document.getElementById('umum-content').classList.add('hidden');
-    document.getElementById('instansi-content').classList.add('hidden');
-    document.getElementById('mahasiswa-content').classList.add('hidden');
-    document.getElementById('form-embed').classList.add('hidden');
-    // Reset border
-    document.getElementById('umum-card').classList.remove('border-sky-500');
-    document.getElementById('instansi-card').classList.remove('border-sky-500');
-    document.getElementById('mahasiswa-card').classList.remove('border-sky-500');
-    // Tampilkan konten sesuai pilihan
-    if(type === 'umum') {
-        document.getElementById('umum-content').classList.remove('hidden');
-        document.getElementById('form-embed').classList.remove('hidden');
-        document.getElementById('umum-card').classList.add('border-sky-500');
-    } else if(type === 'instansi') {
-        document.getElementById('instansi-content').classList.remove('hidden');
-        document.getElementById('form-embed').classList.remove('hidden');
-        document.getElementById('instansi-card').classList.add('border-sky-500');
-    } else if(type === 'mahasiswa') {
-        document.getElementById('mahasiswa-content').classList.remove('hidden');
-        document.getElementById('form-embed').classList.remove('hidden');
-        document.getElementById('mahasiswa-card').classList.add('border-sky-500');
-    }
-}
-// Event listener untuk kartu layanan
-['umum','instansi','mahasiswa'].forEach(function(type) {
-    var card = document.getElementById(type+'-card');
-    if(card) {
-        card.addEventListener('click', function() {
-            showServiceContent(type);
-        });
-    }
-});
-</script>
+{{-- Script dipindahkan ke resources/js/app.js agar lebih maintainable dan terpusat --}}
 @endpush
 

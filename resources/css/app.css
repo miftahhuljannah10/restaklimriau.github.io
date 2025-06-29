@@ -1,3 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-outfit: Outfit, Montserrat;
+}
+
+@layer utilities {
+  .menu-item {
+    @apply relative flex items-center gap-3 px-3 py-2 font-medium rounded-lg text-sm;
+  }
+  .menu-item-active {
+    @apply bg-brand-50 text-brand-500 dark:bg-brand-500/10 dark:text-brand-400;
+  }
+  .menu-item-inactive {
+    @apply text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300;
+  }
+  .menu-item-icon-active {
+    @apply fill-brand-500 dark:fill-brand-400;
+  }
+  .menu-item-icon-inactive {
+    @apply fill-gray-500 group-hover:fill-gray-700 dark:fill-gray-400 dark:group-hover:fill-gray-300;
+  }
+  .menu-item-arrow {
+    @apply absolute top-1/2 right-2.5 -translate-y-1/2;
+  }
+  .menu-item-arrow-active {
+    @apply rotate-180 stroke-brand-500 dark:stroke-brand-400;
+  }
+  .menu-item-arrow-inactive {
+    @apply stroke-gray-500 group-hover:stroke-gray-700 dark:stroke-gray-400 dark:group-hover:stroke-gray-300;
+  }
+  .menu-dropdown-item {
+    @apply text-sm relative flex items-center gap-3 rounded-lg px-3 py-2.5 font-medium;
+  }
+  .menu-dropdown-item-active {
+    @apply bg-brand-50 text-brand-500 dark:bg-brand-500/10 dark:text-brand-400;
+  }
+  .menu-dropdown-item-inactive {
+    @apply text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5;
+  }
+  .menu-dropdown-badge {
+    @apply text-brand-500 dark:text-brand-400 block rounded-full px-2.5 py-0.5 text-xs font-medium uppercase;
+  }
+  .menu-dropdown-badge-active {
+    @apply bg-brand-100 dark:bg-brand-500/20;
+  }
+  .menu-dropdown-badge-inactive {
+    @apply bg-brand-50 group-hover:bg-brand-100 dark:bg-brand-500/15 dark:group-hover:bg-brand-500/20;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 8px;
+  }
+}
+
+body {
+  font-family: var(--font-outfit), Montserrat;
+}
+
+/* Tambahkan custom style lain di bawah sini jika perlu, gunakan class Tailwind jika memungkinkan */
+
+
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
@@ -1245,59 +1326,46 @@ body {
   }
 }
 
-@keyframes cloud-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-18px); }
-}
-.animate-cloud-float { animation: cloud-float 7s ease-in-out infinite; }
-@keyframes sun-pulse {
-  0%, 100% { filter: drop-shadow(0 0 0 #fde047); }
-  50% { filter: drop-shadow(0 0 24px #fde047); }
-}
-.animate-sun-pulse { animation: sun-pulse 3s ease-in-out infinite; }
-@keyframes sun-rays {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
-.animate-sun-rays { animation: sun-rays 2.5s ease-in-out infinite; }
-@keyframes sun-move {
-  0% { transform: translateY(0) scale(1); }
-  30% { transform: translateY(-10px) scale(1.04); }
-  60% { transform: translateY(6px) scale(0.98); }
-  100% { transform: translateY(0) scale(1); }
-}
-.animate-sun-move { animation: sun-move 7s ease-in-out infinite, sun-pulse 3s ease-in-out infinite; }
-@keyframes rain {
-  0% { opacity: 0.7; transform: translateY(0); }
-  80% { opacity: 1; }
-  100% { opacity: 0.1; transform: translateY(18px); }
-}
-.animate-rain line {
-  animation: rain 1.6s linear infinite;
-}
-.animate-rain line:nth-child(2) { animation-delay: 0.4s; }
-.animate-rain line:nth-child(3) { animation-delay: 0.8s; }
-.animate-rain line:nth-child(4) { animation-delay: 1.2s; }
-@keyframes slide-up {
-  0% { opacity: 0; transform: translateY(40px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-@keyframes fade-in {
+@keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
-@keyframes slide-in-right {
-  0% { opacity: 0; transform: translateX(40px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-.animate-slide-up { animation: slide-up 0.8s cubic-bezier(0.4,0,0.2,1) both; }
-.animate-fade-in { animation: fade-in 1.2s cubic-bezier(0.4,0,0.2,1) both; }
-.animate-slide-in-right { animation: slide-in-right 1s cubic-bezier(0.4,0,0.2,1) both; }
-.animate-float { animation: float 3s ease-in-out infinite; }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
+}
+@keyframes slideUp {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes slideInLeft {
+  0% { transform: translateX(-40px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInRight {
+  0% { transform: translateX(40px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+.animate-fade-in { animation: fadeIn 0.8s ease-out; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-slide-up { animation: slideUp 0.8s ease-out; }
+.animate-slide-in-left { animation: slideInLeft 0.8s ease-out; }
+.animate-slide-in-right { animation: slideInRight 0.8s ease-out; }
+
+/* Slide Down Animation */
+.slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ========================================
@@ -1506,6 +1574,7 @@ body {
 .read-more-link:focus {
   outline: 2px solid #1d4ed8;
   outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* Print styles for informasi section */

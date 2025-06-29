@@ -10,7 +10,7 @@
                 </button>
 
             <div class="text-center">
-                <h1 class="text-black text-2xl md:text-3xl font-semibold font-montserrat">
+                <h1 class="text-black text-2xl md:text-3xl font-bold font-montserrat">
                     Form Layanan
                 </h1>
                 <p class="text-black/90 text-base md:text-lg mt-2">

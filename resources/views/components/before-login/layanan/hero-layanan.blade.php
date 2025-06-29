@@ -40,13 +40,6 @@
                         Cek Ketersediaan Data
                     </span>
                 </button>
-
-                <!-- Layanan MKG Button -->
-                <button class="w-full h-12 rounded-[12px] border-2 border-white bg-transparent hover:bg-white hover:text-sky-600 transition-all duration-300 group shadow-lg hover:shadow-xl backdrop-blur-sm">
-                    <span class="text-white group-hover:text-sky-600 text-xs sm:text-sm font-medium font-montserrat group-hover:scale-105 transition-all duration-300 px-2">
-                        Layanan MKG
-                    </span>
-                </button>
             </div>
         </div>
     </div>
@@ -79,13 +72,6 @@
                 <button class="min-w-[220px] lg:min-w-[240px] xl:w-64 h-16 lg:h-18 rounded-[16px] border-2 border-white bg-transparent hover:bg-white hover:text-sky-600 transition-all duration-300 group shadow-lg hover:shadow-xl backdrop-blur-sm" onclick ="window.location.href='/cek-ketersediaan-data'" >
                     <span class="text-white group-hover:text-sky-600 text-base lg:text-lg font-medium font-montserrat group-hover:scale-105 transition-all duration-300 px-2">
                         Cek Ketersediaan Data
-                    </span>
-                </button>
-
-                <!-- Layanan MKG Button -->
-                <button class="min-w-[220px] lg:min-w-[240px] xl:w-64 h-16 lg:h-18 rounded-[16px] border-2 border-white bg-transparent hover:bg-white hover:text-sky-600 transition-all duration-300 group shadow-lg hover:shadow-xl backdrop-blur-sm">
-                    <span class="text-white group-hover:text-sky-600 text-base lg:text-lg font-medium font-montserrat group-hover:scale-105 transition-all duration-300 px-2">
-                        Layanan MKG
                     </span>
                 </button>
             </div>
