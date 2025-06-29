@@ -173,7 +173,11 @@ class MetadataAlatController extends Controller
         $header = str_getcsv(array_shift($lines), ';');
 
         // Hapus semua data lama
-        Alat::truncate();
+
+        Alat::query()->delete();
+
+        // DB::table('alat_curah_hujan')->delete();
+        // Alat::truncate();
 
         foreach ($lines as $line) {
             $row = str_getcsv($line, ';');

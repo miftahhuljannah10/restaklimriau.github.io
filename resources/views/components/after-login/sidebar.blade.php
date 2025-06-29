@@ -1,6 +1,6 @@
 <div class="w-64 bg-white shadow-md hidden lg:block">
     <div class="p-4 border-b">
-        <img src="/image/logo-staklim.png" alt="Logo" class="h-12 mx-auto" />
+        <img src="/images/logo-staklim.png" alt="Logo" class="h-12 mx-auto" />
     </div>
 
     <nav class="p-4 text-sm">
@@ -27,6 +27,7 @@
             <li class="text-xs text-gray-400 uppercase mt-4 px-2">Instrumentasi</li>
             <x-after-login.sidebar.item-icon icon="thermometer" name="Metadata Alat" :route="route('metadata-alat.index')" />
             <x-after-login.sidebar.item-icon icon="map" name="Wilayah Administrasi" :route="route('kecamatan.index')" />
+            <x-after-login.sidebar.item-icon icon="cloud-rain" name="Alat Curah Hujan" :route="route('admin.alat-curah-hujan.index')" />
 
             <li class="text-xs text-gray-400 uppercase mt-4 px-2">Layanan Publik</li>
             {{-- <x-after-login.sidebar.item-icon icon="globe" name="Umum" route="#" />
@@ -45,6 +46,14 @@
                 :active="request()->routeIs('admin.feedback.questions.*')" />
             <x-after-login.sidebar.item-icon icon="message-circle" name="Respon" :route="route('admin.feedback.responses.index')"
                 :active="request()->routeIs('admin.feedback.responses.*')" />
+            <li class="text-xs text-gray-400 uppercase mt-4 px-2">Tata Usaha</li>
+            <x-after-login.sidebar.item-icon icon="user" name="Data Kepegawaian" :route="route(name: 'pegawai.index')" />
+            <x-after-login.sidebar.item-icon icon="calendar" name="Rapat" route="#" />
+            <x-after-login.sidebar.item-icon icon="book-open" name="Buku Tamu" route="#" />
+            <x-after-login.sidebar.item-icon icon="inbox" name="Surat Masuk" :route="route('admin.tata-usaha.surat-masuk.index')" :active="request()->routeIs('admin.tata-usaha.surat-masuk.*')" />
+            <x-after-login.sidebar.item-icon icon="send" name="Surat Keluar" :route="route('admin.tata-usaha.surat-keluar.index')" :active="request()->routeIs('admin.tata-usaha.surat-keluar.*')" />
+            <x-after-login.sidebar.item-icon icon="file-text" name="Klasifikasi Surat" :route="route('admin.tata-usaha.klasifikasi-surat.index')"
+                :active="request()->routeIs('admin.tata-usaha.klasifikasi-surat.*')" />
 
 
             {{-- <li class="text-xs text-gray-400 uppercase mt-4 px-2">Media</li>
@@ -63,8 +72,10 @@
                 :active="request()->routeIs('admin.kategori-berita-artikel.*')" />
             <x-after-login.sidebar.item-icon icon="newspaper" name="Berita" :route="route('admin.media.berita.index', 'berita')" :active="request()->routeIs('admin.media.berita.*') && request()->segment(3) == 'berita'" />
             <x-after-login.sidebar.item-icon icon="file-text" name="Artikel" :route="route('admin.media.berita.index', 'artikel')" :active="request()->routeIs('admin.media.berita.*') && request()->segment(3) == 'artikel'" />
-            <x-after-login.sidebar.item-icon icon="book" name="Buletin" route="#" />
+            <x-after-login.sidebar.item-icon icon="book" name="Buletin" :route="route('admin.media.buletin.index')" />
             <x-after-login.sidebar.item-icon icon="file-text" name="Profile Perusahaan" route="#" />
+
+
 
             {{-- profile --}}
             <li class="text-xs text-gray-400 uppercase mt-4 px-2">Profile</li>

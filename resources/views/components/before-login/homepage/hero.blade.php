@@ -1,3 +1,4 @@
+
 <!-- Hero Section Component - Model Alternatif Unik -->
 <section class="w-full h-[400px] sm:h-[450px] md:h-[488px] relative overflow-hidden bg-gradient-to-br from-sky-600 via-sky-400 to-cyan-500">
     <!-- Decorative SVG Top Left -->
@@ -40,6 +41,20 @@
                 Temukan info, layanan, dan publikasi terpercaya di satu tempat!
             </p>
         </div>
+<!-- Hero Section Component - HANYA HTML -->
+<section class="w-full h-[488px] relative overflow-hidden">
+    <!-- Background Image hero-bg.jpg -->
+    <img src="{{ asset('images/hero-bg.jpg') }}" alt="Hero Background"
+         class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.style.display='none';">
+
+  <!-- Main Hero Content -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full px-4">
+    <!-- Hero Title -->
+    <div class="w-full max-w-[900px] text-center mb-8">
+      <h1 class="text-white text-4xl font-bold font-['Montserrat'] leading-tight">
+        Cari informasi iklim terupdate langsung hanya di satu website
+      </h1>
+
     </div>
 </section>
 
