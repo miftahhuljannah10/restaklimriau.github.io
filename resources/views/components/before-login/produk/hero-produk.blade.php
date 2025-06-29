@@ -42,7 +42,7 @@
         </p>
         <!-- Optional Image -->
         @if(!empty($image))
-            <img src="{{ $image }}" alt="Hero Image" class="mx-auto mb-6 max-h-32 animate-float">
+            <img src="{{ $image }}" alt="Hero Image" class="mx-auto mb-6 max-h-32">
         @endif
         <!-- Search Bar -->
         @if(!empty($showSearch))
