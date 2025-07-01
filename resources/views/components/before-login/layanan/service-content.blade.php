@@ -61,6 +61,28 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Embed Google Form di dalam kotak layanan umum -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                        <iframe
+                            src="https://docs.google.com/forms/d/e/1FAIpQLSda8GyQeog0iaISmeIipH4Z7jzydAAWKtC42CcvF9zZdyUg9g/viewform?embedded=true"
+                            width="100%"
+                            height="800"
+                            frameborder="0"
+                            marginheight="0"
+                            marginwidth="0"
+                            class="w-full"
+                            loading="lazy"
+                        >
+                            Memuat form...
+                        </iframe>
+                    </div>
+                    <div class="mt-4 mb-4 text-center">
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Pastikan semua data yang diisi sudah benar sebelum mengirim form
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -104,6 +126,28 @@
                                 </p>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Embed Google Form di dalam kotak instansi -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                        <iframe
+                            src="https://docs.google.com/forms/d/e/1FAIpQLSda8GyQeog0iaISmeIipH4Z7jzydAAWKtC42CcvF9zZdyUg9g/viewform?embedded=true"
+                            width="100%"
+                            height="800"
+                            frameborder="0"
+                            marginheight="0"
+                            marginwidth="0"
+                            class="w-full"
+                            loading="lazy"
+                        >
+                            Memuat form...
+                        </iframe>
+                    </div>
+                    <div class="mt-4 mb-4 text-center">
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Pastikan semua data yang diisi sudah benar sebelum mengirim form
+                        </p>
                     </div>
                 </div>
             </div>
@@ -151,49 +195,33 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Embed Google Form di dalam kotak mahasiswa -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                        <iframe
+                            src="https://docs.google.com/forms/d/e/1FAIpQLSda8GyQeog0iaISmeIipH4Z7jzydAAWKtC42CcvF9zZdyUg9g/viewform?embedded=true"
+                            width="100%"
+                            height="800"
+                            frameborder="0"
+                            marginheight="0"
+                            marginwidth="0"
+                            class="w-full"
+                            loading="lazy"
+                        >
+                            Memuat form...
+                        </iframe>
+                    </div>
+                    <div class="mt-4 mb-4 text-center">
+                        <p class="text-gray-500 text-sm">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Pastikan semua data yang diisi sudah benar sebelum mengirim form
+                        </p>
+                    </div>
                 </div>
             </div>
 
-        </div>
-
-<!-- JotForm Embed Section -->
-<div id="form-embed" class="hidden w-full mt-2 md:mt-6">
-    <div class="w-full max-w-[1440px] mx-auto">
-        <!-- Form Title -->
-        <div class="text-center mb-6">
-            <h3 class="text-gray-800 text-2xl font-bold font-montserrat mb-2">
-                Form Permohonan Data
-            </h3>
-            <p class="text-gray-600 text-base">
-                Silakan isi form di bawah ini dengan lengkap dan benar
-            </p>
-        </div>
-
-        <!-- Embedded JotForm -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <iframe
-                src="https://form.jotform.com/251542752034451"
-                width="100%"
-                height="800"
-                frameborder="0"
-                marginheight="0"
-                marginwidth="0"
-                class="w-full"
-                loading="lazy"
-            >
-                Memuat form...
-            </iframe>
-    </div>
-
-        <!-- Form Footer Info -->
-        <div class="mt-4 mb-4 text-center">
-            <p class="text-gray-500 text-sm">
-                <i class="fas fa-info-circle mr-1"></i>
-                Pastikan semua data yang diisi sudah benar sebelum mengirim form
-            </p>
-        </div>
-    </div>
-</div>
-
     </div>
 </section>
+
+<!-- Section dummy untuk menghindari error JS jika section-tentang tidak ada -->
+<section id="section-tentang" class="hidden"></section>
