@@ -25,7 +25,7 @@
             <div class="flex items-center gap-2.5">
                 <!-- BMKG Logo -->
                 <img
-                    src="assets/images/bmkg-logo.png"
+                    src="{{ asset('assets/images/bmkg-logo-main.png') }}"
                     alt="Logo BMKG"
                     class="w-12 h-12 object-contain"
                     onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='block';"

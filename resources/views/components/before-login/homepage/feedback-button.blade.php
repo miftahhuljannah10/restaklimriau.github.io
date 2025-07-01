@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="flex items-center justify-between px-8 py-6 bg-gradient-to-r from-sky-500 to-cyan-500">
             <div class="flex items-center gap-3">
-                <img src="assets/images/bmkg-logo.png" alt="BMKG Logo" class="w-12 h-12 rounded-full bg-white/80 shadow">
+                <img src="assets/images/bmkg-logo-2.png" alt="BMKG Logo" class="w-18 h-12 rounded-full">
                 <div>
                     <div class="font-bold text-white text-lg leading-tight">Feedback BMKG Riau</div>
                     <div class="text-xs text-cyan-100">Bantu kami jadi lebih baik!</div>

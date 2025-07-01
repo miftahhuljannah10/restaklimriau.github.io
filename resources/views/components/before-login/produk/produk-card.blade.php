@@ -1,5 +1,5 @@
 <!-- Produk Card Component Dinamis -->
-<div class="group cursor-pointer rounded-xl shadow-md hover:shadow-lg transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-gray-200 relative bg-white font-montserrat h-full flex flex-col">
+<a href="{{ url('/produk/detail-produk') }}" class="group cursor-pointer rounded-xl shadow-md hover:shadow-lg transition-all duration-500 overflow-hidden transform hover:-translate-y-2 border border-gray-200 relative bg-white font-montserrat h-full flex flex-col no-underline">
     <div class="h-48 flex items-center justify-center relative overflow-hidden">
         <img src="{{ $image }}" alt="Iklim Terapan" class="w-86 h-86 object-contain transform group-hover:scale-105 transition-all duration-500 relative z-10">
     </div>
@@ -16,4 +16,4 @@
             </div>
         </div>
     </div>
-</div>
+</a>

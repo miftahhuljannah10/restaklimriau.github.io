@@ -8,7 +8,7 @@
         <!-- Logo -->
         <div class="mb-6 footer-logo">
           <img
-            src="assets/images/bmkg-logo (2).png"
+            src="{{ asset('assets/images/bmkg-logo-2.png') }}"
             alt="Logo BMKG"
             class="w-52 h-32 object-contain"
             onerror="this.style.display='none'; document.getElementById('fallback-logo-footer').style.display='block';"

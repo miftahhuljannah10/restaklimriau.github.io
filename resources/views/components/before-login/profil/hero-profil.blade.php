@@ -12,7 +12,7 @@
     <div class="relative z-10 max-w-[1440px] mx-auto px-4 lg:px-10 h-full flex items-center justify-center text-center text-white py-20">
         <div class="animate-fade-in">
             <div class="mb-8">
-                <img src="assets/images/bmkg-logo.png" alt="BMKG Logo" class="w-24 h-24 mx-auto mb-6 animate-float">
+                <img src="{{ asset('assets/images/bmkg-logo-2.png') }}" alt="BMKG Logo" class="w-32 h-20 mx-auto mb-6 animate-float">
             </div>
             <h1 class="text-5xl lg:text-7xl font-bold font-montserrat mb-6 drop-shadow-lg">
                 Stasiun Klimatologi Riau
