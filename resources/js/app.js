@@ -1288,4 +1288,27 @@ window.closeFeedbackModal = closeFeedbackModal
 // Make service click handler globally available
 window.handleServiceClick = handleServiceClick
 
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('mapid') && window.alatMarkers && window.imgBaseUrl) {
+        var map = L.map('mapid').setView([-0.7893, 101.2644], 7);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+        window.alatMarkers.forEach(function(alat) {
+            var icon = L.icon({
+                iconUrl: window.imgBaseUrl + alat.icon,
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40]
+            });
+            L.marker([alat.lat, alat.lng], {icon: icon}).addTo(map)
+                .bindPopup('<b>' + alat.label + '</b>');
+        });
+    }
+});
+
 console.log("📦 BMKG Scripts loaded successfully!")

@@ -2113,3 +2113,13 @@ body {
   80% { opacity: 1;}
   100% { opacity: 0; transform: translateY(16px);}
 }
+
+/* Custom style for Leaflet map dan popup */
+#mapid {
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+}
