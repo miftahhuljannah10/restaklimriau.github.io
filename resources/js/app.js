@@ -1311,4 +1311,61 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// ========================================
+// SLIDER UNTUK PROFIL (Fungsional, PPNPN, Alumni)
+// ========================================
+document.addEventListener('DOMContentLoaded', function() {
+    function setupSlider(trackId, prevId, nextId) {
+        const track = document.getElementById(trackId);
+        const prevBtn = document.getElementById(prevId);
+        const nextBtn = document.getElementById(nextId);
+        if (!track || !prevBtn || !nextBtn) return;
+        let position = 0;
+        function getCardWidth() {
+            const card = track.children[0];
+            return card ? card.offsetWidth : 0;
+        }
+        function getGap() {
+            const style = window.getComputedStyle(track);
+            return parseInt(style.gap) || 0;
+        }
+        function getMaxScroll() {
+            const visibleWidth = track.parentElement.offsetWidth;
+            const cardWidth = getCardWidth();
+            const gap = getGap();
+            const totalCards = track.children.length;
+            if (totalCards === 0) return 0;
+            const totalWidth = totalCards * cardWidth + (totalCards - 1) * gap;
+            if (totalWidth <= visibleWidth) return 0;
+            return totalWidth - visibleWidth;
+        }
+        function updatePosition(newPos) {
+            const maxScroll = getMaxScroll();
+            if (newPos > 0) newPos = 0;
+            if (Math.abs(newPos) > maxScroll) newPos = -maxScroll;
+            position = newPos;
+            track.style.transform = `translateX(${position}px)`;
+        }
+        nextBtn.addEventListener('click', function() {
+            const cardWidth = getCardWidth();
+            const gap = getGap();
+            updatePosition(position - (cardWidth + gap));
+        });
+        prevBtn.addEventListener('click', function() {
+            const cardWidth = getCardWidth();
+            const gap = getGap();
+            updatePosition(position + (cardWidth + gap));
+        });
+        window.addEventListener('resize', function() {
+            updatePosition(position);
+        });
+        updatePosition(0);
+    }
+    setupSlider('fungsional-track', 'fungsional-prev', 'fungsional-next');
+    setupSlider('ppnpn-track', 'ppnpn-prev', 'ppnpn-next');
+    setupSlider('alumni-track', 'alumni-prev', 'alumni-next');
+});
+
 console.log("📦 BMKG Scripts loaded successfully!")
+
+

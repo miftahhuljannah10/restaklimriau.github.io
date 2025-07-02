@@ -1,4 +1,20 @@
-<!-- Cek Ketersediaan Data - Modern Map Component (Responsif) -->
+{{--
+Contoh pemanggilan dinamis dari view utama:
+@include('components.before-login.layanan.cek-ketersediaan-map', [
+    'title' => 'Cek Ketersediaan Data',
+    'jenisAlatLabel' => 'JENIS ALAT',
+    'jenisAlat' => [
+        [ 'label' => 'PHK', 'icon' => 'phk.png' ],
+        // ...
+    ],
+    'imgBaseUrl' => asset('assets/images/alat/'),
+    'titikAlat' => [
+        [ 'nama' => 'SMPK Bangkinang', 'jenis' => 'PHK', 'nomor_pos' => '14010101A', 'lat' => 0.333277778, 'lng' => 101.0332778 ],
+        // ...
+    ]
+])
+--}}
+<!-- Cek Ketersediaan Data - Modern Map Component Dinamis (Responsif) -->
 <div class="w-full max-w-12xl mx-auto mt-8">
     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
         <div class="p-0 md:p-4">
@@ -8,7 +24,7 @@
         </div>
         <div class="bg-gray-50 border-t border-gray-100 px-2 sm:px-4 py-6">
             <div class="card-footer">
-                <h4 class="text-lg md:text-xl font-bold text-sky-700 mb-2 tracking-wide text-center"><strong>JENIS ALAT</strong></h4>
+                <h4 class="text-lg md:text-xl font-bold text-sky-700 mb-2 tracking-wide text-center"><strong>{{ $jenisAlatLabel ?? 'JENIS ALAT' }}</strong></h4>
                 <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 mt-4">
                     @foreach($jenisAlat as $alat)
                         <div class="flex flex-col items-center min-w-[80px] max-w-[120px]">
@@ -21,14 +37,13 @@
         </div>
     </div>
 </div>
-
 <!-- Tambahkan Leaflet CSS & JS jika belum ada -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 <!-- Data alat untuk JS map -->
 <script>
 window.imgBaseUrl = "{{ $imgBaseUrl }}";
+window.titikAlat = @json($titikAlat ?? []);
 // Daftar koordinat, jenis alat, dan nomor pos manual (data sesuai yang Anda kirim)
 var titikAlat = [
   {nama:'SMPK Bangkinang', jenis:'PHK', nomor_pos:'14010101A', lat:0.333277778, lng:101.0332778},
