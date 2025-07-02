@@ -1,13 +1,6 @@
 <!-- Hero Layanan Section Component -->
 <!-- Hero Layanan Section mirip Hero Profil -->
 <section class="w-full h-[400px] sm:h-[450px] md:h-[488px] relative overflow-hidden bg-gradient-to-br from-bmkg-blue via-bmkg-light-blue to-bmkg-cyan">
-    <!-- Animated Background Elements -->
-    <div class="absolute inset-0">
-        <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full animate-float"></div>
-        <div class="absolute top-40 right-20 w-24 h-24 bg-white/10 rounded-full animate-float" style="animation-delay: 1s;"></div>
-        <div class="absolute bottom-20 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-float" style="animation-delay: 2s;"></div>
-        <div class="absolute bottom-40 right-1/3 w-20 h-20 bg-white/10 rounded-full animate-float" style="animation-delay: 0.5s;"></div>
-    </div>
     <!-- Mobile Layout (Gambar di atas, teks di tengah) - Hanya tampil di layar kecil -->
     <div class="flex flex-col items-center md:hidden h-full">
         <!-- Background Image for Mobile -->

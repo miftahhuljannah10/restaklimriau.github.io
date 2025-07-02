@@ -1,31 +1,22 @@
-<!-- Cek Ketersediaan Data - Modern Map Component -->
+<!-- Cek Ketersediaan Data - Modern Map Component (Responsif) -->
 <div class="w-full max-w-12xl mx-auto mt-8">
     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
         <div class="p-0 md:p-4">
-            <div class="w-full h-[350px] md:h-[500px] rounded-xl overflow-hidden relative">
+            <div class="w-full h-[260px] sm:h-[350px] md:h-[500px] rounded-xl overflow-hidden relative">
                 <div id="mapid" class="w-full h-full"></div>
             </div>
         </div>
-        <div class="bg-gray-50 border-t border-gray-100 px-4 py-6">
+        <div class="bg-gray-50 border-t border-gray-100 px-2 sm:px-4 py-6">
             <div class="card-footer">
-                <center>
-                    <h4 class="text-lg md:text-xl font-bold text-sky-700 mb-2 tracking-wide"><strong>JENIS ALAT</strong></h4>
-                    <br>
-                    <table style="margin: 0 auto; border-collapse: separate; border-spacing: 60px 0;">
-                        <thead>
-                            <tr style="vertical-align: bottom;">
-                                @foreach($jenisAlat as $alat)
-                                    <th style="padding-left: 15px; font-size: 1.15em; text-align: center; font-weight: bold;">
-                                        <div style="display: flex; flex-direction: column; align-items: center;">
-                                            <span>{{ $alat['label'] }}</span>
-                                            <img src="{{ $imgBaseUrl . $alat['icon'] }}" style="height:90px;width:90px;object-fit:contain;display:block;margin-top:12px;" alt="{{ $alat['label'] }}">
-                                        </div>
-                                    </th>
-                                @endforeach
-                            </tr>
-                        </thead>
-                    </table>
-                </center>
+                <h4 class="text-lg md:text-xl font-bold text-sky-700 mb-2 tracking-wide text-center"><strong>JENIS ALAT</strong></h4>
+                <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 mt-4">
+                    @foreach($jenisAlat as $alat)
+                        <div class="flex flex-col items-center min-w-[80px] max-w-[120px]">
+                            <span class="text-base md:text-lg font-semibold text-center">{{ $alat['label'] }}</span>
+                            <img src="{{ $imgBaseUrl . $alat['icon'] }}" class="h-14 w-14 md:h-20 md:w-20 object-contain mt-3" alt="{{ $alat['label'] }}">
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -255,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
             popupAnchor: [0, -40]
         });
         var popupHtml = '<div style="min-width:180px;max-width:220px;">' +
-            '<div style="font-size:1.5em;color:#1976d2;font-weight:500;">' + alat.nama + '</div>' +
+            '<a href="/masyarakat/detail-alat/' + alat.nomor_pos + '" style="font-size:1.5em;color:#1976d2;font-weight:500;text-decoration:underline;cursor:pointer;">' + alat.nama + '</a>' +
             '<hr style="margin:8px 0 12px 0;">' +
             '<div style="font-size:1em;margin-bottom:8px;">ID Pos : ' + alat.nomor_pos + '</div>' +
             '<div style="font-size:1em;">Koordinat : ' + alat.lat.toFixed(2) + ', ' + alat.lng.toFixed(4) + '</div>' +

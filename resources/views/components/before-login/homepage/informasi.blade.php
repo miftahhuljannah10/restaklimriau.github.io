@@ -3,7 +3,7 @@
   <div class="max-w-[1441px] mx-auto px-4 sm:px-6 md:px-8 lg:px-[120px]">
     <!-- Section Title -->
     <div class="mb-8 md:mb-8">
-      <h2 class="text-black text-2xl sm:text-3xl font-bold font-montserrat">
+      <h2 class="gradient-text text-2xl sm:text-3xl font-bold font-montserrat">
         Informasi Hari Ini
       </h2>
     </div>

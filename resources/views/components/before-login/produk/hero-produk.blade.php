@@ -1,7 +1,7 @@
 <!-- Hero Artikel Section Component -->
 <section class="w-full h-[340px] sm:h-[380px] md:h-[420px] relative overflow-hidden bg-gradient-to-br from-bmkg-blue via-bmkg-light-blue to-bmkg-cyan">
     <!-- Matahari animasi di kiri atas, bergerak pelan -->
-    <svg class="absolute left-6 top-6 w-32 h-32 z-0 animate-sun-move" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="absolute left-2 top-2 sm:left-6 sm:top-6 w-20 h-20 sm:w-32 sm:h-32 z-0 animate-sun-move pointer-events-none" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="60" cy="60" r="28" fill="#FDE047" />
         <g stroke="#FDE047" stroke-width="6" stroke-linecap="round" class="animate-sun-rays">
             <line x1="60" y1="10" x2="60" y2="0" />
@@ -15,7 +15,7 @@
         </g>
     </svg>
     <!-- Awan hujan animasi di kanan atas -->
-    <svg class="absolute right-6 top-10 w-44 h-24 opacity-90 animate-cloud-float" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="absolute right-2 top-6 sm:right-6 sm:top-10 w-32 h-16 sm:w-44 sm:h-24 opacity-90 animate-cloud-float pointer-events-none" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- Cloud -->
         <ellipse cx="50" cy="40" rx="50" ry="20" fill="#e0f2fe" />
         <ellipse cx="120" cy="40" rx="40" ry="18" fill="#bae6fd" />
@@ -31,7 +31,7 @@
         </g>
     </svg>
     <!-- Hero Content -->
-    <div class="relative z-10 flex flex-col items-center justify-center h-full px-4">
+    <div class="relative z-10 flex flex-col items-center justify-center h-full px-4 pt-20 sm:pt-0">
         <!-- Hero Title -->
         <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-bold font-montserrat mb-4 md:mb-6 text-center drop-shadow-lg animate-slide-up text-white">
             {{ $title ?? 'Judul Produk' }}

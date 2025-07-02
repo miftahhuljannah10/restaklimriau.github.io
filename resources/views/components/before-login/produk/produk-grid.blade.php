@@ -4,7 +4,7 @@
     <!-- Enhanced Title Section -->
     <div class="text-center mb-10">
       <div class="relative inline-block">
-        <h1 class="text-3xl lg:text-3xl font-bold text-black mb-4 relative">
+        <h1 class="text-3xl lg:text-3xl font-bold gradient-text mb-4 relative">
           Jenis Produk
         </h1>
       </div>

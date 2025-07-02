@@ -1,7 +1,7 @@
 <!-- Kontak Content Section -->
 <section class="py-8 bg-gradient-to-br from-blue-50 to-white">
   <div class="max-w-[1440px] mx-auto px-4 lg:px-10">
-    <h2 class="text-center text-3xl font-bold text-slate-800 mb-10">Hubungi Kami</h2>
+    <h2 class="text-center text-3xl font-bold gradient-text mb-10">Hubungi Kami</h2>
 
     <!-- Contact Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

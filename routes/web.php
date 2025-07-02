@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\KlasifikasiSuratController;
 use App\Http\Controllers\Admin\SuratMasukController;
 use App\Http\Controllers\Admin\SuratKeluarController;
+use App\Http\Controllers\AlatController;
 
 
 Route::get('/', function () {
@@ -274,4 +275,13 @@ Route::get('/produk/detail-produk', function () {
         'topik' => 'Agroklimat',
         'sumber' => 'BMKG',
     ]);
+});
+Route::get('/masyarakat/detail-alat/{nomor_pos}', function ($nomor_pos) {
+    // Ambil data alat dari database atau sumber lain secara dinamis
+    // Contoh:
+    // $alat = Alat::where('id_pos', $nomor_pos)->firstOrFail();
+    // return view('masyarakat.detail-alat', compact('alat'));
+
+    // Sementara, tampilkan halaman kosong atau pesan jika belum ada implementasi
+    return view('masyarakat.detail-alat');
 });

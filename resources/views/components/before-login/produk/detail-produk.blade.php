@@ -12,8 +12,11 @@
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Grafik/Visualisasi -->
             <div class="lg:w-2/3 w-full">
-                <div class="rounded-lg shadow overflow-hidden bg-gray-50">
-                    <iframe frameborder="0" marginheight="0" marginwidth="0" title="Data Visualization" allowtransparency="true" allowfullscreen="true" class="w-full h-[400px] md:h-[600px]" src="{{ $iframe }}"></iframe>
+                <div class="rounded-lg shadow overflow-hidden bg-gray-50 relative">
+                    <div id="iframe-loader" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
+                        <svg class="animate-spin h-8 w-8 text-sky-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
+                    </div>
+                    <iframe frameborder="0" marginheight="0" marginwidth="0" title="Data Visualization" allowtransparency="true" allowfullscreen="true" class="w-full h-[400px] md:h-[600px]" src="{{ $iframe }}" onload="document.getElementById('iframe-loader').style.display='none';"></iframe>
                 </div>
             </div>
             <!-- Deskripsi dan Info Samping -->

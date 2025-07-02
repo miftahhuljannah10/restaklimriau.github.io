@@ -10,8 +10,15 @@
 @endsection
 
 @section('content')
-    <main class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 py-12">
+    <main class="min-h-screen bg-white py-10">
         <div class="max-w-6xl mx-auto px-4 lg:px-8">
+            <!-- Back Button -->
+            <div class="mb-6 flex justify-start">
+                <button onclick="history.back()" class="inline-flex items-center gap-2 text-sky-500 hover:text-sky-600 transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="font-medium font-montserrat">Kembali</span>
+                </button>
+            </div>
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                 @include('components.before-login.profil.profil-detail-content')
             </div>

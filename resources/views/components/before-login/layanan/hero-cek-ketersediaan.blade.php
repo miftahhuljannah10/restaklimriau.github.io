@@ -1,7 +1,7 @@
 <!-- Hero Section for Cek Ketersediaan Data Alat dengan animasi peta dan marker, warna dan elemen mirip hero produk -->
 <section class="w-full h-[340px] sm:h-[380px] md:h-[420px] relative overflow-hidden bg-gradient-to-br from-bmkg-blue via-bmkg-light-blue to-bmkg-cyan">
     <!-- Animasi peta dan marker kiri -->
-    <svg class="absolute left-8 top-8 w-44 h-44 z-0 animate-bounce-slow" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="absolute left-2 top-2 sm:left-8 sm:top-8 w-24 h-24 sm:w-44 sm:h-44 z-0 animate-bounce-slow pointer-events-none" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- Peta background -->
         <rect x="20" y="30" width="120" height="80" rx="18" fill="#bae6fd" stroke="#38bdf8" stroke-width="4"/>
         <!-- Sungai -->
@@ -27,7 +27,7 @@
         </g>
     </svg>
     <!-- Animasi kanan: alat iklim (ombrometer, thermometer, anemometer) -->
-    <svg class="absolute right-8 top-8 w-44 h-44 z-0" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="absolute right-2 top-2 sm:right-8 sm:top-8 w-24 h-24 sm:w-44 sm:h-44 z-0 pointer-events-none" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- Ombrometer (penakar hujan) -->
         <g class="animate-ombrometer">
             <ellipse cx="50" cy="120" rx="18" ry="8" fill="#bae6fd"/>
@@ -56,7 +56,7 @@
         </g>
     </svg>
     <!-- Hero Content -->
-    <div class="relative z-10 flex flex-col items-center justify-center h-full px-4">
+    <div class="relative z-10 flex flex-col items-center justify-center h-full px-4 pt-24 sm:pt-0">
         <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-bold font-montserrat mb-4 md:mb-6 text-center drop-shadow-lg animate-slide-up">
             {{ $title ?? 'Cek Ketersediaan Data Alat' }}
         </h1>

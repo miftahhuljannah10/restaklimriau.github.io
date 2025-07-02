@@ -1,6 +1,6 @@
 <!-- Service Content Component -->
-<section class="w-full py-4 bg-gray-50" id="service-content">
-    <div class="max-w-[1440px] mx-auto px-4 lg:px-8">
+<section class="w-full py-6 bg-gray-50" id="service-content">
+    <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
 
 
         <!-- Service Information Content -->
@@ -10,7 +10,7 @@
             <!-- Umum Content -->
             <div id="umum-content" class="hidden bg-white rounded-lg p-6 md:p-8 shadow-sm border border-gray-200">
                 <div class="text-justify space-y-4">
-                    <h2 class="text-gray-800 text-xl md:text-2xl font-bold font-montserrat mb-4">
+                    <h2 class="gradient-text text-xl md:text-2xl font-bold font-montserrat mb-4">
                         Layanan Umum
                     </h2>
 
@@ -89,7 +89,7 @@
             <!-- Instansi Content -->
             <div id="instansi-content" class="hidden bg-white rounded-lg p-6 md:p-8 shadow-sm border border-gray-200">
                 <div class="text-justify space-y-4">
-                    <h2 class="text-gray-800 text-xl md:text-2xl font-bold font-montserrat mb-4">
+                    <h2 class="gradient-text text-xl md:text-2xl font-bold font-montserrat mb-4">
                         Instansi Kerja Sama
                     </h2>
 
@@ -155,16 +155,16 @@
             <!-- Mahasiswa Content -->
             <div id="mahasiswa-content" class="hidden bg-white rounded-lg p-6 md:p-8 shadow-sm border border-gray-200">
                 <div class="text-justify space-y-4">
-                    <h2 class="text-gray-800 text-xl md:text-2xl font-bold font-montserrat mb-4">
+                    <h2 class="gradient-text text-xl md:text-2xl font-bold font-montserrat mb-4">
                         Layanan Mahasiswa
                     </h2>
 
-                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
                         <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
                             <div>
-                                <h4 class="font-semibold text-purple-800 mb-1">Tarif Rp. 0,00 (Gratis)</h4>
-                                <p class="text-purple-700 text-sm">
+                                <h4 class="font-semibold text-green-800 mb-1">Tarif Rp. 0,00 (Gratis)</h4>
+                                <p class="text-green-800 text-sm">
                                     Khusus untuk Pendidikan dan Penelitian Non-Komersial berdasarkan Peraturan BMKG No. 12 Tahun 2019 dan No. 20 Tahun 2014.
                                 </p>
                             </div>
