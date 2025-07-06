@@ -1,5 +1,5 @@
 <!-- Products Grid Section Dinamis -->
-<section class="w-full bg-gradient-to-br from-slate-50 via-blue-50/30 to-white py-10 mb-8 relative overflow-hidden">
+<section class="w-full bg-gradient-to-br from-slate-50 via-blue-50/30 py-10 mb-8 relative overflow-hidden">
   <div class="max-w-[1440px] mx-auto px-4 lg:px-10 relative z-10">
     <!-- Enhanced Title Section -->
     <div class="text-center mb-10">

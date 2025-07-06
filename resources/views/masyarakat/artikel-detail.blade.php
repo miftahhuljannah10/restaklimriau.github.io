@@ -3,7 +3,6 @@ $artikel = [
     'title' => 'Prakiraan Musim Kemarau 2023 Provinsi Riau: Analisis Awal, Sifat Hujan, dan Puncak Musim di 27 Zona Musim (ZOM)',
     'date' => '28 Mar 2023',
     'author' => 'MKKuG',
-    'category' => '',
     'meta_description' => 'Prakiraan Musim Kemarau 2023 Provinsi Riau',
     'image' => 'assets/images/kemarau.png',
     'image_caption' => 'Ilustrasi Musim Kemarau di Provinsi Riau',

@@ -42,4 +42,12 @@
         'alertDesc' => 'Beberapa wilayah masih berpotensi terjadi hujan dengan intensitas sedang hingga lebat yang dapat disertai kilat/petir dan angin kencang pada 1 Juni 2025 pukul 17.30 WIB. Diperkirakan masih dapat berlangsung hingga 11 Apr 2025 pukul 19.30 WIB.',
         'alertLink' => '',
     ])
+    @include('components.before-login.homepage.prakiraan-cuaca-section', [
+        'prakiraanCuacaRiau' => $prakiraanCuacaRiau
+    ])
+    @include('components.before-login.homepage.gempa-bumi-section', [
+        // Data akan diisi dari controller
+        'gempa' => $gempa ?? null
+    ])
+    @include('components.before-login.homepage.kualitas-udara-section')
 @endsection

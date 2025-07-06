@@ -1366,6 +1366,102 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSlider('alumni-track', 'alumni-prev', 'alumni-next');
 });
 
+// ========================================
+// SWIPERJS UNTUK PRAKIRAAN CUACA (HOMEPAGE)
+// ========================================
+import Swiper from 'swiper/bundle';
+import 'swiper/css/bundle';
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.querySelector('.swiper')) {
+        new Swiper('.swiper', {
+            slidesPerView: 2,
+            spaceBetween: 20,
+            loop: true,
+            speed: 700,
+            grabCursor: true,
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.cw-next-slide',
+                prevEl: '.cw-prev-slide',
+            },
+            watchOverflow: false,
+            breakpoints: {
+                640: { slidesPerView: 3 },
+                768: { slidesPerView: 4 },
+                1024: { slidesPerView: 6 },
+            },
+        });
+    }
+});
+
+// =============================
+// PRAKIRAAN CUACA CAROUSEL
+// =============================
+window.initPrakiraanCuacaCarousel = function(prakiraanCuacaRiau) {
+    function getShowCount() {
+        if (window.innerWidth >= 1024) return 5;
+        if (window.innerWidth >= 768) return 3;
+        return 1;
+    }
+    let showCount = getShowCount();
+    let cuacaIndex = 0;
+    const total = prakiraanCuacaRiau.length;
+    const carousel = document.getElementById('cuaca-carousel');
+    function updateCarousel() {
+        showCount = getShowCount();
+        const cardWidth = carousel.offsetWidth / showCount;
+        carousel.style.transform = `translateX(-${cuacaIndex * cardWidth}px)`;
+    }
+    function nextCuaca() {
+        showCount = getShowCount();
+        cuacaIndex = (cuacaIndex + 1) % total;
+        if (cuacaIndex > total - showCount) cuacaIndex = 0;
+        updateCarousel();
+        resetCuacaInterval();
+    }
+    function prevCuaca() {
+        showCount = getShowCount();
+        cuacaIndex = (cuacaIndex - 1 + total) % total;
+        if (cuacaIndex > total - showCount) cuacaIndex = 0;
+        updateCarousel();
+        resetCuacaInterval();
+    }
+    let cuacaInterval;
+    function resetCuacaInterval() {
+        clearInterval(cuacaInterval);
+        cuacaInterval = setInterval(nextCuaca, 3500);
+    }
+    document.getElementById('cw-next-slide').onclick = nextCuaca;
+    document.getElementById('cw-prev-slide').onclick = prevCuaca;
+    updateCarousel();
+    resetCuacaInterval();
+    carousel.addEventListener('mouseenter', () => clearInterval(cuacaInterval));
+    carousel.addEventListener('mouseleave', resetCuacaInterval);
+    window.addEventListener('resize', () => {
+        updateCarousel();
+    });
+}
+
+// =============================
+// SEARCH ALAT HERO (from hero-cek-ketersediaan.blade.php)
+// =============================
+window.searchAlat = function(searchId) {
+    const input = document.getElementById(searchId || 'alat-search');
+    if (!input) return;
+    const q = input.value.trim();
+    if (!q) {
+        input.focus();
+        input.classList.add('ring-2', 'ring-red-400');
+        setTimeout(()=>input.classList.remove('ring-2','ring-red-400'), 1200);
+        return;
+    }
+    window.dispatchEvent(new CustomEvent('search-alat', { detail: { query: q } }));
+}
+
 console.log("📦 BMKG Scripts loaded successfully!")
 
 

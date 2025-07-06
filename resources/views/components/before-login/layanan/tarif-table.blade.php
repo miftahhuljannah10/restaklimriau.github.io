@@ -41,7 +41,7 @@ Contoh pemanggilan dinamis dari view utama:
             <table class="w-full min-w-[800px] text-sm md:text-base">
                 <!-- Table Header -->
                 <thead class="sticky top-0 z-10">
-                    <tr class="bg-gradient-to-r from-sky-500 to-sky-400 text-white">
+                    <tr class="bg-sky-500 text-white">
                         <th class="px-4 py-3 text-left font-semibold font-montserrat rounded-tl-2xl">No</th>
                         <th class="px-4 py-3 text-left font-semibold font-montserrat">Nama Tarif</th>
                         <th class="px-4 py-3 text-left font-semibold font-montserrat"><i class="fas fa-box mr-1"></i>Satuan</th>

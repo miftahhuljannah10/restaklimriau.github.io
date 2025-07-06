@@ -26,10 +26,6 @@
                 <i class="fas fa-user text-gray-600"></i>
                 <span class="text-gray-600 font-bold font-montserrat">{{ $author ?? '' }}</span>
             </div>
-            <div class="flex items-center gap-2">
-                <i class="fas fa-tag text-gray-600"></i>
-                <span class="text-gray-600 font-bold font-montserrat">{{ $category ?? '' }}</span>
-            </div>
         </div>
     </div>
 </section>

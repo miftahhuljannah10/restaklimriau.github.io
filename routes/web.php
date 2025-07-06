@@ -22,11 +22,10 @@ use App\Http\Controllers\Admin\KlasifikasiSuratController;
 use App\Http\Controllers\Admin\SuratMasukController;
 use App\Http\Controllers\Admin\SuratKeluarController;
 use App\Http\Controllers\AlatController;
+use App\Http\Controllers\HomeController;
 
 
-Route::get('/', function () {
-    return view('masyarakat.index');
-});
+Route::get('/', [HomeController::class, 'index']);
 Route::get('/artikel', function () {
     return view('masyarakat.artikel');
 });
