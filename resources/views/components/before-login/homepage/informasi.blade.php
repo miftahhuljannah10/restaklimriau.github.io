@@ -10,7 +10,7 @@
 
     <!-- Weather Alert Card Container -->
     <div class="w-full">
-      <div class="w-full py-px bg-amber-500/30 rounded-2xl outline outline-1 outline-offset-[-1px] outline-amber-500 flex flex-col sm:flex-row items-start sm:items-center">
+      <div class="w-full py-px bg-amber-400/30 rounded-2xl outline outline-1 outline-offset-[-1px] outline-amber-500 flex flex-col sm:flex-row items-start sm:items-center">
         <div class="w-full relative p-4 sm:p-5 md:p-6">
           <!-- Warning Icon - Mobile: Top Center, Desktop: Left Side -->
           <div class="flex sm:hidden justify-center w-full mb-3">

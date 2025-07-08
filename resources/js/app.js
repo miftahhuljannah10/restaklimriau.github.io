@@ -1199,10 +1199,10 @@ function switchToSection(sectionId) {
             window.scrollTo({ top: y, behavior: 'smooth' });
             window._scrollToProfilSection = false;
         }
-        // Update URL jika perlu
-        const url = new URL(window.location);
-        url.searchParams.set('section', sectionId);
-        window.history.replaceState({}, '', url);
+        // HAPUS: Update URL jika perlu
+        // const url = new URL(window.location);
+        // url.searchParams.set('section', sectionId);
+        // window.history.replaceState({}, '', url);
     } catch (err) {
         console.error('Error switching tabs:', err);
     }
