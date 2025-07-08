@@ -6,7 +6,7 @@
             <button onclick="history.back()"
                 class="inline-flex items-center gap-2 text-sky-500 hover:text-sky-600 transition-colors">
                 <i class="fas fa-arrow-left"></i>
-                <span class="font-medium font-montserrat">Kembali</span>
+                <span class="font-medium font-montserrat">Kembali tes</span>
             </button>
         </div>
 
