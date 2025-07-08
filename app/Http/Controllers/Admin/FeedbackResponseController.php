@@ -28,4 +28,17 @@ class FeedbackResponseController extends Controller
         return redirect()->route('admin.feedback.responses.index')
             ->with('success', 'Feedback response deleted successfully');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:feedback_responses,id',
+        ]);
+
+        FeedbackResponse::whereIn('id', $request->ids)->delete();
+
+        return redirect()->route('admin.feedback.responses.index')
+            ->with('success', 'Selected feedback responses deleted successfully');
+    }
 }

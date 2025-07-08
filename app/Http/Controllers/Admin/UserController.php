@@ -61,7 +61,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $user = User::findOrFail($user->id);
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, User $user)
@@ -91,5 +92,9 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
+    }
+    public function show(User $user)
+    {
+        return view('admin.users.show', compact('user'));
     }
 }

@@ -1223,9 +1223,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Set initial active tab from URL or default to 'tentang'
-    const params = new URLSearchParams(window.location.search);
-    const initialSection = params.get('section') || 'tentang';
-    switchToSection(initialSection);
+    // const params = new URLSearchParams(window.location.search);
+    // const initialSection = params.get('section') || 'tentang';
+    // switchToSection(initialSection);
 });
 
 // Make modal functions globally available

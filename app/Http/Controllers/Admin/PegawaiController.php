@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class PegawaiController extends Controller
 {
@@ -15,7 +16,8 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawais = DB::table('pegawai')->get();
+        $pegawais = Pegawai::paginate(10);
+
         return view('admin.pegawai.index', compact('pegawais'));
     }
 
@@ -32,31 +34,38 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
+        // Debug: Log the incoming request data
+        Log::info('Pegawai Store Request:', $request->all());
 
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'tempat_lahir' => 'required|string',
-            'tanggal_lahir' => 'required|date',
-            'NIP' => 'required|string',
-            'golongan' => 'required|string',
-            'jabatan' => 'required|string',
-            'pendidikan' => 'required|string',
-            'kompetensi' => 'required|string',
-            'email' => 'required|email|unique:pegawai,email',
-            'publikasi' => 'required|string',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
-        ]);
+        try {
+            $validated = $request->validate([
+                'nama' => 'required|string|max:255',
+                'tempat_lahir' => 'required|string',
+                'tanggal_lahir' => 'required|date',
+                'NIP' => 'required|string',
+                'golongan' => 'required|string',
+                'jabatan' => 'required|string',
+                'pendidikan' => 'required|string',
+                'kompetensi' => 'required|string',
+                'email' => 'required|email|unique:pegawai,email',
+                'publikasi' => 'required|string',
+                'foto' => 'nullable|url|max:500' // Changed to URL validation
+            ]);
 
-        if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $filename = time() . '_' . Str::slug($request->nama) . '.' . $foto->getClientOriginalExtension();
-            $foto->move(public_path('foto_pegawai'), $filename);
-            $validated['foto'] = 'foto_pegawai/' . $filename;
+            $pegawai = Pegawai::create($validated);
+            
+            Log::info('Pegawai created successfully:', $pegawai->toArray());
+
+            return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan.');
+            
+        } catch (\Exception $e) {
+            Log::error('Error creating pegawai:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return redirect()->back()->withInput()->with('error', 'Gagal menambahkan data pegawai: ' . $e->getMessage());
         }
-
-        Pegawai::create($validated);
-
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan.');
     }
 
     /**
@@ -64,7 +73,8 @@ class PegawaiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pegawai = Pegawai::findOrFail($id);
+        return view('admin.pegawai.show', compact('pegawai'));
     }
 
     /**
@@ -91,30 +101,13 @@ class PegawaiController extends Controller
             'jabatan' => 'required|string',
             'pendidikan' => 'required|string',
             'kompetensi' => 'required|string',
-            'email' => 'required|email|unique:pegawai,email,' . $id, // Menambahkan pengecekan untuk email di update
+            'email' => 'required|email|unique:pegawai,email,' . $id,
             'publikasi' => 'required|string',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'foto' => 'nullable|url|max:500' // Changed to URL validation
         ]);
 
         // Temukan pegawai berdasarkan ID
         $pegawai = Pegawai::findOrFail($id);
-
-        // Cek apakah ada file foto baru yang diupload
-        if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
-            if ($pegawai->foto && file_exists(public_path($pegawai->foto))) {
-                unlink(public_path($pegawai->foto)); // Menghapus foto lama
-            }
-
-            // Upload foto baru
-            $foto = $request->file('foto');
-            $filename = time() . '_' . Str::slug($request->nama) . '.' . $foto->getClientOriginalExtension();
-            $foto->move(public_path('foto_pegawai'), $filename);
-            $validated['foto'] = 'foto_pegawai/' . $filename;
-        } else {
-            // Jika tidak ada foto baru, tetap pakai foto yang lama
-            $validated['foto'] = $pegawai->foto;
-        }
 
         // Update data pegawai
         $pegawai->update($validated);

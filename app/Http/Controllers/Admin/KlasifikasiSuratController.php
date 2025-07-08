@@ -15,7 +15,7 @@ class KlasifikasiSuratController extends Controller
      */
     public function index()
     {
-        $klasifikasi = KlasifikasiSurat::paginate(15);
+        $klasifikasi = KlasifikasiSurat::paginate(10);
         return view('admin.tata-usaha.klasifikasi-surat.index', compact('klasifikasi'));
     }
 
@@ -45,7 +45,7 @@ class KlasifikasiSuratController extends Controller
 
         KlasifikasiSurat::create($validator->validated());
 
-        return redirect()->route('admin.klasifikasi-surat.index')
+        return redirect()->route('admin.tata-usaha.klasifikasi-surat.index')
             ->with('success', 'Klasifikasi surat berhasil ditambahkan');
     }
 
@@ -55,7 +55,7 @@ class KlasifikasiSuratController extends Controller
     public function show(KlasifikasiSurat $klasifikasiSurat)
     {
         // Ambil juga surat keluar yang memiliki klasifikasi ini
-        $suratKeluar = SuratKeluar::where('klasifikasi_surat_id', $klasifikasiSurat->id)
+        $suratKeluar = SuratKeluar::where('klasifikasi_id', $klasifikasiSurat->id)
             ->latest()
             ->paginate(10);
 

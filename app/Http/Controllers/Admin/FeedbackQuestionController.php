@@ -26,10 +26,17 @@ class FeedbackQuestionController extends Controller
             'order' => 'required|integer|min:0',
             'answer_type' => 'required|in:text,dropdown',
             'options' => 'required_if:answer_type,dropdown|array',
-            'options.*' => 'required_if:answer_type,dropdown|string|max:255'
+            'options.*' => 'required_if:answer_type,dropdown|string|max:255|nullable'
         ]);
 
         $data['is_active'] = $request->has('is_active');
+
+        // Filter out empty options
+        if (isset($data['options'])) {
+            $data['options'] = array_filter($data['options'], function ($option) {
+                return !empty(trim($option));
+            });
+        }
 
         $question = FeedbackQuestion::create([
             'question_text' => $data['question_text'],
@@ -40,7 +47,7 @@ class FeedbackQuestionController extends Controller
         if ($data['answer_type'] === 'dropdown' && !empty($data['options'])) {
             $optionsData = array_map(function ($optionText, $index) {
                 return [
-                    'option_text' => $optionText,
+                    'option_text' => trim($optionText),
                     'order' => $index + 1
                 ];
             }, $data['options'], array_keys($data['options']));
@@ -65,10 +72,17 @@ class FeedbackQuestionController extends Controller
             'order' => 'required|integer|min:0',
             'answer_type' => 'required|in:text,dropdown',
             'options' => 'required_if:answer_type,dropdown|array',
-            'options.*' => 'required_if:answer_type,dropdown|string|max:255'
+            'options.*' => 'required_if:answer_type,dropdown|string|max:255|nullable'
         ]);
 
         $data['is_active'] = $request->has('is_active');
+
+        // Filter out empty options
+        if (isset($data['options'])) {
+            $data['options'] = array_filter($data['options'], function ($option) {
+                return !empty(trim($option));
+            });
+        }
 
         $question->update([
             'question_text' => $data['question_text'],
@@ -83,7 +97,7 @@ class FeedbackQuestionController extends Controller
             if (!empty($data['options'])) {
                 $optionsData = array_map(function ($optionText, $index) {
                     return [
-                        'option_text' => $optionText,
+                        'option_text' => trim($optionText),
                         'order' => $index + 1
                     ];
                 }, $data['options'], array_keys($data['options']));

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PegawaiController;
 use App\Http\Controllers\Admin\UrlController;
@@ -21,26 +22,27 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\KlasifikasiSuratController;
 use App\Http\Controllers\Admin\SuratMasukController;
 use App\Http\Controllers\Admin\SuratKeluarController;
-
+use App\Http\Controllers\Admin\BukuTamuController;
+use App\Http\Controllers\Masyarakat\BeritaController;
 
 Route::get('/', function () {
     return view('masyarakat.index');
 });
-Route::get('/artikel', function () {    
+Route::get('/artikel', function () {
     return view('masyarakat.artikel');
 });
 Route::get('/artikel-detail', function () {
     return view('masyarakat.artikel-detail');
 });
-Route::get('/berita', function () {
-    return view('masyarakat.berita');
-});
-Route::get('/berita-detail', function () {
-    return view('masyarakat.berita-detail');
-});
-Route::get('/buletin', function () {
-    return view('masyarakat.buletin');
-});
+// Route::get('/berita', function () {
+//     return view('masyarakat.berita');
+// });
+// Route::get('/berita-detail', function () {
+//     return view('masyarakat.berita-detail');
+// });
+// Route::get('/buletin', function () {
+//     return view('masyarakat.buletin');
+// });
 Route::get('/form-layanan', function () {
     return view('masyarakat.form-layanan');
 });
@@ -86,6 +88,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth', 'role:pemimpin'])->group(function () {
+    // Dashboard Routes
+    Route::get('/admin', function () {
+        return redirect()->route('admin.dashboard');
+    })->name('admin.index');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
     // Produk Management Routes
     // Kategori Produk Management Routes with resource controller
     Route::resource('/admin/produk/kategori-produk', KategoriProdukController::class)
@@ -177,7 +185,8 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
 
     Route::prefix('/admin/feedback')->name('admin.feedback.')->group(function () {
         Route::resource('questions', FeedbackQuestionController::class);
-        Route::resource('responses', FeedbackResponseController::class)->only(['index', 'show', 'destroy']);
+        Route::resource('responses', FeedbackResponseController::class);
+        Route::delete('responses/bulk-delete', [FeedbackResponseController::class, 'bulkDelete'])->name('responses.bulkDelete');
     });
     Route::get('/admin/alat-curah-hujan/full', [AlatCurahHujanController::class, 'full'])->name('admin.alat-curah-hujan.full');
     Route::resource('/admin/alat-curah-hujan', AlatCurahHujanController::class)->names([
@@ -230,6 +239,18 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
             'update' => 'admin.tata-usaha.surat-keluar.update',
             'destroy' => 'admin.tata-usaha.surat-keluar.destroy',
         ]);
+    // buku tamu routes
+    Route::resource('/admin/buku-tamu', BukuTamuController::class)
+        ->names([
+            'index' => 'admin.tata-usaha.buku-tamu.index',
+            'create' => 'admin.tata-usaha.buku-tamu.create',
+            'store' => 'admin.tata-usaha.buku-tamu.store',
+            'show' => 'admin.tata-usaha.buku-tamu.show',
+            'edit' => 'admin.tata-usaha.buku-tamu.edit',
+            'update' => 'admin.tata-usaha.buku-tamu.update',
+            'destroy' => 'admin.tata-usaha.buku-tamu.destroy',
+        ]);
+
     Route::get('/admin/tata-usaha/surat-keluar/export', [SuratKeluarController::class, 'export'])
         ->name('admin.tata-usaha.surat-keluar.export');
     Route::get('/admin/tata-usaha/surat-keluar/{suratKeluar}/download', [SuratKeluarController::class, 'downloadScan'])
@@ -244,3 +265,8 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
 // Public Feedback Routes
 Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
 Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
+
+Route::get('/berita', [App\Http\Controllers\Masyarakat\BeritaController::class, 'index'])->name('berita.index');
+Route::get('/berita/kategori/{kategori}', [App\Http\Controllers\Masyarakat\BeritaController::class, 'category'])->name('berita.category');
+Route::get('/berita/{slug}', [App\Http\Controllers\Masyarakat\BeritaController::class, 'show'])->name('berita.show');
+Route::get('/buletin', [App\Http\Controllers\Masyarakat\BuletinController::class, 'index'])->name('buletin.index');

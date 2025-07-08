@@ -10,24 +10,77 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+
 class BeritaArtikelController extends Controller
 {
     /**
      * Display a listing of the resource by type.
      */
-    public function index($type = 'berita')
+    public function index(Request $request, $type = 'berita')
     {
         // Validate type parameter
         if (!in_array($type, ['berita', 'artikel'])) {
             return redirect()->route('admin.media.berita.index', 'berita');
         }
 
-        $items = BeritaArtikel::with(['kategori', 'thumbnail'])
-            ->where('jenis', $type)
-            ->latest()
-            ->get();
+        $query = BeritaArtikel::with(['kategori', 'thumbnail'])
+            ->where('jenis', $type);
+
+        // Handle search
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('penulis', 'like', "%{$search}%")
+                    ->orWhere('isi', 'like', "%{$search}%")
+                    ->orWhereHas('kategori', function ($q) use ($search) {
+                        $q->where('nama', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        // Handle status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->get('status'));
+        }
+
+        // Handle featured filter
+        if ($request->filled('featured')) {
+            $query->where('featured', $request->get('featured') == '1');
+        }
+
+        // Order by latest
+        $query->latest();
+
+        // Paginate results
+        $perPage = $request->get('per_page', 10);
+        $items = $query->paginate($perPage)->withQueryString();
 
         return view('admin.media.berita.index', compact('items', 'type'));
+    }
+
+    public function publicIndex()
+    {
+        $beritaList = BeritaArtikel::with('kategori', 'thumbnail')
+            ->where('jenis', 'berita')
+            ->where('status', 'publish')
+            ->latest()
+            ->get()
+            ->map(function ($berita) {
+                return [
+                    'id' => 'berita-' . $berita->id,
+                    'image' => $berita->thumbnail ?
+                        (Storage::url($berita->thumbnail->media_url)) :
+                        '/assets/images/',
+                    'kategori' => $berita->kategori->nama,
+                    'title' => $berita->judul,
+                    'author' => $berita->penulis,
+                    'date' => $berita->created_at->format('d F Y'),
+                    'slug' => $berita->slug,
+                ];
+            });
+
+        return view('masyarakat.berita', compact('beritaList'));
     }
 
     /**

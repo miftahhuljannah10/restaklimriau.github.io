@@ -10,5 +10,5 @@
 @section('content')
     @include('components.before-login.layanan.hero-layanan')
     @include('components.before-login.layanan.alur-pelayanan')
-    @include('components.before-login.layanan.jenis-pelayanan')
+    @include('components.before-login.layanan.jenis-pelayanan', ['url' => $urlNolRupiah])
 @endsection

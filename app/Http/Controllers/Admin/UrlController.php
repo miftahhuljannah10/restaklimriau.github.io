@@ -17,6 +17,8 @@ class UrlController extends Controller
 
         $urls = Url::where('menu_type', $type)->latest()->paginate(10);
         return view('admin.url.index', compact('urls', 'type'));
+
+        
     }
     /**
      * Show the form for creating a new resource.

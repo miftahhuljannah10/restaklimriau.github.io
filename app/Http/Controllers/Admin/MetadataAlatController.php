@@ -81,7 +81,8 @@ class MetadataAlatController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $alat = Alat::with(['provinsi', 'kabupaten', 'kecamatan'])->findOrFail($id);
+        return view('admin.metadata-alat.show', compact('alat'));
     }
 
     /**

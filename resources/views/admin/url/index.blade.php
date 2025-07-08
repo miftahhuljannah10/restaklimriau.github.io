@@ -1,98 +1,121 @@
-@extends('layouts.app')
+<x-layouts.admin>
+    <x-slot name="title">Daftar URL {{ ucfirst($type) }}</x-slot>
 
-@section('content')
-    <div class="p-6">
-        <div class="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
-            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-                <div class="mb-2 md:mb-0">
-                    <label for="entries" class="mr-2 text-sm text-gray-700">Tampilkan</label>
-                    <select id="entries" class="border rounded px-2 py-1 text-sm">
+    <div class="space-y-6">
+        <x-main.cards.content-card>
+            <x-slot name="header">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-gray-800">Daftar URL {{ ucfirst($type) }}</h2>
+                    <a href="{{ route('url.create', $type) }}"
+                        class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Tambah URL
+                    </a>
+                </div>
+            </x-slot>
+
+            <!-- Search and entries control -->
+            <div class="mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                <div class="flex items-center">
+                    <label for="entries" class="mr-2 text-sm font-medium text-gray-700">Tampilkan</label>
+                    <select id="entries"
+                        class="rounded-lg border border-gray-300 px-3 py-1 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
                     </select>
                 </div>
-                <div class="flex items-center gap-2">
-                    <label for="search" class="text-sm text-gray-700">Cari:</label>
+                <div class="flex items-center">
+                    <label for="search" class="mr-2 text-sm font-medium text-gray-700">Cari:</label>
                     <x-main.table.search :route="route('url.index', $type)" />
-                    <a href="{{ route('url.create', $type) }}">
-                        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm">
-                            + Tambah URL
-                        </button>
-                    </a>
                 </div>
-                <!-- Tombol untuk membuka modal -->
-                {{-- <button @click="openModal = true"
-                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm">
-                    + Tambah URL
-                </button> --}}
-
-                <!-- Modal -->
-                {{-- <div x-data="{ openModal: false }" x-show="openModal"
-                    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div @click.outside="openModal = false" class="bg-white w-full max-w-lg p-6 rounded shadow-lg">
-                        <h2 class="text-xl font-semibold mb-4">Tambah URL</h2>
-                        <form action="{{ route('url.store', $type) }}" method="POST">
-                            @csrf
-                            <div class="mb-4">
-                                <label for="url" class="block text-sm font-medium text-gray-700">URL</label>
-                                <input type="url" name="url" id="url" required
-                                    class="w-full border border-gray-300 rounded p-2">
-                            </div>
-                            <div class="mb-4">
-                                <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                                <textarea name="deskripsi" id="deskripsi" class="w-full border border-gray-300 rounded p-2"></textarea>
-                            </div>
-                            <div class="flex justify-end gap-2">
-                                <button type="button" @click="openModal = false"
-                                    class="bg-gray-500 text-white px-4 py-2 rounded">Batal</button>
-                                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div> --}}
-
             </div>
+
             <div class="overflow-x-auto">
-                <table class="min-w-full text-sm text-left text-gray-700 border">
-                    <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-3 py-2 border">No</th>
-                            <th class="px-3 py-2 border">URL</th>
-                            <th class="px-3 py-2 border">Deskripsi</th>
-                            <th class="px-3 py-2 border text-center">Aksi</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                No</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                URL</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Deskripsi</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($urls as $index => $url)
-                            <tr class="{{ $loop->even ? 'bg-gray-50' : 'bg-white' }}">
-                                <td class="px-3 py-2 border">{{ $urls->firstItem() + $index }}</td>
-                                <td class="px-3 py-2 border">{{ $url->url }}</td>
-                                <td class="px-3 py-2 border">{{ $url->deskripsi }}</td>
-
-                                <td class="px-3 py-2 border text-center">
-                                    <div class="flex justify-center gap-2">
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @forelse ($urls as $index => $url)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $urls->firstItem() + $index }}
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-900">
+                                    <a href="{{ $url->url }}" target="_blank"
+                                        class="text-blue-600 hover:text-blue-800 break-all">
+                                        {{ $url->url }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline ml-1"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                        </svg>
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-500">
+                                    {{ $url->deskripsi ?? '-' }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="flex justify-end space-x-2">
                                         <a href="{{ route('url.edit', ['type' => $type, 'id' => $url->id]) }}"
-                                            class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
+                                            class="inline-flex items-center px-3 py-1 border border-yellow-300 rounded-lg text-sm font-medium text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                                             Edit
                                         </a>
                                         <form action="{{ route('url.destroy', ['type' => $type, 'id' => $url->id]) }}"
-                                            method="POST" onsubmit="return confirm('Yakin ingin menghapus URL ini?')">
+                                            method="POST" class="inline"
+                                            onsubmit="return confirm('Yakin ingin menghapus URL ini?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
+                                                class="inline-flex items-center px-3 py-1 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                                 Hapus
                                             </button>
                                         </form>
-
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="4"
+                                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                    <div class="flex flex-col items-center py-8">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-2"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                        </svg>
+                                        <p class="text-gray-500">Tidak ada URL ditemukan</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
-
-                {{ $urls->links() }}
             </div>
-        @endsection
+
+            @if ($urls->hasPages())
+                <div class="mt-6 border-t border-gray-200 pt-4">
+                    <x-main.datatables.pagination :paginator="$urls" />
+                </div>
+            @endif
+        </x-main.cards.content-card>
+    </div>
+</x-layouts.admin>

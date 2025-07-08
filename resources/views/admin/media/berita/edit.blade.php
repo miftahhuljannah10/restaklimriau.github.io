@@ -1,62 +1,63 @@
-@extends('layouts.app')
+<x-layouts.admin title="Edit {{ $type == 'berita' ? 'Berita' : 'Artikel' }}">
+    <x-main.layouts.breadcrumb :items="[
+        ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+        ['title' => 'Media'],
+        ['title' => ucfirst($type), 'url' => route('admin.media.berita.index', $type)],
+        ['title' => 'Edit'],
+    ]" />
 
-@section('title', 'Edit ' . ($type == 'berita' ? 'Berita' : 'Artikel') . ' - Stasiun Klimatologi Riau')
+    @push('styles')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <style>
+            .ck-editor__editable_inline {
+                min-height: 300px;
+                max-height: 500px;
+            }
 
-@section('styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <style>
-        .ck-editor__editable_inline {
-            min-height: 300px;
-            max-height: 500px;
-        }
+            .select2-container .select2-selection--single {
+                height: 42px;
+                border-color: #d1d5db;
+                border-radius: 0.375rem;
+            }
 
-        .select2-container .select2-selection--single {
-            height: 42px;
-            border-color: #d1d5db;
-            border-radius: 0.375rem;
-        }
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                line-height: 42px;
+                padding-left: 12px;
+            }
 
-        .select2-container .select2-selection--single .select2-selection__rendered {
-            line-height: 42px;
-            padding-left: 12px;
-        }
+            .select2-container .select2-selection--single .select2-selection__arrow {
+                height: 42px;
+            }
 
-        .select2-container .select2-selection--single .select2-selection__arrow {
-            height: 42px;
-        }
+            .tab-active {
+                background-color: #3b82f6;
+                color: white;
+            }
 
-        .tab-active {
-            background-color: #3b82f6;
-            color: white;
-        }
+            .tab-inactive {
+                background-color: #e5e7eb;
+                color: #4b5563;
+            }
 
-        .tab-inactive {
-            background-color: #e5e7eb;
-            color: #4b5563;
-        }
+            .media-method-active {
+                background-color: #f3f4f6;
+                border-color: #3b82f6;
+            }
 
-        .media-method-active {
-            background-color: #f3f4f6;
-            border-color: #3b82f6;
-        }
-        
-        .gallery-preview img {
-            max-height: 150px;
-            width: auto;
-        }
-    </style>
-@endsection
+            .gallery-preview img {
+                max-height: 150px;
+                width: auto;
+            }
+        </style>
+    @endpush
 
-@section('content')
-    <div class="container mx-auto px-4 py-6">
-        <div class="mb-6">
-            <a href="{{ route('admin.media.berita.index', $type) }}" class="text-blue-600 hover:underline flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                Kembali ke Daftar {{ $type == 'berita' ? 'Berita' : 'Artikel' }}
-            </a>
-        </div>
+    <x-main.cards.content-card title="Edit {{ $type == 'berita' ? 'Berita' : 'Artikel' }}">
+        <x-slot:header>
+            <x-main.buttons.action-button variant="secondary" icon="arrow-left"
+                href="{{ route('admin.media.berita.index', $type) }}">
+                Kembali
+            </x-main.buttons.action-button>
+        </x-slot:header>
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
@@ -73,7 +74,8 @@
                 <a href="{{ route('admin.media.berita.edit', ['berita', $item->id]) }}"
                     class="px-6 py-3 font-medium text-sm {{ $type == 'berita' ? 'tab-active' : 'tab-inactive' }}
                       hover:bg-blue-500 hover:text-white transition-colors flex-1 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-1" viewBox="0 0 20 20"
+                        fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z"
                             clip-rule="evenodd" />
@@ -84,7 +86,8 @@
                 <a href="{{ route('admin.media.berita.edit', ['artikel', $item->id]) }}"
                     class="px-6 py-3 font-medium text-sm {{ $type == 'artikel' ? 'tab-active' : 'tab-inactive' }}
                       hover:bg-blue-500 hover:text-white transition-colors flex-1 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-1" viewBox="0 0 20 20"
+                        fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
                             clip-rule="evenodd" />
@@ -93,7 +96,8 @@
                 </a>
             </div>
 
-            <form action="{{ route('admin.media.berita.update', [$type, $item->id]) }}" method="POST" enctype="multipart/form-data" class="p-6">
+            <form action="{{ route('admin.media.berita.update', [$type, $item->id]) }}" method="POST"
+                enctype="multipart/form-data" class="p-6">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="jenis" value="{{ $type }}">
@@ -102,8 +106,10 @@
                     <div class="md:col-span-2">
                         <div class="mb-6">
                             <label for="judul" class="block text-sm font-medium text-gray-700 mb-1">Judul
-                                {{ $type == 'berita' ? 'Berita' : 'Artikel' }} <span class="text-red-500">*</span></label>
-                            <input type="text" name="judul" id="judul" value="{{ old('judul', $item->judul) }}"
+                                {{ $type == 'berita' ? 'Berita' : 'Artikel' }} <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" name="judul" id="judul"
+                                value="{{ old('judul', $item->judul) }}"
                                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 @error('judul') border-red-500 @enderror"
                                 required>
                             @error('judul')
@@ -131,8 +137,8 @@
                         </div>
 
                         <div class="mb-6">
-                            <label for="isi_editor" class="block text-sm font-medium text-gray-700 mb-1">Isi Konten <span
-                                    class="text-red-500">*</span></label>
+                            <label for="isi_editor" class="block text-sm font-medium text-gray-700 mb-1">Isi Konten
+                                <span class="text-red-500">*</span></label>
                             <textarea name="isi" id="isi_editor"
                                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 @error('isi') border-red-500 @enderror"
                                 rows="12" required>{{ old('isi', $item->isi) }}</textarea>
@@ -151,20 +157,23 @@
 
                             <div class="p-4">
                                 <!-- Current Thumbnail Preview -->
-                                @if($item->thumbnail)
-                                <div class="mb-4">
-                                    <h4 class="text-sm font-medium text-gray-700 mb-2">Thumbnail Saat Ini</h4>
-                                    @if(filter_var($item->thumbnail->media_url, FILTER_VALIDATE_URL))
-                                        <img src="{{ $item->thumbnail->media_url }}" alt="Current thumbnail" class="max-h-40 rounded mb-2">
-                                    @else
-                                        <img src="{{ Storage::url($item->thumbnail->media_url) }}" alt="Current thumbnail" class="max-h-40 rounded mb-2">
-                                    @endif
-                                    <p class="text-sm text-gray-600">{{ $item->thumbnail->caption }}</p>
-                                </div>
+                                @if ($item->thumbnail)
+                                    <div class="mb-4">
+                                        <h4 class="text-sm font-medium text-gray-700 mb-2">Thumbnail Saat Ini</h4>
+                                        @if (filter_var($item->thumbnail->media_url, FILTER_VALIDATE_URL))
+                                            <img src="{{ $item->thumbnail->media_url }}" alt="Current thumbnail"
+                                                class="max-h-40 rounded mb-2">
+                                        @else
+                                            <img src="{{ Storage::url($item->thumbnail->media_url) }}"
+                                                alt="Current thumbnail" class="max-h-40 rounded mb-2">
+                                        @endif
+                                        <p class="text-sm text-gray-600">{{ $item->thumbnail->caption }}</p>
+                                    </div>
                                 @endif
 
                                 <div class="flex items-center mb-4">
-                                    <input id="update_thumbnail" name="update_thumbnail" type="checkbox" value="1" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                    <input id="update_thumbnail" name="update_thumbnail" type="checkbox" value="1"
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                                     <label for="update_thumbnail" class="ml-2 block text-sm text-gray-700">
                                         Update thumbnail
                                     </label>
@@ -173,7 +182,8 @@
                                 <div id="thumbnail-update-container" class="hidden">
                                     <!-- Thumbnail Method Selector -->
                                     <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih metode:</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih
+                                            metode:</label>
                                         <div class="flex space-x-2">
                                             <label class="flex-1 cursor-pointer">
                                                 <input type="radio" name="thumbnail_type" value="url"
@@ -184,7 +194,8 @@
                                                         {{ old('thumbnail_type', $item->thumbnail && filter_var($item->thumbnail->media_url, FILTER_VALIDATE_URL) ? 'url' : 'upload') == 'url' ? 'media-method-active' : '' }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
                                                             d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                                                     </svg>
                                                     <div class="mt-2 text-sm font-medium">URL</div>
@@ -199,7 +210,8 @@
                                                         {{ old('thumbnail_type', $item->thumbnail && !filter_var($item->thumbnail->media_url, FILTER_VALIDATE_URL) ? 'upload' : 'url') == 'upload' ? 'media-method-active' : '' }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
                                                             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12" />
                                                     </svg>
                                                     <div class="mt-2 text-sm font-medium">Upload</div>
@@ -225,10 +237,12 @@
                                         </div>
                                         <div id="thumbnail-url-preview"
                                             class="mt-2 {{ old('thumbnail_url', $item->thumbnail && filter_var($item->thumbnail->media_url, FILTER_VALIDATE_URL) ? $item->thumbnail->media_url : '') ? '' : 'hidden' }}">
-                                            <img id="thumbnail-url-img" src="{{ old('thumbnail_url', $item->thumbnail && filter_var($item->thumbnail->media_url, FILTER_VALIDATE_URL) ? $item->thumbnail->media_url : '') }}" alt="Preview"
-                                                class="max-h-40 max-w-full mx-auto rounded">
+                                            <img id="thumbnail-url-img"
+                                                src="{{ old('thumbnail_url', $item->thumbnail && filter_var($item->thumbnail->media_url, FILTER_VALIDATE_URL) ? $item->thumbnail->media_url : '') }}"
+                                                alt="Preview" class="max-h-40 max-w-full mx-auto rounded">
                                         </div>
-                                        <p class="text-xs text-gray-500 mt-1">Masukkan URL gambar lengkap (termasuk https://)
+                                        <p class="text-xs text-gray-500 mt-1">Masukkan URL gambar lengkap (termasuk
+                                            https://)
                                         </p>
                                     </div>
 
@@ -246,7 +260,8 @@
                                                     fill="none" viewBox="0 0 48 48" aria-hidden="true">
                                                     <path
                                                         d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                        stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
                                                 </svg>
                                                 <div class="flex text-sm text-gray-600">
                                                     <label for="thumbnail"
@@ -269,7 +284,8 @@
                                         <label for="thumbnail_caption"
                                             class="block text-sm font-medium text-gray-700 mb-1">Caption Gambar</label>
                                         <input type="text" name="thumbnail_caption" id="thumbnail_caption"
-                                            value="{{ old('thumbnail_caption', $item->thumbnail ? $item->thumbnail->caption : '') }}" placeholder="Deskripsi gambar"
+                                            value="{{ old('thumbnail_caption', $item->thumbnail ? $item->thumbnail->caption : '') }}"
+                                            placeholder="Deskripsi gambar"
                                             class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                     </div>
                                 </div>
@@ -282,7 +298,8 @@
                                 <h3 class="font-medium text-gray-700">Galeri Gambar</h3>
                                 <button type="button" id="add-gallery-btn"
                                     class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
+                                        fill="currentColor">
                                         <path fill-rule="evenodd"
                                             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                             clip-rule="evenodd" />
@@ -294,56 +311,75 @@
                             <div class="p-4">
                                 <div id="gallery-container">
                                     <!-- Existing Gallery Items -->
-                                    @foreach($item->galeri as $index => $galleryItem)
-                                    <div class="gallery-item mb-4 pb-4 border-b border-gray-200 last:border-0">
-                                        <input type="hidden" name="existing_gallery_ids[]" value="{{ $galleryItem->id }}">
-                                        <div class="flex justify-between items-center mb-2">
-                                            <label class="block text-sm font-medium text-gray-700">Gambar #{{ $index + 1 }}</label>
+                                    @foreach ($item->galeri as $index => $galleryItem)
+                                        <div class="gallery-item mb-4 pb-4 border-b border-gray-200 last:border-0">
+                                            <input type="hidden" name="existing_gallery_ids[]"
+                                                value="{{ $galleryItem->id }}">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <label class="block text-sm font-medium text-gray-700">Gambar
+                                                    #{{ $index + 1 }}</label>
+                                                <div>
+                                                    <input type="checkbox" id="delete_gallery_{{ $galleryItem->id }}"
+                                                        name="delete_gallery_ids[]" value="{{ $galleryItem->id }}"
+                                                        class="h-4 w-4 text-red-600 border-gray-300 rounded focus:ring-red-500">
+                                                    <label for="delete_gallery_{{ $galleryItem->id }}"
+                                                        class="ml-2 text-sm text-red-600">Hapus</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                @if (filter_var($galleryItem->media_url, FILTER_VALIDATE_URL))
+                                                    <img src="{{ $galleryItem->media_url }}" alt="Gallery image"
+                                                        class="max-h-32 rounded">
+                                                @else
+                                                    <img src="{{ Storage::url($galleryItem->media_url) }}"
+                                                        alt="Gallery image" class="max-h-32 rounded">
+                                                @endif
+                                            </div>
                                             <div>
-                                                <input type="checkbox" id="delete_gallery_{{ $galleryItem->id }}" name="delete_gallery_ids[]" value="{{ $galleryItem->id }}" class="h-4 w-4 text-red-600 border-gray-300 rounded focus:ring-red-500">
-                                                <label for="delete_gallery_{{ $galleryItem->id }}" class="ml-2 text-sm text-red-600">Hapus</label>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">Caption
+                                                    Gambar</label>
+                                                <input type="text" name="existing_gallery_captions[]"
+                                                    value="{{ old('existing_gallery_captions.' . $index, $galleryItem->caption) }}"
+                                                    placeholder="Deskripsi gambar"
+                                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                             </div>
                                         </div>
-                                        <div class="mb-3">
-                                            @if(filter_var($galleryItem->media_url, FILTER_VALIDATE_URL))
-                                                <img src="{{ $galleryItem->media_url }}" alt="Gallery image" class="max-h-32 rounded">
-                                            @else
-                                                <img src="{{ Storage::url($galleryItem->media_url) }}" alt="Gallery image" class="max-h-32 rounded">
-                                            @endif
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">Caption Gambar</label>
-                                            <input type="text" name="existing_gallery_captions[]"
-                                                value="{{ old('existing_gallery_captions.'.$index, $galleryItem->caption) }}" placeholder="Deskripsi gambar"
-                                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                        </div>
-                                    </div>
                                     @endforeach
 
                                     <!-- New Gallery Items -->
-                                    @if(old('gallery_urls'))
-                                        @foreach(old('gallery_urls') as $index => $url)
+                                    @if (old('gallery_urls'))
+                                        @foreach (old('gallery_urls') as $index => $url)
                                             <div class="gallery-item mb-4 pb-4 border-b border-gray-200 last:border-0">
                                                 <div class="flex justify-between items-center mb-2">
-                                                    <label class="block text-sm font-medium text-gray-700">Gambar Baru #{{ $index + 1 }}</label>
-                                                    <button type="button" class="remove-gallery-btn text-red-500 hover:text-red-700">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                    <label class="block text-sm font-medium text-gray-700">Gambar Baru
+                                                        #{{ $index + 1 }}</label>
+                                                    <button type="button"
+                                                        class="remove-gallery-btn text-red-500 hover:text-red-700">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                            viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd"
+                                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                                                clip-rule="evenodd" />
                                                         </svg>
                                                     </button>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="block text-sm font-medium text-gray-700 mb-1">URL Gambar <span class="text-red-500">*</span></label>
-                                                    <input type="url" name="gallery_urls[]" value="{{ $url }}"
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">URL
+                                                        Gambar <span class="text-red-500">*</span></label>
+                                                    <input type="url" name="gallery_urls[]"
+                                                        value="{{ $url }}"
                                                         placeholder="https://example.com/gallery-image.jpg"
                                                         class="gallery-url-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                                 </div>
                                                 <div class="gallery-preview mb-3 {{ $url ? '' : 'hidden' }}">
-                                                    <img src="{{ $url }}" alt="Preview" class="max-h-32 rounded">
+                                                    <img src="{{ $url }}" alt="Preview"
+                                                        class="max-h-32 rounded">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700 mb-1">Caption Gambar</label>
-                                                    <input type="text" name="gallery_captions[]" value="{{ old('gallery_captions')[$index] ?? '' }}"
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">Caption
+                                                        Gambar</label>
+                                                    <input type="text" name="gallery_captions[]"
+                                                        value="{{ old('gallery_captions')[$index] ?? '' }}"
                                                         placeholder="Deskripsi gambar"
                                                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                                 </div>
@@ -351,7 +387,8 @@
                                         @endforeach
                                     @endif
 
-                                    <div id="empty-gallery-message" class="{{ $item->galeri->count() > 0 || old('gallery_urls') ? 'hidden' : '' }} text-center py-8 text-gray-500">
+                                    <div id="empty-gallery-message"
+                                        class="{{ $item->galeri->count() > 0 || old('gallery_urls') ? 'hidden' : '' }} text-center py-8 text-gray-500">
                                         Belum ada gambar dalam galeri. Klik "Tambah Gambar" untuk menambahkan.
                                     </div>
                                 </div>
@@ -377,11 +414,14 @@
                                 <select name="status" id="status"
                                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 @error('status') border-red-500 @enderror"
                                     required>
-                                    <option value="publish" {{ old('status', $item->status) == 'publish' ? 'selected' : '' }}>
+                                    <option value="publish"
+                                        {{ old('status', $item->status) == 'publish' ? 'selected' : '' }}>
                                         Publikasikan</option>
-                                    <option value="draft" {{ old('status', $item->status) == 'draft' ? 'selected' : '' }}>Simpan Draft
+                                    <option value="draft"
+                                        {{ old('status', $item->status) == 'draft' ? 'selected' : '' }}>Simpan Draft
                                     </option>
-                                    <option value="archived" {{ old('status', $item->status) == 'archived' ? 'selected' : '' }}>Arsip
+                                    <option value="archived"
+                                        {{ old('status', $item->status) == 'archived' ? 'selected' : '' }}>Arsip
                                     </option>
                                 </select>
                             </div>
@@ -411,40 +451,42 @@
                 </div>
             </form>
         </div>
-    </div>
-
-    <!-- Gallery Item Template (Hidden) -->
-    <template id="gallery-item-template">
-        <div class="gallery-item mb-4 pb-4 border-b border-gray-200 last:border-0">
-            <div class="flex justify-between items-center mb-2">
-                <label class="block text-sm font-medium text-gray-700">Gambar Baru #INDEX</label>
-                <button type="button" class="remove-gallery-btn text-red-500 hover:text-red-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-            <div class="mb-3">
-                <label class="block text-sm font-medium text-gray-700 mb-1">URL Gambar <span
-                        class="text-red-500">*</span></label>
-                <input type="url" name="gallery_urls[]" placeholder="https://example.com/gallery-image.jpg"
-                    class="gallery-url-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-            </div>
-            <div class="gallery-preview mb-3 hidden">
-                <img src="" alt="Preview" class="max-h-32 rounded">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Caption Gambar</label>
-                <input type="text" name="gallery_captions[]" placeholder="Deskripsi gambar"
-                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-            </div>
         </div>
-    </template>
-@endsection
 
-@section('scripts')
+        <!-- Gallery Item Template (Hidden) -->
+        <template id="gallery-item-template">
+            <div class="gallery-item mb-4 pb-4 border-b border-gray-200 last:border-0">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-sm font-medium text-gray-700">Gambar Baru #INDEX</label>
+                    <button type="button" class="remove-gallery-btn text-red-500 hover:text-red-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">URL Gambar <span
+                            class="text-red-500">*</span></label>
+                    <input type="url" name="gallery_urls[]" placeholder="https://example.com/gallery-image.jpg"
+                        class="gallery-url-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                </div>
+                <div class="gallery-preview mb-3 hidden">
+                    <img src="" alt="Preview" class="max-h-32 rounded">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Caption Gambar</label>
+                    <input type="text" name="gallery_captions[]" placeholder="Deskripsi gambar"
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                </div>
+            </div>
+        </template>
+    </x-main.cards.content-card>
+</x-layouts.admin>
+
+@push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
@@ -538,7 +580,7 @@
                     $('#thumbnail-url-img').attr('src', url).on('error', function() {
                         $(this).attr('src',
                             'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkdhZ2FsIG1lbXVhdCBnYW1iYXI8L3RleHQ+PC9zdmc+'
-                            );
+                        );
                     });
                     $('#thumbnail-url-preview').removeClass('hidden');
                 } else {
@@ -585,7 +627,7 @@
                     $img.attr('src', url).on('error', function() {
                         $(this).attr('src',
                             'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkdhZ2FsIG1lbXVhdCBnYW1iYXI8L3RleHQ+PC9zdmc+'
-                            );
+                        );
                     });
                     $preview.removeClass('hidden');
                 } else {
@@ -594,7 +636,8 @@
             });
 
             // Add gallery item
-            let galleryCount = {{ $item->galeri->count() + (old('gallery_urls') ? count(old('gallery_urls')) : 0) }};
+            let galleryCount =
+                {{ $item->galeri->count() + (old('gallery_urls') ? count(old('gallery_urls')) : 0) }};
 
             $('#add-gallery-btn').on('click', function() {
                 galleryCount++;
@@ -681,4 +724,4 @@
             });
         });
     </script>
-@endsection 
+@endpush

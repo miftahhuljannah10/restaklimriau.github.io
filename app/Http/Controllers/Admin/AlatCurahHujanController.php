@@ -19,7 +19,8 @@ class AlatCurahHujanController extends Controller
      */
     public function index()
     {
-        $curahHujanData = AlatCurahHujan::with('alat')->get();
+        // paginate data curah hujan dengan 10 item per halaman
+        $curahHujanData = AlatCurahHujan::with('alat')->paginate(10);
         return view('admin.alat-curah-hujan.index', compact('curahHujanData'));
     }
 

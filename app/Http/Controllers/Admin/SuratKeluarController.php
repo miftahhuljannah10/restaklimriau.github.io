@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SuratKeluar;
 use App\Models\KlasifikasiSurat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,11 +15,34 @@ class SuratKeluarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $suratKeluar = SuratKeluar::with('klasifikasiSurat')->latest()->paginate(10);
+        $query = SuratKeluar::with('klasifikasiSurat');
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('no_surat', 'like', '%' . $request->search . '%')
+                    ->orWhere('perihal', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->filled('klasifikasi')) {
+            $query->where('klasifikasi_id', $request->klasifikasi);
+        }
+
+        if ($request->filled('tanggal_mulai')) {
+            $query->whereDate('tanggal_surat', '>=', $request->tanggal_mulai);
+        }
+
+        if ($request->filled('tanggal_akhir')) {
+            $query->whereDate('tanggal_surat', '<=', $request->tanggal_akhir);
+        }
+
+        $suratKeluar = $query->latest()->paginate(15);
         return view('admin.tata-usaha.surat-keluar.index', compact('suratKeluar'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -127,7 +151,7 @@ class SuratKeluarController extends Controller
 
         $suratKeluar->update($data);
 
-        return redirect()->route('admin.surat-keluar.index')
+        return redirect()->route('admin.tata-usaha.surat-keluar.index')
             ->with('success', 'Surat keluar berhasil diperbarui');
     }
 
@@ -153,17 +177,23 @@ class SuratKeluarController extends Controller
     public function downloadScan(SuratKeluar $suratKeluar)
     {
         if (!$suratKeluar->scanning) {
-            return redirect()->back()->with('error', 'File tidak ditemukan');
+            abort(404);
         }
 
-        $filePath = 'public/surat-keluar/' . $suratKeluar->scanning;
+        $filePath = storage_path('app/public/surat-keluar/' . $suratKeluar->scanning);
 
-        if (!Storage::exists($filePath)) {
-            return redirect()->back()->with('error', 'File tidak ditemukan di storage');
+        if (!file_exists($filePath)) {
+            abort(404);
         }
 
-        return Storage::download($filePath, $suratKeluar->scanning);
+        return response()->download($filePath);
     }
+
+    // public function export()
+    // {
+    //     return Excel::download(new SuratKeluarExport, 'surat-keluar-' . date('Y-m-d') . '.xlsx');
+    // }
+
 
     public function addKlasifikasiAjax(Request $request)
     {

@@ -1,106 +1,134 @@
-@extends('layouts.app')
+<x-layouts.admin>
+    <x-slot name="title">Tambah Surat Masuk</x-slot>
 
-@section('title', 'Tambah Surat Masuk')
+    <!-- Breadcrumb -->
+    <x-main.layouts.breadcrumb :items="[
+        ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+        ['title' => 'Surat Masuk', 'url' => route('admin.tata-usaha.surat-masuk.index')],
+        ['title' => 'Tambah'],
+    ]" />
 
-@section('content')
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 bg-white border-b border-gray-200">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        Tambah Surat Masuk
-                    </h2>
-                    <a href="{{ route('admin.tata-usaha.surat-masuk.index') }}"
-                       class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        Kembali
-                    </a>
+    <!-- Main Content -->
+    <x-main.cards.content-card title="Tambah Surat Masuk">
+        <x-slot name="header-actions">
+            <x-main.buttons.action-button href="{{ route('admin.tata-usaha.surat-masuk.index') }}" variant="secondary"
+                size="sm">
+                Kembali
+            </x-main.buttons.action-button>
+        </x-slot>
+
+        <!-- Success Message -->
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Berhasil!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        <!-- Errors -->
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Terjadi kesalahan:</strong>
+                <ul class="mt-2 mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+        <!-- Form -->
+        <form action="{{ route('admin.tata-usaha.surat-masuk.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="no_surat" class="form-label">Nomor Surat <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control @error('no_surat') is-invalid @enderror" id="no_surat"
+                        name="no_surat" value="{{ old('no_surat') }}" placeholder="Contoh: 123/SM/2023" required>
+                    @error('no_surat')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
-                <!-- Errors -->
-                @if ($errors->any())
-                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
-                        <p class="font-bold">Terjadi kesalahan:</p>
-                        <ul class="list-disc list-inside">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal_surat" class="form-label">Tanggal Surat <span
+                            class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        <input type="date" class="form-control @error('tanggal_surat') is-invalid @enderror"
+                            id="tanggal_surat" name="tanggal_surat" value="{{ old('tanggal_surat') ?? date('Y-m-d') }}"
+                            required>
+                        @error('tanggal_surat')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                @endif
+                </div>
 
-                <!-- Form -->
-                <form action="{{ route('admin.tata-usaha.surat-masuk.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="no_surat" class="block text-sm font-medium text-gray-700 mb-1">Nomor Surat <span class="text-red-500">*</span></label>
-                            <input type="text" name="no_surat" id="no_surat" value="{{ old('no_surat') }}" required
-                                   class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                   placeholder="Contoh: 123/SM/2023">
-                        </div>
+                <div class="col-md-6 mb-3">
+                    <label for="perihal" class="form-label">Perihal <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control @error('perihal') is-invalid @enderror" id="perihal"
+                        name="perihal" value="{{ old('perihal') }}" placeholder="Perihal surat" required>
+                    @error('perihal')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                        <div>
-                            <label for="tanggal_surat" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Surat <span class="text-red-500">*</span></label>
-                            <input type="date" name="tanggal_surat" id="tanggal_surat" value="{{ old('tanggal_surat') ?? date('Y-m-d') }}" required
-                                   class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                        </div>
+                <div class="col-md-6 mb-3">
+                    <label for="dari" class="form-label">Dari <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control @error('dari') is-invalid @enderror" id="dari"
+                        name="dari" value="{{ old('dari') }}" placeholder="Pengirim surat" required>
+                    @error('dari')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                        <div>
-                            <label for="perihal" class="block text-sm font-medium text-gray-700 mb-1">Perihal <span class="text-red-500">*</span></label>
-                            <input type="text" name="perihal" id="perihal" value="{{ old('perihal') }}" required
-                                   class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                   placeholder="Perihal surat">
-                        </div>
+                <div class="col-md-6 mb-3">
+                    <label for="jenis" class="form-label">Jenis <span class="text-danger">*</span></label>
+                    <select class="form-select @error('jenis') is-invalid @enderror" id="jenis" name="jenis"
+                        required>
+                        <option value="" disabled selected>-- Pilih Jenis --</option>
+                        <option value="Biasa" {{ old('jenis') == 'Biasa' ? 'selected' : '' }}>Biasa</option>
+                        <option value="Penting" {{ old('jenis') == 'Penting' ? 'selected' : '' }}>Penting</option>
+                        <option value="Segera" {{ old('jenis') == 'Segera' ? 'selected' : '' }}>Segera</option>
+                        <option value="Rahasia" {{ old('jenis') == 'Rahasia' ? 'selected' : '' }}>Rahasia</option>
+                    </select>
+                    @error('jenis')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                        <div>
-                            <label for="dari" class="block text-sm font-medium text-gray-700 mb-1">Dari <span class="text-red-500">*</span></label>
-                            <input type="text" name="dari" id="dari" value="{{ old('dari') }}" required
-                                   class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                   placeholder="Pengirim surat">
-                        </div>
+                <div class="col-md-6 mb-3">
+                    <label for="scanning" class="form-label">File Scan</label>
+                    <input type="file" class="form-control @error('scanning') is-invalid @enderror" id="scanning"
+                        name="scanning" accept=".pdf,.jpg,.jpeg,.png">
+                    <small class="form-text text-muted">Format: PDF, JPG, JPEG, PNG. Maks: 2MB</small>
+                    @error('scanning')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                        <div>
-                            <label for="jenis" class="block text-sm font-medium text-gray-700 mb-1">Jenis <span class="text-red-500">*</span></label>
-                            <select name="jenis" id="jenis" required
-                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <option value="" disabled selected>-- Pilih Jenis --</option>
-                                <option value="Biasa" {{ old('jenis') == 'Biasa' ? 'selected' : '' }}>Biasa</option>
-                                <option value="Penting" {{ old('jenis') == 'Penting' ? 'selected' : '' }}>Penting</option>
-                                <option value="Segera" {{ old('jenis') == 'Segera' ? 'selected' : '' }}>Segera</option>
-                                <option value="Rahasia" {{ old('jenis') == 'Rahasia' ? 'selected' : '' }}>Rahasia</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label for="scanning" class="block text-sm font-medium text-gray-700 mb-1">File Scan</label>
-                            <input type="file" name="scanning" id="scanning" accept=".pdf,.jpg,.jpeg,.png"
-                                   class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            <p class="text-xs text-gray-500 mt-1">Format: PDF, JPG, JPEG, PNG. Maks: 2MB</p>
-                        </div>
-
-                        <div class="md:col-span-2">
-                            <label for="catatan" class="block text-sm font-medium text-gray-700 mb-1">Catatan</label>
-                            <textarea name="catatan" id="catatan" rows="3"
-                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                    placeholder="Catatan tambahan (opsional)">{{ old('catatan') }}</textarea>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 flex justify-end">
-                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25 transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            Simpan
-                        </button>
-                    </div>
-                </form>
+                <div class="col-12 mb-3">
+                    <label for="catatan" class="form-label">Catatan</label>
+                    <textarea class="form-control @error('catatan') is-invalid @enderror" id="catatan" name="catatan" rows="3"
+                        placeholder="Catatan tambahan (opsional)">{{ old('catatan') }}</textarea>
+                    @error('catatan')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-@endsection
+
+            <!-- Form Actions -->
+            <div class="d-flex justify-content-end gap-2">
+                <x-main.buttons.action-button href="{{ route('admin.tata-usaha.surat-masuk.index') }}"
+                    variant="secondary">
+                    Batal
+                </x-main.buttons.action-button>
+                <x-main.buttons.submit-button variant="primary">
+                    Simpan
+                </x-main.buttons.submit-button>
+            </div>
+        </form>
+    </x-main.cards.content-card>
+</x-layouts.admin>

@@ -10,6 +10,12 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif !important;
+        }
+    </style>
 
     <!-- Vite (Tailwind & JS app) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -38,7 +44,7 @@
     @stack('head')
 </head>
 
-<body class="min-h-full flex flex-col">
+<body class="min-h-full flex flex-col font-poppins !font-poppins">
 
     {{-- Header --}}
     <x-after-login.header />
@@ -67,7 +73,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
         });
+
     </script>
+
+
+
 
     <!-- Stack: Script tambahan dari halaman -->
     @stack('scripts')

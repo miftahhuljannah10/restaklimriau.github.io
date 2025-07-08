@@ -6,8 +6,15 @@
     <title>Administrator Stasiun Klimatologi Riau - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+
 </head>
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-gray-100 font-poppins !font-poppins">
 
     <div class="flex min-h-screen items-center justify-center bg-cover bg-center" style="background-image: url('/images/stasiun-bg.png')">
         <div class="bg-white shadow-xl rounded-3xl w-full max-w-md p-10">

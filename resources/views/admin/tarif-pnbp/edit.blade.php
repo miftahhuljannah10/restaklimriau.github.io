@@ -1,76 +1,99 @@
-@extends('layouts.app')
-@section('content')
-    <div class="max-w-5xl mx-auto py-6 px-4">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-2xl font-bold mb-6 text-gray-700">Edit Tarif PNBP</h2>
-            <form action="{{ route('tarif-pnbp.update', $tarif->id) }}" method="POST" enctype="multipart/form-data"
-                class="space-y-4">
-                @csrf
-                @method('PUT')
+<x-layouts.admin>
+    <x-slot name="title">Edit Tarif PNBP</x-slot>
 
-                <!-- Nama Tarif -->
-                <div>
-                    <label for="nama_tarif" class="block text-sm font-medium text-gray-700">Nama Tarif <span
-                            class="text-red-500">*</span></label>
-                    <input type="text" name="nama_tarif" id="nama_tarif" required
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
-                        value="{{ old('nama_tarif', $tarif->nama_tarif) }}">
-                    @error('nama_tarif')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
+    <!-- Breadcrumb -->
+    <x-main.layouts.breadcrumb :items="[
+        ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+        ['title' => 'Tarif PNBP', 'url' => route('tarif-pnbp.index')],
+        ['title' => 'Edit'],
+    ]" />
+
+    <!-- Main Content -->
+    <x-main.cards.content-card title="Edit Tarif PNBP">
+        <x-slot name="header-actions">
+            <x-main.buttons.action-button href="{{ route('tarif-pnbp.index') }}" variant="secondary" size="sm">
+                Kembali
+            </x-main.buttons.action-button>
+        </x-slot>
+
+        <form action="{{ route('tarif-pnbp.update', $tarif->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <!-- Informasi Dasar Tarif -->
+            <div class="mb-4">
+                <h5 class="mb-3">Informasi Dasar Tarif</h5>
+
+                <div class="row">
+                    <!-- Nama Tarif -->
+                    <div class="col-md-6 mb-3">
+                        <label for="nama_tarif" class="form-label">Nama Tarif <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control @error('nama_tarif') is-invalid @enderror"
+                            id="nama_tarif" name="nama_tarif" value="{{ old('nama_tarif', $tarif->nama_tarif) }}"
+                            placeholder="Masukkan nama tarif" required>
+                        @error('nama_tarif')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Satuan -->
+                    <div class="col-md-6 mb-3">
+                        <label for="satuan" class="form-label">Satuan <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control @error('satuan') is-invalid @enderror" id="satuan"
+                            name="satuan" value="{{ old('satuan', $tarif->satuan) }}" placeholder="Masukkan satuan"
+                            required>
+                        @error('satuan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-                <!-- Satuan -->
-                <div>
-                    <label for="satuan" class="block text-sm font-medium text-gray-700">Satuan <span
-                            class="text-red-500">*</span></label>
-                    <input type="text" name="satuan" id="satuan" required
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
-                        value="{{ old('satuan', $tarif->satuan) }}">
-                    @error('satuan')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <!-- Jenis Tarif, tarif, and waktu -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label for="jenis_tarif" class="block text-sm font-medium text-gray-700">Jenis Tarif <span
-                                class="text-red-500">*</span></label>
-                        <input type="text" name="jenis_tarif" id="jenis_tarif" required
-                            class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
-                            value="{{ old('jenis_tarif', $tarif->jenis_tarif) }}">
+
+                <div class="row">
+                    <!-- Jenis Tarif -->
+                    <div class="col-md-4 mb-3">
+                        <label for="jenis_tarif" class="form-label">Jenis Tarif <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control @error('jenis_tarif') is-invalid @enderror"
+                            id="jenis_tarif" name="jenis_tarif" value="{{ old('jenis_tarif', $tarif->jenis_tarif) }}"
+                            placeholder="Masukkan jenis tarif" required>
                         @error('jenis_tarif')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div>
-                        <label for="tarif" class="block text-sm font-medium text-gray-700">Tarif <span
-                                class="text-red-500">*</span></label>
-                        <input type="number" name="tarif" id="tarif" required
-                            class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
-                            value="{{ old('tarif', $tarif->tarif) }}">
+
+                    <!-- Tarif -->
+                    <div class="col-md-4 mb-3">
+                        <label for="tarif" class="form-label">Tarif <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control @error('tarif') is-invalid @enderror" id="tarif"
+                            name="tarif" value="{{ old('tarif', $tarif->tarif) }}" placeholder="Masukkan tarif"
+                            required>
                         @error('tarif')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div>
-                        <label for="waktu" class="block text-sm font-medium text-gray-700">Waktu <span
-                                class="text-red-500">*</span></label>
-                        <input type="text" name="waktu" id="waktu" required
-                            class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
-                            value="{{ old('waktu', $tarif->waktu) }}">
+
+                    <!-- Waktu -->
+                    <div class="col-md-4 mb-3">
+                        <label for="waktu" class="form-label">Waktu <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control @error('waktu') is-invalid @enderror" id="waktu"
+                            name="waktu" value="{{ old('waktu', $tarif->waktu) }}" placeholder="Masukkan waktu"
+                            required>
                         @error('waktu')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
-                <div class="flex justify-end mt-6">
-                    <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-semibold">Simpan
-                        Perubahan</button>
-                    <a href="{{ route('tarif-pnbp.index') }}"
-                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md font-semibold ml-4">Kembali</a>
-                </div>
-            </form>
-        </div>
-    </div>
-@endsection
+            </div>
+
+            <!-- Form Actions -->
+            <div class="d-flex justify-content-end gap-2">
+                <x-main.buttons.action-button href="{{ route('tarif-pnbp.index') }}" variant="secondary">
+                    Batal
+                </x-main.buttons.action-button>
+                <x-main.buttons.submit-button variant="primary">
+                    Simpan Perubahan
+                </x-main.buttons.submit-button>
+            </div>
+        </form>
+    </x-main.cards.content-card>
+</x-layouts.admin>

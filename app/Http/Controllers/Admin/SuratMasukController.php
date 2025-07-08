@@ -13,9 +13,31 @@ class SuratMasukController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $suratMasuk = SuratMasuk::latest()->paginate(10);
+        $query = SuratMasuk::query();
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('no_surat', 'like', '%' . $request->search . '%')
+                    ->orWhere('perihal', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->filled('dari')) {
+            $query->where('dari', 'like', '%' . $request->dari . '%');
+        }
+
+        if ($request->filled('tanggal_mulai')) {
+            $query->whereDate('tanggal_surat', '>=', $request->tanggal_mulai);
+        }
+
+        if ($request->filled('tanggal_akhir')) {
+            $query->whereDate('tanggal_surat', '<=', $request->tanggal_akhir);
+        }
+
+        $suratMasuk = $query->latest()->paginate(15);
         return view('admin.tata-usaha.surat-masuk.index', compact('suratMasuk'));
     }
 
@@ -119,7 +141,7 @@ class SuratMasukController extends Controller
 
         $suratMasuk->update($data);
 
-        return redirect()->route('admin.surat-masuk.index')
+        return redirect()->route('admin.tata-usaha.surat-masuk.index')
             ->with('success', 'Surat masuk berhasil diperbarui');
     }
 

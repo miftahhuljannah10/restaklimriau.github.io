@@ -18,74 +18,7 @@
         'searchRing' => 'focus:ring-sky-300',
         'searchId' => 'berita-search'
     ])
-    @php
-        $beritaList = [
-            [
-                'id' => 'berita-1',
-                'image' => '/assets/images/berita2.png',
-                'kategori' => 'Berita Terkini',
-                'title' => 'Stasiun Klimatologi Riau Luncurkan Sistem Peringatan Dini Terbaru',
-                'author' => 'Tim Redaksi BMKG Riau',
-                'date' => '15 Januari 2024',
-            ],
-            [
-                'id' => 'berita-2',
-                'image' => '/assets/images/berita2.png',
-                'kategori' => 'Kegiatan',
-                'title' => 'Workshop Pelatihan Interpretasi Data Cuaca untuk Petani Riau',
-                'author' => 'Humas BMKG Riau',
-                'date' => '22 Januari 2024',
-            ],
-            [
-                'id' => 'berita-3',
-                'image' => '/assets/images/berita2.png',
-                'kategori' => 'Berita Terkini',
-                'title' => 'BMKG Riau Gelar Sosialisasi Adaptasi Perubahan Iklim',
-                'author' => 'Tim Redaksi BMKG Riau',
-                'date' => '5 Februari 2024',
-            ],
-            [
-                'id' => 'berita-4',
-                'image' => '/assets/images/berita2.png',
-                'kategori' => 'Kegiatan',
-                'title' => 'Pelatihan Prakiraan Musim untuk Penyuluh Pertanian',
-                'author' => 'Humas BMKG Riau',
-                'date' => '12 Februari 2024',
-            ],
-            [
-                'id' => 'berita-5',
-                'image' => '/assets/images/berita2.png',
-                'kategori' => 'Berita Terkini',
-                'title' => 'BMKG Riau Perkuat Kolaborasi dengan Pemda',
-                'author' => 'Tim Redaksi BMKG Riau',
-                'date' => '20 Februari 2024',
-            ],
-            [
-                'id' => 'berita-6',
-                'image' => '/assets/images/berita2.png',
-                'kategori' => 'Kegiatan',
-                'title' => 'Seminar Nasional Adaptasi Iklim di Pekanbaru',
-                'author' => 'Humas BMKG Riau',
-                'date' => '28 Februari 2024',
-            ],
-            [
-                'id' => 'berita-7',
-                'image' => '/assets/images/berita2.png',
-                'kategori' => 'Berita Terkini',
-                'title' => 'BMKG Riau Rilis Prakiraan Musim Kemarau 2024',
-                'author' => 'Tim Redaksi BMKG Riau',
-                'date' => '5 Maret 2024',
-            ],
-            [
-                'id' => 'berita-8',
-                'image' => '/assets/images/berita2.png',
-                'kategori' => 'Kegiatan',
-                'title' => 'Pelatihan Mitigasi Bencana Berbasis Iklim',
-                'author' => 'Humas BMKG Riau',
-                'date' => '12 Maret 2024',
-            ],
-        ];
-    @endphp
+
     <section class="w-full py-12 md:py-16 lg:py-10">
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Back Button -->
@@ -95,12 +28,22 @@
                     <span class="font-medium font-montserrat">Kembali</span>
                 </button>
             </div>
+
             <!-- Berita Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" id="berita-grid">
-                @foreach($beritaList as $berita)
+                @forelse($beritaList as $berita)
                     @include('components.before-login.media.berita-card', $berita)
-                @endforeach
+                @empty
+                    <div class="col-span-full text-center py-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        </svg>
+                        <h3 class="mt-4 text-lg font-medium text-gray-900">Belum ada berita</h3>
+                        <p class="mt-1 text-sm text-gray-500">Berita terbaru akan ditampilkan di sini.</p>
+                    </div>
+                @endforelse
             </div>
+
             <!-- Pagination Dummy -->
             <div class="mt-8 flex justify-center">
                 <nav class="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
@@ -120,3 +63,49 @@
     </section>
 @endsection
 
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('berita-search');
+        const beritaGrid = document.getElementById('berita-grid');
+        const beritaCards = beritaGrid.querySelectorAll('.berita-card');
+
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            let foundItems = 0;
+
+            beritaCards.forEach(card => {
+                const title = card.querySelector('.berita-title').textContent.toLowerCase();
+                const kategori = card.querySelector('.berita-kategori').textContent.toLowerCase();
+
+                if (title.includes(searchTerm) || kategori.includes(searchTerm)) {
+                    card.style.display = '';
+                    foundItems++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show no results message if needed
+            const noResultsEl = document.getElementById('no-search-results');
+            if (foundItems === 0 && searchTerm !== '') {
+                if (!noResultsEl) {
+                    const noResults = document.createElement('div');
+                    noResults.id = 'no-search-results';
+                    noResults.className = 'col-span-full text-center py-8';
+                    noResults.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <h3 class="mt-2 text-lg font-medium text-gray-900">Tidak ada hasil</h3>
+                        <p class="mt-1 text-sm text-gray-500">Coba kata kunci lain</p>
+                    `;
+                    beritaGrid.appendChild(noResults);
+                }
+            } else if (noResultsEl) {
+                noResultsEl.remove();
+            }
+        });
+    });
+</script>
+@endsection
