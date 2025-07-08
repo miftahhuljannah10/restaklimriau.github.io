@@ -1199,10 +1199,10 @@ function switchToSection(sectionId) {
             window.scrollTo({ top: y, behavior: 'smooth' });
             window._scrollToProfilSection = false;
         }
-        // Update URL jika perlu
-        const url = new URL(window.location);
-        url.searchParams.set('section', sectionId);
-        window.history.replaceState({}, '', url);
+        // HAPUS: Update URL jika perlu
+        // const url = new URL(window.location);
+        // url.searchParams.set('section', sectionId);
+        // window.history.replaceState({}, '', url);
     } catch (err) {
         console.error('Error switching tabs:', err);
     }
@@ -1228,10 +1228,240 @@ document.addEventListener('DOMContentLoaded', function() {
     // switchToSection(initialSection);
 });
 
+// ========================================
+// FORM LAYANAN (form-layanan.blade.php)
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Tampilkan konten Umum secara default
+    if (document.getElementById('umum-card')) {
+        showServiceContent('umum');
+        document.getElementById('umum-card').classList.add('border-sky-500');
+    }
+    // Event listener untuk kartu layanan
+    ['umum','instansi','mahasiswa'].forEach(function(type) {
+        var card = document.getElementById(type+'-card');
+        if(card) {
+            card.addEventListener('click', function() {
+                showServiceContent(type);
+            });
+        }
+    });
+});
+
+function showServiceContent(type) {
+    // Sembunyikan semua konten
+    var umum = document.getElementById('umum-content');
+    var instansi = document.getElementById('instansi-content');
+    var mahasiswa = document.getElementById('mahasiswa-content');
+    var formEmbed = document.getElementById('form-embed');
+    var umumCard = document.getElementById('umum-card');
+    var instansiCard = document.getElementById('instansi-card');
+    var mahasiswaCard = document.getElementById('mahasiswa-card');
+    if (umum) umum.classList.add('hidden');
+    if (instansi) instansi.classList.add('hidden');
+    if (mahasiswa) mahasiswa.classList.add('hidden');
+    if (formEmbed) formEmbed.classList.add('hidden');
+    // Reset semua card ke default
+    if (umumCard) umumCard.className = umumCard.className.replace(/border-sky-500/g, '').replace(/  +/g, ' ') + ' border-zinc-300';
+    if (instansiCard) instansiCard.className = instansiCard.className.replace(/border-sky-500/g, '').replace(/  +/g, ' ') + ' border-zinc-300';
+    if (mahasiswaCard) mahasiswaCard.className = mahasiswaCard.className.replace(/border-sky-500/g, '').replace(/  +/g, ' ') + ' border-zinc-300';
+    // Tampilkan konten & highlight card sesuai pilihan
+    if(type === 'umum') {
+        if (umum) umum.classList.remove('hidden');
+        if (formEmbed) formEmbed.classList.remove('hidden');
+        if (umumCard) umumCard.className = umumCard.className.replace(/border-zinc-300/g, '').replace(/  +/g, ' ') + ' border-sky-500';
+    } else if(type === 'instansi') {
+        if (instansi) instansi.classList.remove('hidden');
+        if (formEmbed) formEmbed.classList.remove('hidden');
+        if (instansiCard) instansiCard.className = instansiCard.className.replace(/border-zinc-300/g, '').replace(/  +/g, ' ') + ' border-sky-500';
+    } else if(type === 'mahasiswa') {
+        if (mahasiswa) mahasiswa.classList.remove('hidden');
+        if (formEmbed) formEmbed.classList.remove('hidden');
+        if (mahasiswaCard) mahasiswaCard.className = mahasiswaCard.className.replace(/border-zinc-300/g, '').replace(/  +/g, ' ') + ' border-sky-500';
+    }
+}
+
 // Make modal functions globally available
 window.closeFeedbackModal = closeFeedbackModal
 
 // Make service click handler globally available
 window.handleServiceClick = handleServiceClick
 
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('mapid') && window.alatMarkers && window.imgBaseUrl) {
+        var map = L.map('mapid').setView([-0.7893, 101.2644], 7);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+        window.alatMarkers.forEach(function(alat) {
+            var icon = L.icon({
+                iconUrl: window.imgBaseUrl + alat.icon,
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40]
+            });
+            L.marker([alat.lat, alat.lng], {icon: icon}).addTo(map)
+                .bindPopup('<b>' + alat.label + '</b>');
+        });
+    }
+});
+
+// ========================================
+// SLIDER UNTUK PROFIL (Fungsional, PPNPN, Alumni)
+// ========================================
+document.addEventListener('DOMContentLoaded', function() {
+    function setupSlider(trackId, prevId, nextId) {
+        const track = document.getElementById(trackId);
+        const prevBtn = document.getElementById(prevId);
+        const nextBtn = document.getElementById(nextId);
+        if (!track || !prevBtn || !nextBtn) return;
+        let position = 0;
+        function getCardWidth() {
+            const card = track.children[0];
+            return card ? card.offsetWidth : 0;
+        }
+        function getGap() {
+            const style = window.getComputedStyle(track);
+            return parseInt(style.gap) || 0;
+        }
+        function getMaxScroll() {
+            const visibleWidth = track.parentElement.offsetWidth;
+            const cardWidth = getCardWidth();
+            const gap = getGap();
+            const totalCards = track.children.length;
+            if (totalCards === 0) return 0;
+            const totalWidth = totalCards * cardWidth + (totalCards - 1) * gap;
+            if (totalWidth <= visibleWidth) return 0;
+            return totalWidth - visibleWidth;
+        }
+        function updatePosition(newPos) {
+            const maxScroll = getMaxScroll();
+            if (newPos > 0) newPos = 0;
+            if (Math.abs(newPos) > maxScroll) newPos = -maxScroll;
+            position = newPos;
+            track.style.transform = `translateX(${position}px)`;
+        }
+        nextBtn.addEventListener('click', function() {
+            const cardWidth = getCardWidth();
+            const gap = getGap();
+            updatePosition(position - (cardWidth + gap));
+        });
+        prevBtn.addEventListener('click', function() {
+            const cardWidth = getCardWidth();
+            const gap = getGap();
+            updatePosition(position + (cardWidth + gap));
+        });
+        window.addEventListener('resize', function() {
+            updatePosition(position);
+        });
+        updatePosition(0);
+    }
+    setupSlider('fungsional-track', 'fungsional-prev', 'fungsional-next');
+    setupSlider('ppnpn-track', 'ppnpn-prev', 'ppnpn-next');
+    setupSlider('alumni-track', 'alumni-prev', 'alumni-next');
+});
+
+// ========================================
+// SWIPERJS UNTUK PRAKIRAAN CUACA (HOMEPAGE)
+// ========================================
+import Swiper from 'swiper/bundle';
+import 'swiper/css/bundle';
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.querySelector('.swiper')) {
+        new Swiper('.swiper', {
+            slidesPerView: 2,
+            spaceBetween: 20,
+            loop: true,
+            speed: 700,
+            grabCursor: true,
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.cw-next-slide',
+                prevEl: '.cw-prev-slide',
+            },
+            watchOverflow: false,
+            breakpoints: {
+                640: { slidesPerView: 3 },
+                768: { slidesPerView: 4 },
+                1024: { slidesPerView: 6 },
+            },
+        });
+    }
+});
+
+// =============================
+// PRAKIRAAN CUACA CAROUSEL
+// =============================
+window.initPrakiraanCuacaCarousel = function(prakiraanCuacaRiau) {
+    function getShowCount() {
+        if (window.innerWidth >= 1024) return 5;
+        if (window.innerWidth >= 768) return 3;
+        return 1;
+    }
+    let showCount = getShowCount();
+    let cuacaIndex = 0;
+    const total = prakiraanCuacaRiau.length;
+    const carousel = document.getElementById('cuaca-carousel');
+    function updateCarousel() {
+        showCount = getShowCount();
+        const cardWidth = carousel.offsetWidth / showCount;
+        carousel.style.transform = `translateX(-${cuacaIndex * cardWidth}px)`;
+    }
+    function nextCuaca() {
+        showCount = getShowCount();
+        cuacaIndex = (cuacaIndex + 1) % total;
+        if (cuacaIndex > total - showCount) cuacaIndex = 0;
+        updateCarousel();
+        resetCuacaInterval();
+    }
+    function prevCuaca() {
+        showCount = getShowCount();
+        cuacaIndex = (cuacaIndex - 1 + total) % total;
+        if (cuacaIndex > total - showCount) cuacaIndex = 0;
+        updateCarousel();
+        resetCuacaInterval();
+    }
+    let cuacaInterval;
+    function resetCuacaInterval() {
+        clearInterval(cuacaInterval);
+        cuacaInterval = setInterval(nextCuaca, 3500);
+    }
+    document.getElementById('cw-next-slide').onclick = nextCuaca;
+    document.getElementById('cw-prev-slide').onclick = prevCuaca;
+    updateCarousel();
+    resetCuacaInterval();
+    carousel.addEventListener('mouseenter', () => clearInterval(cuacaInterval));
+    carousel.addEventListener('mouseleave', resetCuacaInterval);
+    window.addEventListener('resize', () => {
+        updateCarousel();
+    });
+}
+
+// =============================
+// SEARCH ALAT HERO (from hero-cek-ketersediaan.blade.php)
+// =============================
+window.searchAlat = function(searchId) {
+    const input = document.getElementById(searchId || 'alat-search');
+    if (!input) return;
+    const q = input.value.trim();
+    if (!q) {
+        input.focus();
+        input.classList.add('ring-2', 'ring-red-400');
+        setTimeout(()=>input.classList.remove('ring-2','ring-red-400'), 1200);
+        return;
+    }
+    window.dispatchEvent(new CustomEvent('search-alat', { detail: { query: q } }));
+}
+
 console.log("📦 BMKG Scripts loaded successfully!")
+
+

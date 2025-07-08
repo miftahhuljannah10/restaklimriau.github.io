@@ -1,124 +1,89 @@
-<!-- Jenis Pelayanan Section Component -->
-<section class="w-full py-8 md:py-12 lg:py-2 mb-16 bg-white">
+{{--
+Contoh pemanggilan dinamis dari view utama:
+@include('components.before-login.layanan.jenis-pelayanan', [
+    'services' => [
+        [
+            'title' => 'Form Layanan',
+            'desc' => 'Merupakan Layanan Jasa MKKuG',
+            'icon' => 'fas fa-tasks',
+            'bg' => 'bg-gradient-to-br from-sky-400 to-sky-600',
+            'type' => 'button', // atau 'link'
+            'onclick' => "handleServiceClick('Form Layanan')",
+            'aria' => 'Klik untuk membuka Form Layanan',
+        ],
+        [
+            'title' => 'Survey Kepuasan Masyarakat',
+            'desc' => 'Survey online untuk menilai kepuasan masyarakat terhadap layanan BMKG.',
+            'icon' => 'fas fa-edit',
+            'bg' => 'bg-gradient-to-br from-sky-400 to-sky-600',
+            'type' => 'link',
+            'href' => 'https://eskm.bmkg.go.id/survey/418106/0/1/2025-05/2025/0',
+            'target' => '_blank',
+            'aria' => 'Klik untuk membuka Survey Kepuasan Masyarakat',
+        ],
+        // ...layanan lain
+    ]
+])
+--}}
+<!-- Jenis Pelayanan Section Component Dinamis -->
+<section class="w-full py-4 md:py-12 bg-gradient-to-br from-slate-50 via-blue-50/30">
     <div class="max-w-[1440px] mx-auto px-4 lg:px-8">
         <!-- Section Title -->
         <div class="text-center mb-8 md:mb-10 lg:mb-12">
-            <h2 class="text-black text-3xl md:text-3xl font-bold font-montserrat">
+            <h2 class="gradient-text text-3xl md:text-3xl font-bold font-montserrat">
                 Jenis Pelayanan
             </h2>
         </div>
 
-        <!-- Services Grid -->
+        <!-- Services Grid Dinamis -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 max-w-[1290px] mx-auto">
-
-            <!-- Form Layanan -->
-            <div onclick="handleServiceClick('Form Layanan')" class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer" tabindex="0" role="button" aria-label="Klik untuk membuka Form Layanan">
-                <!-- Icon -->
-                <div class="w-20 h-20 mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
-                    <div class="w-20 h-20 bg-sky-500 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-tasks text-white text-2xl"></i>
+            @foreach(($services ?? []) as $service)
+                @if(($service['type'] ?? 'button') === 'link')
+                    <a href="{{ $service['href'] ?? '#' }}" @if(!empty($service['target'])) target="{{ $service['target'] }}" @endif rel="noopener" class="service-card w-full h-80 md:h-84 lg:h-86 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-2xl border border-sky-100 shadow-md flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group text-inherit no-underline" tabindex="0" role="button" aria-label="{{ $service['aria'] ?? '' }}">
+                        <!-- Icon -->
+                        <div class="w-20 h-20 mb-5 flex items-center justify-center">
+                            <div class="w-20 h-20 {{ $service['bg'] ?? 'bg-sky-500' }} rounded-full flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-200">
+                                <i class="{{ $service['icon'] ?? 'fas fa-info-circle' }} text-white text-3xl"></i>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="flex-1 flex flex-col justify-center text-center">
+                            <div class="mb-3">
+                                <h3 class="text-sky-700 text-2xl md:text-2xl lg:text-2xl font-semibold font-montserrat">
+                                    {{ $service['title'] ?? '' }}
+                                </h3>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 text-base md:text-base lg:text-l font-normal font-montserrat leading-relaxed">
+                                    {{ $service['desc'] ?? '' }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                @else
+                    <div onclick="{{ $service['onclick'] ?? '' }}" class="service-card w-full h-80 md:h-84 lg:h-86 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-2xl border border-sky-100 shadow-md flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group" tabindex="0" role="button" aria-label="{{ $service['aria'] ?? '' }}">
+                        <!-- Icon -->
+                        <div class="w-20 h-20 mb-5 flex items-center justify-center">
+                            <div class="w-20 h-20 {{ $service['bg'] ?? 'bg-sky-500' }} rounded-full flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-200">
+                                <i class="{{ $service['icon'] ?? 'fas fa-info-circle' }} text-white text-3xl"></i>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="flex-1 flex flex-col justify-center text-center">
+                            <div class="mb-3">
+                                <h3 class="text-sky-700 text-2xl md:text-2xl lg:text-2xl font-semibold font-montserrat">
+                                    {{ $service['title'] ?? '' }}
+                                </h3>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 text-base md:text-base lg:text-l font-normal font-montserrat leading-relaxed">
+                                    {{ $service['desc'] ?? '' }}
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Content -->
-                <div class="flex-1 flex flex-col justify-center text-center">
-                    <!-- Title -->
-                    <div class="mb-3 md:mb-4">
-                        <h3 class="text-black text-lg md:text-xl lg:text-2xl font-semibold font-montserrat">
-                            Form Layanan
-                        </h3>
-                    </div>
-
-                    <!-- Description -->
-                    <div>
-                        <p class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
-                            Merupakan Layanan Jasa MKKuG
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Survey Kepuasan Masyarakat -->
-            <div onclick="handleServiceClick('Survey Kepuasan Masyarakat')" class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer" tabindex="0" role="button" aria-label="Klik untuk membuka Survey Kepuasan Masyarakat">
-                <!-- Icon -->
-                <div class="w-20 h-20 mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
-                    <div class="w-20 h-20 bg-sky-500 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-edit text-white text-2xl"></i>
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="flex-1 flex flex-col justify-center text-center">
-                    <!-- Title -->
-                    <div class="mb-3 md:mb-4">
-                        <h3 class="text-black text-lg md:text-xl lg:text-2xl font-semibold font-montserrat">
-                            Survey Kepuasan Masyarakat
-                        </h3>
-                    </div>
-
-                    <!-- Description -->
-                    <div>
-                        <p class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
-                            Pengisian Survey berdasarkan kualitas pelayanan Stasiun Klimatologi Riau
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tarif PNBP -->
-            <div onclick="handleServiceClick('Tarif PNBP')" class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer" tabindex="0" role="button" aria-label="Klik untuk membuka Tarif PNBP">
-                <!-- Icon -->
-                <div class="w-20 h-20 mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
-                    <div class="w-20 h-20 bg-sky-500 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-database text-white text-2xl"></i>
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="flex-1 flex flex-col justify-center text-center">
-                    <!-- Title -->
-                    <div class="mb-3 md:mb-4">
-                        <h3 class="text-black text-lg md:text-xl lg:text-2xl font-semibold font-montserrat">
-                            Tarif PNBP
-                        </h3>
-                    </div>
-
-                    <!-- Description -->
-                    <div>
-                        <p class="text-black text-sm md:text-base lg:text-2xl font-normal font-montserrat leading-relaxed">
-                            Daftar Tarif PNBP sesuai PP Nomor 47 Tahun 2018
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Surat 0 Rupiah -->
-            <div onclick="handleServiceClick('Surat 0 Rupiah')" class="service-card w-full h-80 md:h-84 lg:h-96 px-4 md:px-6 py-8 md:py-10 lg:py-12 bg-white rounded-[20px] shadow-[4px_7px_14px_2px_rgba(0,0,0,0.25)] flex flex-col items-center hover:transform hover:scale-105 transition-all duration-300 cursor-pointer" tabindex="0" role="button" aria-label="Klik untuk membuka Surat 0 Rupiah">
-                <!-- Icon -->
-                <div class="w-20 h-20 mb-4 md:mb-5 lg:mb-6 flex items-center justify-center">
-                    <div class="w-20 h-20 bg-sky-500 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-envelope text-white text-2xl"></i>
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="flex-1 flex flex-col justify-center text-center">
-                    <!-- Title -->
-                    <div class="mb-3 md:mb-4">
-                        <h3 class="text-black text-lg md:text-xl lg:text-2xl font-semibold font-montserrat">
-                            Surat 0 Rupiah
-                        </h3>
-                    </div>
-
-                    <!-- Description -->
-                    <div>
-                        <p class="text-black text-sm md:text-base lg:text-xl font-normal font-montserrat leading-relaxed">
-                            Pengisian Surat 0 Rupiah hanya berlaku untuk pengajuan Mahasiswa
-                        </p>
-                    </div>
-                </div>
-            </div>
-
+                @endif
+            @endforeach
         </div>
     </div>
 </section>

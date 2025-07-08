@@ -1,23 +1,23 @@
-<!-- Staff Directory Section -->
+<!-- Staff Directory Section Dinamis -->
 <section class="relative w-full bg-gradient-to-br from-slate-50 to-blue-50 py-16">
     <div class="max-w-6xl mx-auto px-4 lg:px-8">
-        <!-- Kepala Stasiun -->
+        <!-- Kepala Stasiun Dinamis -->
         <section class="mb-16">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold font-montserrat gradient-text mb-4">
-                    Kepala Stasiun
+                    {{ $kepala_title ?? 'Kepala Stasiun' }}
                 </h2>
             </div>
             <div class="flex justify-center">
                 <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 relative group hover:scale-105">
                     <div class="relative z-10 flex flex-col h-full">
-                        <img src="/assets/images/SDM.png" alt="Foto Kepala Stasiun" class="w-32 h-40 mx-auto rounded-xl shadow-md mb-4 object-cover">
+                        <img src="{{ $kepala['foto'] ?? '/assets/images/SDM.png' }}" alt="Foto Kepala Stasiun" class="w-32 h-40 mx-auto rounded-xl shadow-md mb-4 object-cover">
                         <div class="flex-grow flex flex-col justify-between">
                             <div class="text-center mb-4">
-                                <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Edi Rahmanto, S.Tr</h4>
-                                <p class="text-sm text-gray-600 font-montserrat">Kepala Stasiun Klimatologi</p>
+                                <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">{{ $kepala['nama'] ?? '' }}</h4>
+                                <p class="text-sm text-gray-600 font-montserrat">{{ $kepala['jabatan'] ?? '' }}</p>
                             </div>
-                            <a href="/profil-detail?id=kepala-stasiun&type=kepala" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
+                            <a href="{{ $kepala['url'] ?? '#' }}" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
                                 Lihat Profil →
                             </a>
                         </div>
@@ -26,11 +26,11 @@
             </div>
         </section>
 
-        <!-- Kelompok Jabatan Fungsional -->
+        <!-- Kelompok Jabatan Fungsional Dinamis -->
         <section class="mb-16">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold font-montserrat gradient-text mb-4">
-                    Kelompok Jabatan Fungsional
+                    {{ $fungsional_title ?? 'Kelompok Jabatan Fungsional' }}
                 </h2>
             </div>
             <div class="flex justify-center mb-6">
@@ -45,105 +45,31 @@
             </div>
             <div class="flex justify-center"><div class="relative overflow-hidden max-w-6xl">
                 <div id="fungsional-track" class="flex gap-6 transition-transform duration-300 ease-in-out">
-                    <!-- Staff Card Template - Repeat for each member -->
+                    @foreach(($fungsional ?? []) as $staff)
                     <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
                         <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Staff" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
+                            <img src="{{ $staff['foto'] ?? '/assets/images/SDM.png' }}" alt="Foto Staff" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
                             <div class="flex-grow flex flex-col justify-between">
                                 <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Nama Staff 1</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Analis Iklim</p>
+                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">{{ $staff['nama'] ?? '' }}</h4>
+                                    <p class="text-sm text-gray-600 font-montserrat">{{ $staff['jabatan'] ?? '' }}</p>
                                 </div>
-                                <a href="/profil-detail?id=fungsional-1&type=fungsional" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
+                                <a href="{{ $staff['url'] ?? '#' }}" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
                                     Lihat Profil →
                                 </a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Staff" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Nama Staff 2</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Analis Iklim</p>
-                                </div>
-                                <a href="/profil-detail?id=fungsional-2&type=fungsional" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Staff" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Nama Staff 3</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Analis Iklim</p>
-                                </div>
-                                <a href="/profil-detail?id=fungsional-3&type=fungsional" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Staff" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Nama Staff 4</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Analis Iklim</p>
-                                </div>
-                                <a href="/profil-detail?id=fungsional-4&type=fungsional" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Staff" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Nama Staff 5</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Analis Iklim</p>
-                                </div>
-                                <a href="/profil-detail?id=fungsional-5&type=fungsional" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Staff" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Nama Staff 6</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Analis Iklim</p>
-                                </div>
-                                <a href="/profil-detail?id=fungsional-6&type=fungsional" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div></div>
         </section>
 
-        <!-- PPNPN -->
+        <!-- PPNPN Dinamis -->
         <section class="mb-16">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold font-montserrat gradient-text mb-4">
-                    PPNPN
+                    {{ $ppnpn_title ?? 'PPNPN' }}
                 </h2>
             </div>
             <div class="flex justify-center mb-6">
@@ -158,90 +84,31 @@
             </div>
             <div class="flex justify-center"><div class="relative overflow-hidden max-w-6xl">
                 <div id="ppnpn-track" class="flex gap-6 transition-transform duration-300 ease-in-out">
-                    <!-- PPNPN Cards -->
+                    @foreach(($ppnpn ?? []) as $staff)
                     <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
                         <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto PPNPN" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
+                            <img src="{{ $staff['foto'] ?? '/assets/images/SDM.png' }}" alt="Foto PPNPN" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
                             <div class="flex-grow flex flex-col justify-between">
                                 <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">PPNPN 1</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">PPNPN</p>
+                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">{{ $staff['nama'] ?? '' }}</h4>
+                                    <p class="text-sm text-gray-600 font-montserrat">{{ $staff['jabatan'] ?? '' }}</p>
                                 </div>
-                                <a href="/profil-detail?id=ppnpn-1&type=ppnpn" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
+                                <a href="{{ $staff['url'] ?? '#' }}" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
                                     Lihat Profil →
                                 </a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto PPNPN" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">PPNPN 2</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">PPNPN</p>
-                                </div>
-                                <a href="/profil-detail?id=ppnpn-2&type=ppnpn" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto PPNPN" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">PPNPN 3</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">PPNPN</p>
-                                </div>
-                                <a href="/profil-detail?id=ppnpn-3&type=ppnpn" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto PPNPN" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">PPNPN 4</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">PPNPN</p>
-                                </div>
-                                <a href="/profil-detail?id=ppnpn-4&type=ppnpn" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto PPNPN" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">PPNPN 5</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">PPNPN</p>
-                                </div>
-                                <a href="/profil-detail?id=ppnpn-5&type=ppnpn" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div></div>
         </section>
 
-        <!-- Alumni Pegawai -->
+        <!-- Alumni Pegawai Dinamis -->
         <section class="mb-16">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold font-montserrat gradient-text mb-4">
-                    Alumni Pegawai
+                    {{ $alumni_title ?? 'Alumni Pegawai' }}
                 </h2>
             </div>
             <div class="flex justify-center mb-6">
@@ -256,81 +123,25 @@
             </div>
             <div class="flex justify-center"><div class="relative overflow-hidden max-w-6xl">
                 <div id="alumni-track" class="flex gap-6 transition-transform duration-300 ease-in-out">
-                    <!-- Alumni Cards -->
+                    @foreach(($alumni ?? []) as $staff)
                     <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
                         <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Alumni" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
+                            <img src="{{ $staff['foto'] ?? '/assets/images/SDM.png' }}" alt="Foto Alumni" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
                             <div class="flex-grow flex flex-col justify-between">
                                 <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Alumni 1</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Alumni Pegawai</p>
+                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">{{ $staff['nama'] ?? '' }}</h4>
+                                    <p class="text-sm text-gray-600 font-montserrat">{{ $staff['jabatan'] ?? '' }}</p>
                                 </div>
-                                <a href="/profil-detail?id=alumni-1&type=alumni" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
+                                <a href="{{ $staff['url'] ?? '#' }}" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
                                     Lihat Profil →
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Alumni" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Alumni 2</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Alumni Pegawai</p>
-                                </div>
-                                <a href="/profil-detail?id=alumni-2&type=alumni" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Alumni" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Alumni 3</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Alumni Pegawai</p>
-                                </div>
-                                <a href="/profil-detail?id=alumni-3&type=alumni" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Alumni" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Alumni 4</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Alumni Pegawai</p>
-                                </div>
-                                <a href="/profil-detail?id=alumni-4&type=alumni" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white w-64 h-80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex-shrink-0 hover:scale-105">
-                        <div class="flex flex-col h-full">
-                            <img src="/assets/images/SDM.png" alt="Foto Alumni" class="w-32 h-40 mx-auto rounded-xl object-cover mb-4 shadow-sm">
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div class="text-center mb-4">
-                                    <h4 class="text-lg font-bold font-montserrat text-gray-800 mb-1">Alumni 5</h4>
-                                    <p class="text-sm text-gray-600 font-montserrat">Alumni Pegawai</p>
-                                </div>
-                                <a href="/profil-detail?id=alumni-5&type=alumni" class="block w-full text-center text-sm font-bold text-sky-500 hover:text-sky-700 transition-colors font-montserrat bg-sky-50 hover:bg-sky-100 py-2 px-4 rounded-lg">
-                                    Lihat Profil →
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div></div>
         </section>
-
     </div>
 </section>
 
