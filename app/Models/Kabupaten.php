@@ -8,6 +8,7 @@ class Kabupaten extends Model
 {
     protected $table = 'kabupaten';
     protected $fillable = [
+        'provinsi_id',
         'nama_kabupaten',
     ];
     public function kecamatans()
@@ -18,5 +19,9 @@ class Kabupaten extends Model
     public function alats()
     {
         return $this->hasMany(Alat::class);
+    }
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class);
     }
 }

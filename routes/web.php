@@ -28,6 +28,7 @@ use App\Http\Controllers\Masyarakat\BeritaController;
 Route::get('/', function () {
     return view('masyarakat.index');
 });
+
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\HomeController;
 
@@ -105,6 +106,18 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth', 'role:pemimpin'])->group(function () {
+
+    // Kontak Perusahaan Management
+    Route::resource('/admin/kontak', App\Http\Controllers\Admin\KontakController::class)
+        ->names([
+            'index' => 'admin.kontak.index',
+            'create' => 'admin.kontak.create',
+            'store' => 'admin.kontak.store',
+            'show' => 'admin.kontak.show',
+            'edit' => 'admin.kontak.edit',
+            'update' => 'admin.kontak.update',
+            'destroy' => 'admin.kontak.destroy',
+        ]);
     // Dashboard Routes
     Route::get('/admin', function () {
         return redirect()->route('admin.dashboard');
@@ -287,6 +300,9 @@ Route::get('/berita', [App\Http\Controllers\Masyarakat\BeritaController::class, 
 Route::get('/berita/kategori/{kategori}', [App\Http\Controllers\Masyarakat\BeritaController::class, 'category'])->name('berita.category');
 Route::get('/berita/{slug}', [App\Http\Controllers\Masyarakat\BeritaController::class, 'show'])->name('berita.show');
 Route::get('/buletin', [App\Http\Controllers\Masyarakat\BuletinController::class, 'index'])->name('buletin.index');
+// kontak
+Route::get('/kontak', [App\Http\Controllers\Masyarakat\KontakController::class, 'index'])->name('kontak.index');
+
 Route::get('/produk/detail-produk', function () {
     return view('masyarakat.detail-produk', [
         'judul' => 'Prakiraan Ketersediaan Air Bagi Tanaman',

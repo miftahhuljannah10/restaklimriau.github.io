@@ -10,7 +10,7 @@
             '{{ old('provinsi_id', $alat->provinsi_id) }}',
             '{{ old('kabupaten_id', $alat->kabupaten_id) }}',
             '{{ old('kecamatan_id', $alat->kecamatan_id) }}'
-        )">
+        )" x-init="init()">
             <form action="{{ route('metadata-alat.update', $alat->nomor_pos) }}" method="POST"
                 enctype="multipart/form-data" class="space-y-4">
                 @csrf
@@ -125,8 +125,7 @@
                             required>
                             <option value="">Pilih Kabupaten</option>
                             <template x-for="kabupaten in filteredKabupatens" :key="kabupaten.id">
-                                <option :value="kabupaten.id" x-text="kabupaten.nama_kabupaten"
-                                    :selected="kabupaten.id == '{{ old('kabupaten_id', $alat->kabupaten_id) }}'">
+                                <option :value="kabupaten.id" x-text="kabupaten.nama_kabupaten">
                                 </option>
                             </template>
                         </select>
@@ -144,8 +143,7 @@
                             required>
                             <option value="">Pilih Kecamatan</option>
                             <template x-for="kecamatan in filteredKecamatans" :key="kecamatan.id">
-                                <option :value="kecamatan.id" x-text="kecamatan.nama_kecamatan"
-                                    :selected="kecamatan.id == '{{ old('kecamatan_id', $alat->kecamatan_id) }}'">
+                                <option :value="kecamatan.id" x-text="kecamatan.nama_kecamatan">
                                 </option>
                             </template>
                         </select>
@@ -358,14 +356,9 @@
                 get filteredKabupatens() {
                     if (!this.provinsiId) return [];
 
-                    // Filter kabupaten berdasarkan kecamatan yang ada di provinsi ini
-                    const kecamatanInProvinsi = this.allKecamatans.filter(
-                        kec => kec.provinsi_id == this.provinsiId
-                    );
-                    const kabupatenIds = [...new Set(kecamatanInProvinsi.map(k => k.kabupaten_id))];
-
+                    // Cari kabupaten berdasarkan provinsi_id langsung
                     return this.allKabupatens.filter(
-                        kab => kabupatenIds.includes(kab.id)
+                        kab => kab.provinsi_id == this.provinsiId
                     );
                 },
 
@@ -376,10 +369,25 @@
                     );
                 },
 
+                filterKabupaten() {
+                    this.kabupatenId = '';
+                    this.kecamatanId = '';
+                },
+
+                filterKecamatan() {
+                    this.kecamatanId = '';
+                },
+
                 init() {
-                    // Inisialisasi filter berdasarkan data yang sudah ada
-                    if (this.provinsiId) this.filterKabupaten();
-                    if (this.kabupatenId) this.filterKecamatan();
+                    // Auto-load data saat halaman dimuat
+                    this.$nextTick(() => {
+                        if (this.provinsiId) {
+                            this.filterKabupaten();
+                        }
+                        if (this.kabupatenId) {
+                            this.filterKecamatan();
+                        }
+                    });
                 }
             }
         }

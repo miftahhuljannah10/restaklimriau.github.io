@@ -1,107 +1,187 @@
 <x-layouts.admin title="Kategori Produk" subtitle="Kelola kategori produk">
 
+    {{-- Custom CSS for table --}}
+    @push('styles')
+        <style>
+            .sortable:hover {
+                background-color: #f9fafb;
+            }
+
+            .sortable .sort-icon {
+                transition: transform 0.2s ease;
+            }
+
+            .sortable:hover .sort-icon {
+                transform: scale(1.1);
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            @media (max-width: 768px) {
+                .table-container {
+                    overflow-x: scroll;
+                }
+            }
+        </style>
+    @endpush
+
     {{-- Breadcrumb --}}
     <x-main.layouts.breadcrumb :items="[['title' => 'Produk', 'url' => '#'], ['title' => 'Kategori Produk']]" />
 
-    {{-- Main Content --}}
+    {{-- Modern Data Table --}}
     <x-main.cards.content-card>
-        {{-- Header --}}
-        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-            <div class="flex items-center justify-between mb-4">
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Data Kategori Produk</h3>
-                    <p class="text-sm text-gray-600">Kelola kategori produk yang tersedia</p>
-                </div>
-                <div class="flex items-center space-x-2 text-sm text-gray-500">
-                    <span>Total: {{ $categories->total() }} kategori</span>
-                </div>
-            </div>
-
-            {{-- Quick Actions --}}
-            <div
-                class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 sm:space-x-4">
-                <div class="flex-1 max-w-md">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </div>
-                        <form method="GET" action="{{ route('kategori-produk.index') }}">
-                            <input type="text" name="search" value="{{ request('search') }}"
-                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Cari nama kategori...">
-                        </form>
+        <div class="overflow-hidden">
+            {{-- Table Header with Info and Quick Filters --}}
+            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Data Kategori Produk</h3>
+                        <p class="text-sm text-gray-600">Kelola kategori produk yang tersedia</p>
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                        <span>Menampilkan <span id="visibleCount">{{ $categories->count() }}</span> dari
+                            {{ $categories->total() }} data</span>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-3">
-                    <x-main.buttons.action-button href="{{ route('kategori-produk.create') }}" variant="primary">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                        </svg>
-                        Tambah Kategori
-                    </x-main.buttons.action-button>
+                {{-- Quick Search and Actions --}}
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 sm:space-x-4">
+                    <div class="flex-1 max-w-md">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <input type="text" id="quickSearch"
+                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Cari kategori...">
+                        </div>
+                    </div>
 
-                    <button type="button" onclick="location.reload()"
-                        class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
-                            </path>
-                        </svg>
-                        Refresh
-                    </button>
+                    <div class="flex items-center space-x-3">
+                        <x-main.buttons.action-button href="{{ route('kategori-produk.create') }}" variant="primary">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4" />
+                            </svg>
+                            Tambah Kategori
+                        </x-main.buttons.action-button>
+
+                        <button type="button" id="refreshBtn"
+                            class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                                </path>
+                            </svg>
+                            Refresh
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {{-- Table --}}
-        <div class="overflow-hidden">
-            <div class="overflow-x-auto">
+            {{-- Datatables Table Container --}}
+            <div class="table-container">
                 <table class="min-w-full divide-y divide-gray-200">
+                    {{-- Table Header --}}
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                No
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                                data-sort="id">
+                                <div class="flex items-center space-x-1">
+                                    <span>No</span>
+                                    <svg class="w-4 h-4 text-gray-400 sort-icon" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                    </svg>
+                                </div>
                             </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Nama Kategori
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                                data-sort="nama_kategori">
+                                <div class="flex items-center space-x-1">
+                                    <span>Nama Kategori</span>
+                                    <svg class="w-4 h-4 text-gray-400 sort-icon" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                    </svg>
+                                </div>
                             </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Aksi
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    {{-- Table Body --}}
+                    <tbody class="bg-white divide-y divide-gray-200" id="categoryTableBody">
                         @forelse ($categories as $index => $item)
-                            <tr class="hover:bg-gray-50">
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $categories->firstItem() + $index }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">{{ $item->nama_kategori }}</div>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <div
+                                                class="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                                                <span class="text-white text-sm font-bold">
+                                                    {{ strtoupper(substr($item->nama_kategori, 0, 1)) }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-semibold text-gray-900 truncate">
+                                                {{ $item->nama_kategori }}
+                                            </p>
+                                            <p class="text-xs text-gray-500">ID: {{ $item->id }}</p>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <x-main.datatables.action-buttons :editUrl="route('kategori-produk.edit', $item->id)" :deleteUrl="route('kategori-produk.destroy', $item->id)"
-                                        deleteConfirmText="Yakin ingin menghapus kategori ini?" />
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    <div class="flex items-center justify-center space-x-2">
+                                        <x-main.datatables.action-buttons :deleteAction="route('kategori-produk.destroy', $item->id)" :itemId="$item->id"
+                                            :itemName="$item->nama_kategori" size="sm" />
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3"
-                                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                    <div class="flex flex-col items-center py-8">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-2"
-                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                        </svg>
-                                        <p class="text-gray-500">Tidak ada kategori produk ditemukan</p>
+                                <td colspan="3" class="px-6 py-16 text-center">
+                                    <div class="flex flex-col items-center space-y-4">
+                                        <div
+                                            class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center">
+                                            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                            </svg>
+                                        </div>
+                                        <div class="text-center max-w-md">
+                                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Belum ada kategori
+                                                produk
+                                            </h3>
+                                            <p class="text-sm text-gray-500 mb-6">
+                                                Sistem belum memiliki kategori produk. Mulai dengan menambahkan
+                                                kategori pertama untuk mengorganisir produk Anda.
+                                            </p>
+                                            <a href="{{ route('kategori-produk.create') }}"
+                                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 shadow-sm">
+                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                                </svg>
+                                                Tambah Kategori Pertama
+                                            </a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profil_perusahaan', function (Blueprint $table) {
+        Schema::create('kontak_perusahaan', function (Blueprint $table) {
             $table->id();
+            $table->string('key')->unique(); // contoh: alamat, email, whatsapp, operasional_senin_kamis, operasional_jumat
+            $table->text('value'); // isi kontak atau jam operasional
+            $table->string('link')->nullable(); // untuk kontak yang punya link (mailto, wa.me, dsb)
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profil_perusahaan');
+        Schema::dropIfExists('kontak_perusahaan');
     }
 };

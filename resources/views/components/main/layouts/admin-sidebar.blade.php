@@ -394,13 +394,42 @@
                     </li>
                 </ul>
             </li>
+            <li x-data="{ open: {{ str_contains($currentRoute, 'kontak') ? 'true' : 'false' }} }" class="bg-gray-900">
+                <button @click="open = !open"
+                    class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-200 group text-gray-300 hover:bg-gray-800 hover:text-white">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
+                    </svg>
+                    <span x-show="!sidebarCollapsed" x-transition class="truncate flex-1 text-left">Profil
+                        Perusahaan</span>
+                    <svg x-show="!sidebarCollapsed" :class="open ? 'rotate-180' : ''"
+                        class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <ul x-show="open && !sidebarCollapsed" x-transition class="mt-1 ml-8 space-y-1 bg-gray-900">
+                    <li class="bg-gray-900">
+                        <a href="{{ route('admin.kontak.index') }}"
+                            class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 {{ request()->routeIs('admin.kontak.*') ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                            Kontak Perusahaan
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
 
             {{-- Divider --}}
             <li class="my-4 bg-gray-900">
                 <hr class="border-gray-700">
             </li>
+
         </ul>
     </nav>
+
 
     {{-- Bottom Section (Profile, Logout) --}}
     <div class="admin-sidebar-bottom mt-auto bg-gray-900">

@@ -123,6 +123,6 @@
                 </div>
             </form>
         </div>
-        </div>
-        </div>
-    @endsection
+    </x-main.cards.content-card>
+
+</x-layouts.admin>

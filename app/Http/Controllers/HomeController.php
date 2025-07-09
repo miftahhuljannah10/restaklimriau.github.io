@@ -1,12 +1,38 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        // Daftar wilayah dengan kode tingkat IV
+        $wilayahRiau = [
+            ['nama' => 'Pekanbaru',         'kode' => '1471010002'],
+            ['nama' => 'Dumai',             'kode' => '1471020001'],
+            ['nama' => 'Bengkalis',         'kode' => '1401010003'],
+            ['nama' => 'Rokan Hilir',       'kode' => '1401020004'],
+            ['nama' => 'Rokan Hulu',        'kode' => '1401030002'],
+            ['nama' => 'Kampar',            'kode' => '1401040003'],
+            ['nama' => 'Indragiri Hulu',    'kode' => '1401050001'],
+            ['nama' => 'Indragiri Hilir',   'kode' => '1401060001'],
+            ['nama' => 'Pelalawan',         'kode' => '1401070002'],
+            ['nama' => 'Siak',              'kode' => '1401080002'],
+            ['nama' => 'Kuantan Singingi',  'kode' => '1401090001'],
+            ['nama' => 'Kepulauan Meranti', 'kode' => '1401100001'],
+        ];
+
+        $prakiraanCuacaRiau = [];
+
+        foreach ($wilayahRiau as $wilayah) {
+            $cuaca = $this->getCuacaWilayah($wilayah['kode'], $wilayah['nama']);
+            if ($cuaca) {
+                $prakiraanCuacaRiau[] = $cuaca;
+            }
+        }
         $gempa = [
             'Shakemap' => 'https://static.bmkg.go.id/20250706185549.mmi.jpg',
             'TanggalJamFormat' => '06 Jul 2025, 18:55:49 WIB',
@@ -16,88 +42,40 @@ class HomeController extends Controller
             'Kedalaman' => '7 Km',
             'KoordinatFormat' => '3,52 LS - 128,67 BT',
         ];
-        $prakiraanCuacaRiau = [
-            [
-                'nama' => 'Pekanbaru',
-                'kode' => '14.71.01.1002',
-                'waktu' => '15.40 WIB',
-                'suhu' => 30,
-                'kondisi' => 'Cerah',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="14" fill="#FFD600"/><g stroke="#FFB300" stroke-width="2"><line x1="32" y1="8" x2="32" y2="0"/><line x1="32" y1="56" x2="32" y2="64"/><line x1="8" y1="32" x2="0" y2="32"/><line x1="56" y1="32" x2="64" y2="32"/><line x1="14.93" y1="14.93" x2="8.49" y2="8.49"/><line x1="49.07" y1="14.93" x2="55.51" y2="8.49"/><line x1="14.93" y1="49.07" x2="8.49" y2="55.51"/><line x1="49.07" y1="49.07" x2="55.51" y2="55.51"/></g></svg>',
-            ],
-            [
-                'nama' => 'Dumai',
-                'kode' => '14.71.02.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 29,
-                'kondisi' => 'Berawan',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="44" rx="16" ry="10" fill="#B0BEC5"/><ellipse cx="28" cy="40" rx="14" ry="9" fill="#ECEFF1"/></svg>',
-            ],
-            [
-                'nama' => 'Bengkalis',
-                'kode' => '14.71.03.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 28,
-                'kondisi' => 'Cerah Berawan',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="26" r="10" fill="#FFD600"/><ellipse cx="40" cy="44" rx="16" ry="10" fill="#B0BEC5"/><ellipse cx="28" cy="40" rx="14" ry="9" fill="#ECEFF1"/></svg>',
-            ],
-            [
-                'nama' => 'Siak',
-                'kode' => '14.71.04.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 27,
-                'kondisi' => 'Cerah',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="14" fill="#FFD600"/><g stroke="#FFB300" stroke-width="2"><line x1="32" y1="8" x2="32" y2="0"/><line x1="32" y1="56" x2="32" y2="64"/><line x1="8" y1="32" x2="0" y2="32"/><line x1="56" y1="32" x2="64" y2="32"/><line x1="14.93" y1="14.93" x2="8.49" y2="8.49"/><line x1="49.07" y1="14.93" x2="55.51" y2="8.49"/><line x1="14.93" y1="49.07" x2="8.49" y2="55.51"/><line x1="49.07" y1="49.07" x2="55.51" y2="55.51"/></g></svg>',
-            ],
-            [
-                'nama' => 'Rokan Hulu',
-                'kode' => '14.71.05.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 26,
-                'kondisi' => 'Hujan Ringan',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="44" rx="16" ry="10" fill="#B0BEC5"/><ellipse cx="28" cy="40" rx="14" ry="9" fill="#ECEFF1"/><g stroke="#4FC3F7" stroke-width="2"><line x1="24" y1="54" x2="24" y2="60"/><line x1="32" y1="54" x2="32" y2="60"/><line x1="40" y1="54" x2="40" y2="60"/></g></svg>',
-            ],
-            [
-                'nama' => 'Indragiri Hulu',
-                'kode' => '14.71.06.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 27,
-                'kondisi' => 'Cerah Berawan',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="26" r="10" fill="#FFD600"/><ellipse cx="40" cy="44" rx="16" ry="10" fill="#B0BEC5"/><ellipse cx="28" cy="40" rx="14" ry="9" fill="#ECEFF1"/></svg>',
-            ],
-            [
-                'nama' => 'Pelalawan',
-                'kode' => '14.71.07.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 28,
-                'kondisi' => 'Berawan',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="44" rx="16" ry="10" fill="#B0BEC5"/><ellipse cx="28" cy="40" rx="14" ry="9" fill="#ECEFF1"/></svg>',
-            ],
-            [
-                'nama' => 'Kuantan Singingi',
-                'kode' => '14.71.08.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 29,
-                'kondisi' => 'Hujan Sedang',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="44" rx="16" ry="10" fill="#B0BEC5"/><ellipse cx="28" cy="40" rx="14" ry="9" fill="#ECEFF1"/><g stroke="#0288D1" stroke-width="3"><line x1="20" y1="54" x2="20" y2="62"/><line x1="32" y1="54" x2="32" y2="62"/><line x1="44" y1="54" x2="44" y2="62"/></g></svg>',
-            ],
-            [
-                'nama' => 'Meranti',
-                'kode' => '14.71.09.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 27,
-                'kondisi' => 'Cerah',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="14" fill="#FFD600"/><g stroke="#FFB300" stroke-width="2"><line x1="32" y1="8" x2="32" y2="0"/><line x1="32" y1="56" x2="32" y2="64"/><line x1="8" y1="32" x2="0" y2="32"/><line x1="56" y1="32" x2="64" y2="32"/><line x1="14.93" y1="14.93" x2="8.49" y2="8.49"/><line x1="49.07" y1="14.93" x2="55.51" y2="8.49"/><line x1="14.93" y1="49.07" x2="8.49" y2="55.51"/><line x1="49.07" y1="49.07" x2="55.51" y2="55.51"/></g></svg>',
-            ],
-            [
-                'nama' => 'Kampar',
-                'kode' => '14.71.10.1001',
-                'waktu' => '15.40 WIB',
-                'suhu' => 28,
-                'kondisi' => 'Berawan Tebal',
-                'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="44" rx="16" ry="10" fill="#78909C"/><ellipse cx="28" cy="40" rx="14" ry="9" fill="#B0BEC5"/></svg>',
-            ],
-        ];
-        return view('masyarakat.index', compact('gempa', 'prakiraanCuacaRiau'));
+
+        return view('masyarakat.index', compact('prakiraanCuacaRiau', 'gempa'));
+        
+    }
+
+    private function getCuacaWilayah($kode, $nama)
+    {
+        return Cache::remember("cuaca_$kode", 300, function () use ($kode, $nama) {
+            $url = "https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4={$kode}";
+
+            try {
+                $response = Http::timeout(10)->get($url);
+                if (!$response->successful()) {
+                    return null;
+                }
+
+                $data = $response->json();
+                $list = $data['data'][0]['cuaca'][0] ?? [];
+
+                $prakiraan = $list[0] ?? null; // Ambil data pertama
+
+                if (!$prakiraan) return null;
+
+                return [
+                    'nama' => $nama,
+                    'kode' => $kode,
+                    'waktu' => $prakiraan['local_datetime'] ?? '',
+                    'suhu' => $prakiraan['t'] ?? '-',
+                    'kondisi' => $prakiraan['weather_desc'] ?? '-',
+                ];
+            } catch (\Exception $e) {
+                \Log::error("Gagal ambil data cuaca untuk {$kode}: " . $e->getMessage());
+                return null;
+            }
+        });
     }
 }

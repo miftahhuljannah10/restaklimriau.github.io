@@ -317,31 +317,42 @@
                 get filteredKabupatens() {
                     if (!this.provinsiId) return [];
 
-                    // 1. Dapatkan semua kecamatan yang ada di provinsi ini
-                    const kecamatanInProvinsi = this.allKecamatans.filter(
-                        kec => kec.provinsi_id == this.provinsiId
-                    );
-
-                    // 2. Kumpulkan ID kabupaten unik dari kecamatan tersebut
-                    const kabupatenIds = [...new Set(kecamatanInProvinsi.map(k => k.kabupaten_id))];
-
-                    // 3. Filter kabupaten berdasarkan ID yang terkait
+                    // Filter kabupaten berdasarkan provinsi_id
                     return this.allKabupatens.filter(
-                        kab => kabupatenIds.includes(kab.id)
+                        kab => kab.provinsi_id == this.provinsiId
                     );
                 },
 
                 get filteredKecamatans() {
                     if (!this.kabupatenId) return [];
+
+                    // Filter kecamatan berdasarkan kabupaten_id
                     return this.allKecamatans.filter(
                         kec => kec.kabupaten_id == this.kabupatenId
                     );
                 },
 
+                filterKabupaten() {
+                    // Reset kabupaten dan kecamatan ketika provinsi berubah
+                    this.kabupatenId = '';
+                    this.kecamatanId = '';
+                },
+
+                filterKecamatan() {
+                    // Reset kecamatan ketika kabupaten berubah
+                    this.kecamatanId = '';
+                },
+
                 init() {
-                    // Jika ada old value, filter dropdown
-                    if (this.provinsiId) this.filterKabupaten();
-                    if (this.kabupatenId) this.filterKecamatan();
+                    // Inisialisasi sudah dilakukan melalui x-data
+                    console.log('Alpine.js initialized');
+                    console.log('Provinsi ID:', this.provinsiId);
+                    console.log('Kabupaten ID:', this.kabupatenId);
+                    console.log('Kecamatan ID:', this.kecamatanId);
+                    console.log('All Kabupatens:', this.allKabupatens);
+                    console.log('All Kecamatans:', this.allKecamatans);
+                    console.log('Filtered Kabupatens:', this.filteredKabupatens);
+                    console.log('Filtered Kecamatans:', this.filteredKecamatans);
                 }
             }
         }

@@ -68,11 +68,10 @@ class AlatCurahHujanController extends Controller
             if (!$nomor_pos) continue;
 
             // Cek apakah nomor_pos ada di tabel alat
-            if (Alat::where('nomor_pos', $nomor_pos)->exists()) {
+            if (!Alat::where('nomor_pos', $nomor_pos)->exists()) {
                 $skipped++;
                 continue;
             }
-
             $data = [
                 'nomor_pos'  => $nomor_pos,
                 'januari'    => $row[1] ?? null,
