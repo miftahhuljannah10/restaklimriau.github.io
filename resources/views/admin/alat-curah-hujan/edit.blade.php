@@ -126,12 +126,13 @@
                         </svg>
                         Batal
                     </x-main.buttons.action-button>
-                    <x-main.buttons.action-button type="submit" variant="primary">
+                    <button type="submit"
+                        class="inline-flex items-center justify-center font-medium rounded-lg shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 text-white px-4 py-2 text-sm hover:shadow-md transform hover:-translate-y-0.5">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         Simpan Perubahan
-                    </x-main.buttons.action-button>
+                    </button>
                 </div>
             </form>
         </div>

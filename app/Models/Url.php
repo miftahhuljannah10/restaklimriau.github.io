@@ -21,6 +21,7 @@ class Url extends Model
         return [
             'nol_rupiah' => 'Link Nol Rupiah',
             'survey' => 'Link Survey',
+            'google_form' => 'Google Form',
         ];
     }
 }

@@ -9,11 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $user = Auth::user(); // langsung tangkap user
 
-        if (!$user || $user->role->name !== $role) {
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        // If no roles matched, deny access
+        if (!in_array($user->role->name, $roles)) {
             abort(403, 'Anda tidak memiliki izin untuk akses ini.');
         }
 

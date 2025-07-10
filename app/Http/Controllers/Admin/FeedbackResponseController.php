@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\FeedbackResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class FeedbackResponseController extends Controller
 {
@@ -31,14 +33,59 @@ class FeedbackResponseController extends Controller
 
     public function bulkDelete(Request $request)
     {
-        $request->validate([
-            'ids' => 'required|array',
-            'ids.*' => 'exists:feedback_responses,id',
+        // Debug logging
+        Log::info('Bulk delete request received', [
+            'request_data' => $request->all(),
+            'ids_raw' => $request->ids
         ]);
 
-        FeedbackResponse::whereIn('id', $request->ids)->delete();
+        $ids = json_decode($request->ids, true);
 
-        return redirect()->route('admin.feedback.responses.index')
-            ->with('success', 'Selected feedback responses deleted successfully');
+        Log::info('Decoded IDs', ['ids' => $ids]);
+
+        if (empty($ids) || !is_array($ids)) {
+            Log::warning('No valid IDs provided for bulk delete');
+            return redirect()->route('admin.feedback.responses.index')
+                ->with('error', 'Tidak ada data yang dipilih untuk dihapus.');
+        }
+
+        try {
+            $deletedCount = FeedbackResponse::whereIn('id', $ids)->delete();
+
+            Log::info('Bulk delete successful', [
+                'requested_ids' => $ids,
+                'deleted_count' => $deletedCount
+            ]);
+
+            return redirect()->route('admin.feedback.responses.index')
+                ->with('success', $deletedCount . ' feedback berhasil dihapus.');
+        } catch (\Exception $e) {
+            Log::error('Bulk delete failed', [
+                'ids' => $ids,
+                'error' => $e->getMessage()
+            ]);
+
+            return redirect()->route('admin.feedback.responses.index')
+                ->with('error', 'Gagal menghapus data: ' . $e->getMessage());
+        }
+    }
+
+    public function truncate(Request $request)
+    {
+        try {
+            // Use transaction for safety
+            DB::transaction(function () {
+                // Delete all feedback answers first (foreign key constraint)
+                DB::table('feedback_answers')->truncate();
+                // Then truncate feedback responses
+                DB::table('feedback_responses')->truncate();
+            });
+
+            return redirect()->route('admin.feedback.responses.index')
+                ->with('success', 'Semua data feedback berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.feedback.responses.index')
+                ->with('error', 'Gagal menghapus semua data: ' . $e->getMessage());
+        }
     }
 }

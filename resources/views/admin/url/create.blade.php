@@ -78,11 +78,11 @@
                         {{-- Description Field --}}
                         <div>
                             <label for="deskripsi" class="block text-sm font-medium text-gray-700 mb-2">
-                                Deskripsi <span class="text-red-500">*</span>
+                                Deskripsi
                             </label>
                             <textarea id="deskripsi" name="deskripsi" rows="4"
                                 class="block w-full px-3 py-2 border rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 {{ $errors->has('deskripsi') ? 'border-red-500' : 'border-gray-300' }}"
-                                placeholder="Masukkan deskripsi URL" required>{{ old('deskripsi') }}</textarea>
+                                placeholder="Masukkan deskripsi URL (opsional)">{{ old('deskripsi') }}</textarea>
                             @error('deskripsi')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -99,12 +99,13 @@
                         </svg>
                         Batal
                     </x-main.buttons.action-button>
-                    <x-main.buttons.action-button type="submit" variant="primary">
+                    <button type="submit"
+                        class="inline-flex items-center justify-center font-medium rounded-lg shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 text-white px-4 py-2 text-sm hover:shadow-md transform hover:-translate-y-0.5">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                         Simpan
-                    </x-main.buttons.action-button>
+                    </button>
                 </div>
             </form>
         </div>

@@ -18,9 +18,9 @@
 
     <div class="flex min-h-screen items-center justify-center bg-cover bg-center" style="background-image: url('/images/stasiun-bg.png')">
         <div class="bg-white shadow-xl rounded-3xl w-full max-w-md p-10">
-            <h2 class="text-sm text-gray-700 mb-1">Welcome to</h2>
+            <h2 class="text-sm text-gray-700 mb-1">Selamat Datang di</h2>
             <h1 class="text-blue-600 font-semibold text-md mb-4">Administrator Stasiun Klimatologi Riau</h1>
-            <h2 class="text-3xl font-bold text-black mb-6">Sign in</h2>
+            <h2 class="text-3xl font-bold text-black mb-6">Masuk</h2>
 
             @if (session('status'))
                 <div class="mb-4 text-green-600 text-sm">
@@ -42,17 +42,17 @@
                 @csrf
 
                 <div>
-                    <label for="email" class="block text-sm mb-1 text-gray-600">Enter your email address</label>
+                    <label for="email" class="block text-sm mb-1 text-gray-600">Masukkan email anda</label>
                     <input type="email" name="email" id="email" required autofocus
                         class="w-full px-4 py-3 border border-blue-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        placeholder="Username or email address" />
+                        placeholder="Masukkan email anda" />
                 </div>
 
                 <div>
-                    <label for="password" class="block text-sm mb-1 text-gray-600">Enter your password</label>
+                    <label for="password" class="block text-sm mb-1 text-gray-600">Masukkan password anda</label>
                     <input type="password" name="password" id="password" required
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        placeholder="Enter your password" />
+                        placeholder="Masukkan password anda" />
                 </div>
 
                 <button type="submit"

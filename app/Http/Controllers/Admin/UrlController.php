@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Url;
+use Illuminate\Support\Facades\Log;
 
 class UrlController extends Controller
 {
@@ -17,8 +18,6 @@ class UrlController extends Controller
 
         $urls = Url::where('menu_type', $type)->latest()->paginate(10);
         return view('admin.url.index', compact('urls', 'type'));
-
-        
     }
     /**
      * Show the form for creating a new resource.
@@ -37,18 +36,38 @@ class UrlController extends Controller
     {
         abort_unless(array_key_exists($type, Url::getMenuTypes()), 404);
 
-        $request->validate([
-            'url' => 'required|url',
-            'deskripsi' => 'nullable|string|max:255',
-        ]);
+        try {
+            $request->validate([
+                'url' => 'required|url',
+                'deskripsi' => 'nullable|string|max:255',
+            ]);
 
-        Url::create([
-            'url' => $request->url,
-            'menu_type' => $type,
-            'deskripsi' => $request->deskripsi,
-        ]);
+            // Debug logging
+            Log::info('URL Store Debug', [
+                'type' => $type,
+                'request_data' => $request->all(),
+                'valid_types' => array_keys(Url::getMenuTypes())
+            ]);
 
-        return redirect()->route('url.index', ['type' => $type])->with('success', 'URL created successfully.');
+            $url = Url::create([
+                'url' => $request->url,
+                'menu_type' => $type,
+                'deskripsi' => $request->deskripsi,
+            ]);
+
+            Log::info('URL Created Successfully', ['url_id' => $url->id]);
+
+            return redirect()->route('url.index', ['type' => $type])->with('success', 'URL created successfully.');
+        } catch (\Exception $e) {
+            Log::error('URL Store Error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'type' => $type,
+                'request_data' => $request->all()
+            ]);
+
+            return back()->withErrors(['error' => 'Gagal menyimpan data: ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -96,7 +115,7 @@ class UrlController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($type, string $id )
+    public function destroy($type, string $id)
     {
         abort_unless(array_key_exists($type, Url::getMenuTypes()), 404);
 

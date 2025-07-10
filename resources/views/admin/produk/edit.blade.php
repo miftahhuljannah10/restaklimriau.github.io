@@ -20,8 +20,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="judul" class="block font-medium text-sm mb-1">Judul Produk</label>
-                    <input type="text" name="judul" id="judul" value="{{ old('judul', $produk->judul) }}"
-                        required
+                    <input type="text" name="judul" id="judul" value="{{ old('judul', $produk->judul) }}" required
                         class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Masukkan judul produk" />
                 </div>
@@ -35,7 +34,7 @@
 
                 <div class="md:col-span-2">
                     <label for="kategori_id" class="block font-medium text-sm mb-1">Kategori</label>
-                    <select name="kategori_id[]" id="kategori_id"
+                    <select name="kategori_id[]" id="kategori_id" multiple
                         class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
                         @foreach ($kategoris as $kategori)
                             <option value="{{ $kategori->id }}"
@@ -49,7 +48,7 @@
 
                 <div class="md:col-span-2">
                     <label for="isi" class="block font-medium text-sm mb-1">Isi Produk</label>
-                    <textarea name="isi" id="isi">{{ old('isi', $produk->isi) }}</textarea>
+                    <textarea name="isi" id="isi" class="froala w-full">{{ old('isi', $produk->isi) }}</textarea>
                 </div>
 
                 <div class="md:col-span-2">
@@ -92,12 +91,9 @@
                     <label for="status" class="block font-medium text-sm mb-1">Status</label>
                     <select name="status" id="status" required
                         class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="draft" {{ old('status', $produk->status) == 'draft' ? 'selected' : '' }}>Draft
-                        </option>
-                        <option value="published"
-                            {{ old('status', $produk->status) == 'published' ? 'selected' : '' }}>Published</option>
-                        <option value="archived" {{ old('status', $produk->status) == 'archived' ? 'selected' : '' }}>
-                            Archived</option>
+                        <option value="draft" {{ old('status', $produk->status) == 'draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="published" {{ old('status', $produk->status) == 'published' ? 'selected' : '' }}>Published</option>
+                        <option value="archived" {{ old('status', $produk->status) == 'archived' ? 'selected' : '' }}>Archived</option>
                     </select>
                 </div>
 
@@ -118,9 +114,12 @@
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
     <script>
-        new FroalaEditor('#isi', {
-            heightMin: 300,
-            imageUpload: false
+        document.addEventListener('DOMContentLoaded', function () {
+            new FroalaEditor('#isi', {
+                heightMin: 300,
+                imageUpload: false,
+                toolbarSticky: false
+            });
         });
 
         function addGambarField() {

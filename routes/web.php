@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\SuratMasukController;
 use App\Http\Controllers\Admin\SuratKeluarController;
 use App\Http\Controllers\Admin\BukuTamuController;
 use App\Http\Controllers\Masyarakat\BeritaController;
+use App\Http\Controllers\Admin\PegawaiDashboardController;
 
 Route::get('/', function () {
     return view('masyarakat.index');
@@ -104,8 +105,30 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Common redirect for admin area
+Route::get('/admin', function () {
+    if (Auth::check()) {
+        if (Auth::user()->role->name === 'pemimpin') {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('admin.dashboard-pegawai.index');
+        }
+    }
+    return redirect()->route('login');
+})->name('admin.index');
 
+// Routes only accessible by role:pemimpin
 Route::middleware(['auth', 'role:pemimpin'])->group(function () {
+    // Dashboard Routes - only for pemimpin
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // User Management - only for pemimpin
+    Route::resource('/admin/users', UserController::class);
+});
+
+// Routes accessible by both pemimpin and pegawai roles
+Route::middleware(['auth', 'role:pemimpin,pegawai'])->group(function () {
+    Route::get('/admin/dashboard-pegawai', [PegawaiDashboardController::class, 'index'])->name('admin.dashboard-pegawai.index');
 
     // Kontak Perusahaan Management
     Route::resource('/admin/kontak', App\Http\Controllers\Admin\KontakController::class)
@@ -118,11 +141,6 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
             'update' => 'admin.kontak.update',
             'destroy' => 'admin.kontak.destroy',
         ]);
-    // Dashboard Routes
-    Route::get('/admin', function () {
-        return redirect()->route('admin.dashboard');
-    })->name('admin.index');
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Produk Management Routes
     // Kategori Produk Management Routes with resource controller
@@ -162,9 +180,7 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
             'update' => 'admin.kategori-berita-artikel.update',
             'destroy' => 'admin.kategori-berita-artikel.destroy',
         ]);
-
-    // Add these routes to your web.php file in the admin middleware group
-    Route::prefix('admin/berita')->name('admin.media.berita.')->middleware(['auth', 'role:pemimpin'])->group(function () {
+    Route::prefix('admin/berita')->name('admin.media.berita.')->group(function () {
 
         Route::get('/{type?}', [BeritaArtikelController::class, 'index'])->name('index');
 
@@ -214,9 +230,14 @@ Route::middleware(['auth', 'role:pemimpin'])->group(function () {
     Route::resource('/admin/tarif-pnbp', TarifPNBPController::class);
 
     Route::prefix('/admin/feedback')->name('admin.feedback.')->group(function () {
+        // Additional feedback response routes (MUST be before resource routes)
+        Route::delete('responses/bulk-delete', [FeedbackResponseController::class, 'bulkDelete'])
+            ->name('responses.bulkDelete');
+        Route::delete('responses/truncate', [FeedbackResponseController::class, 'truncate'])
+            ->name('responses.truncate');
+
         Route::resource('questions', FeedbackQuestionController::class);
         Route::resource('responses', FeedbackResponseController::class);
-        Route::delete('responses/bulk-delete', [FeedbackResponseController::class, 'bulkDelete'])->name('responses.bulkDelete');
     });
     Route::get('/admin/alat-curah-hujan/full', [AlatCurahHujanController::class, 'full'])->name('admin.alat-curah-hujan.full');
     Route::resource('/admin/alat-curah-hujan', AlatCurahHujanController::class)->names([

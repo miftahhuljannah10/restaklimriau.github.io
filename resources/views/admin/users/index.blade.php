@@ -218,9 +218,7 @@
                                             </svg>
                                             {{ ucfirst($user->role->name) }}
                                         </span>
-                                        <div class="text-xs text-gray-500">
-                                            Hak akses: {{ $user->role->description ?? 'Standar' }}
-                                        </div>
+                                        
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center">

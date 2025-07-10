@@ -195,7 +195,7 @@
                                     <div class="space-y-2">
                                         <div class="text-sm text-gray-900">
                                             <span class="font-bold text-green-600">Rp
-                                                {{ number_format($tarif->tarif, 0, ',', '.') }}</span>
+                                                {{ number_format((float) $tarif->tarif, 0, ',', '.') }}</span>
                                         </div>
                                         <div class="flex items-center text-xs text-gray-500">
                                             <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
