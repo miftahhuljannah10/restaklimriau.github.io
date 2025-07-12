@@ -1,12 +1,13 @@
-<x-layouts.admin title="Edit Visi/Misi/Tugas" subtitle="Mengubah data section dan item">
-    <x-main.layouts.breadcrumb :items="[['title' => 'Visi Misi', 'url' => route('admin.visimisi.index')], ['title' => 'Edit']]" />
+<x-layouts.admin title="Tambah Visi/Misi/Tugas" subtitle="Menambahkan data Visi, Misi, atau Tugas">
+    {{-- Breadcrumb --}}
+    <x-main.layouts.breadcrumb :items="[['title' => 'Visi Misi', 'url' => route('admin.visimisi.index')], ['title' => 'Tambah']]" />
 
     <x-main.cards.content-card>
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
             <div class="flex items-center justify-between">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Edit Section</h3>
-                    <p class="text-sm text-gray-600">Ubah informasi section dan item di bawah ini</p>
+                    <h3 class="text-lg font-semibold text-gray-900">Tambah Visi/Misi/Tugas</h3>
+                    <p class="text-sm text-gray-600">Masukkan informasi section dan item di bawah ini</p>
                 </div>
                 <div class="flex items-center space-x-2">
                     <x-main.buttons.action-button href="{{ route('admin.visimisi.index') }}" variant="secondary">
@@ -20,23 +21,13 @@
             </div>
         </div>
 
-        <div class="p-6"
-            x-data='{
-            items: @json(old('items', $items)),
-            addItem() {
-                this.items.push({
-                    content: "",
-                    order_number: this.items.length + 1,
-                    is_active: 1
-                });
-            },
-            removeItem(idx) {
-                if (this.items.length > 1) this.items.splice(idx, 1);
-            }
-        }'>
-            <form action="{{ route('admin.visimisi.update', $section->id) }}" method="POST" class="space-y-6">
+        <div class="p-6" x-data="{
+            items: [{ content: '', order_number: 1, is_active: true }],
+            addItem() { this.items.push({ content: '', order_number: this.items.length + 1, is_active: true }); },
+            removeItem(idx) { if (this.items.length > 1) this.items.splice(idx, 1); }
+        }">
+            <form action="{{ route('admin.visimisi.store') }}" method="POST" class="space-y-6">
                 @csrf
-                @method('PUT')
 
                 {{-- Section Info --}}
                 <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
@@ -56,15 +47,9 @@
                                 class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500"
                                 required>
                                 <option value="">Pilih Tipe</option>
-                                <option value="visi"
-                                    {{ old('section_type', $section->section_type) == 'visi' ? 'selected' : '' }}>Visi
-                                </option>
-                                <option value="misi"
-                                    {{ old('section_type', $section->section_type) == 'misi' ? 'selected' : '' }}>Misi
-                                </option>
-                                <option value="tugas"
-                                    {{ old('section_type', $section->section_type) == 'tugas' ? 'selected' : '' }}>Tugas
-                                </option>
+                                <option value="visi">Visi</option>
+                                <option value="misi">Misi</option>
+                                <option value="tugas">Tugas</option>
                             </select>
                             @error('section_type')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -73,10 +58,9 @@
                         <div>
                             <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama <span
                                     class="text-red-500">*</span></label>
-                            <input type="text" id="nama" name="nama"
-                                value="{{ old('nama', $section->nama) }}"
+                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}"
                                 class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500"
-                                required>
+                                placeholder="Nama section" required>
                             @error('nama')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -85,24 +69,23 @@
                             <label for="is_active" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                             <select id="is_active" name="is_active"
                                 class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500">
-                                <option value="1" {{ old('is_active', $section->is_active) ? 'selected' : '' }}>
-                                    Aktif</option>
-                                <option value="0" {{ !old('is_active', $section->is_active) ? 'selected' : '' }}>
-                                    Nonaktif</option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Nonaktif</option>
                             </select>
                         </div>
                     </div>
                     <div class="mt-4">
                         <label for="deskripsi" class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label>
                         <textarea id="deskripsi" name="deskripsi" rows="2"
-                            class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500">{{ old('deskripsi', $section->deskripsi) }}</textarea>
+                            class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500"
+                            placeholder="Deskripsi section (opsional)">{{ old('deskripsi') }}</textarea>
                         @error('deskripsi')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
 
-                {{-- Items --}}
+                {{-- Items Section --}}
                 <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
                     <h4 class="text-lg font-medium text-green-900 mb-4 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor"
@@ -112,10 +95,9 @@
                         </svg>
                         Daftar Item
                     </h4>
-                    <template x-for="(item, idx) in items" :key="item.id ?? idx">
+                    <template x-for="(item, idx) in items" :key="idx">
                         <div
                             class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 bg-white border border-gray-200 rounded-lg p-4 relative">
-                            <input type="hidden" :name="'items[' + idx + '][id]'" x-model="item.id">
                             <div>
                                 <label :for="'items[' + idx + '][content]'"
                                     class="block text-sm font-medium text-gray-700 mb-2">Isi Item <span
@@ -123,14 +105,14 @@
                                 <input type="text" :id="'items[' + idx + '][content]'" :name="'items[' + idx + '][content]'"
                                     x-model="item.content"
                                     class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 border-gray-300 focus:ring-green-500"
-                                    required>
+                                    placeholder="Isi item" required>
                             </div>
                             <div>
                                 <label :for="'items[' + idx + '][order_number]'"
                                     class="block text-sm font-medium text-gray-700 mb-2">Urutan <span
                                         class="text-red-500">*</span></label>
                                 <input type="number" min="1" :id="'items[' + idx + '][order_number]'"
-                                    :name="'items[' + idx + '][order_number]'" x-model.number="item.order_number"
+                                    :name="'items[' + idx + '][order_number]'" x-model="item.order_number"
                                     class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 border-gray-300 focus:ring-green-500"
                                     required>
                             </div>
@@ -138,10 +120,10 @@
                                 <label :for="'items[' + idx + '][is_active]'"
                                     class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                                 <select :id="'items[' + idx + '][is_active]'" :name="'items[' + idx + '][is_active]'"
-                                    x-model.number="item.is_active"
+                                    x-model="item.is_active"
                                     class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 border-gray-300 focus:ring-green-500">
-                                    <option :value="1">Aktif</option>
-                                    <option :value="0">Nonaktif</option>
+                                    <option :value="true">Aktif</option>
+                                    <option :value="false">Nonaktif</option>
                                 </select>
                             </div>
                             <button type="button" @click="removeItem(idx)"

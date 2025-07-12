@@ -141,6 +141,17 @@ Route::middleware(['auth', 'role:pemimpin,pegawai'])->group(function () {
             'update' => 'admin.kontak.update',
             'destroy' => 'admin.kontak.destroy',
         ]);
+    // visi misi admin
+    Route::prefix('admin/visimisi')->name('admin.visimisi.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\VisiMisiController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\Admin\VisiMisiController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\Admin\VisiMisiController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [App\Http\Controllers\Admin\VisiMisiController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [App\Http\Controllers\Admin\VisiMisiController::class, 'update'])->name('update');
+        Route::delete('/{id}', [App\Http\Controllers\Admin\VisiMisiController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}', [App\Http\Controllers\Admin\VisiMisiController::class, 'show'])->name('show');
+        Route::delete('/{sectionId}/item/{itemId}', [App\Http\Controllers\Admin\VisiMisiController::class, 'destroyItem'])->name('item.destroy');
+    });
 
     // Produk Management Routes
     // Kategori Produk Management Routes with resource controller
@@ -239,6 +250,9 @@ Route::middleware(['auth', 'role:pemimpin,pegawai'])->group(function () {
         Route::resource('questions', FeedbackQuestionController::class);
         Route::resource('responses', FeedbackResponseController::class);
     });
+
+
+
     Route::get('/admin/alat-curah-hujan/full', [AlatCurahHujanController::class, 'full'])->name('admin.alat-curah-hujan.full');
     Route::resource('/admin/alat-curah-hujan', AlatCurahHujanController::class)->names([
         'index' => 'admin.alat-curah-hujan.index',
@@ -323,6 +337,9 @@ Route::get('/berita/{slug}', [App\Http\Controllers\Masyarakat\BeritaController::
 Route::get('/buletin', [App\Http\Controllers\Masyarakat\BuletinController::class, 'index'])->name('buletin.index');
 // kontak
 Route::get('/kontak', [App\Http\Controllers\Masyarakat\KontakController::class, 'index'])->name('kontak.index');
+
+
+
 
 Route::get('/produk/detail-produk', function () {
     return view('masyarakat.detail-produk', [

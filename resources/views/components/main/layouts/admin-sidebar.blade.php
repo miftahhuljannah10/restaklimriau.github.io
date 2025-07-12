@@ -428,6 +428,16 @@
                         </a>
                     </li>
                 </ul>
+                {{-- visi misi --}}
+                <ul x-show="open && !sidebarCollapsed" x-transition class="mt-1 ml-8 space-y-1 bg-gray-900">
+                    <li>
+                        <a href="{{ route('admin.visimisi.index') }}"
+                            class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 {{ request()->routeIs('admin.visimisi.*') ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-blue-500' }}">
+                            Visi Misi
+                        </a>
+                    </li>
+                </ul>
+
             </li>
 
             {{-- Divider --}}
