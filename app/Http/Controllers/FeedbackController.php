@@ -34,6 +34,11 @@ class FeedbackController extends Controller
             ]);
         }
 
+        // Return JSON for AJAX requests
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Terima kasih atas feedback Anda!']);
+        }
+
         return redirect()->back()->with('success', 'Terima kasih atas feedback Anda!');
     }
 }

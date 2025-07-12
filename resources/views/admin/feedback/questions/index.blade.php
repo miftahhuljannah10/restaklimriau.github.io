@@ -133,8 +133,10 @@
                                     </form>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <x-main.datatables.action-buttons :editUrl="route('admin.feedback.questions.edit', $question)" :deleteUrl="route('admin.feedback.questions.destroy', $question)"
-                                        deleteConfirmText="Yakin ingin menghapus pertanyaan ini?" />
+                                    <x-main.datatables.action-buttons :editUrl="route('admin.feedback.questions.edit', $question)"
+                                    :deleteAction="route('admin.feedback.questions.destroy', $question)"
+                                    
+                                    </x-main.datatables.action-buttons>
                                 </td>
                             </tr>
                         @empty

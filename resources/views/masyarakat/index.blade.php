@@ -15,22 +15,14 @@
         'subtitle' => 'Update data iklim, cuaca, dan kualitas udara <span class="text-yellow-300">setiap hari</span> dari Stasiun Klimatologi Riau. Temukan info, layanan, dan publikasi terpercaya di satu tempat!',
         'bgImage' => asset('assets/images/hero-bg.jpg')
     ])
-    @include('components.before-login.homepage.feedback-button', [
+    @include('components.before-login.homepage.dynamic-feedback-button', [
+        'questions' => $feedbackQuestions,
         'buttonTitle' => 'Kirim Feedback',
         'buttonIcon' => 'fas fa-comment-dots',
         'buttonLabel' => 'Feedback',
         'modalTitle' => 'Feedback BMKG Riau',
         'modalSubtitle' => 'Bantu kami jadi lebih baik!',
         'introText' => 'Kami ingin mendengar pengalaman dan saran Anda!',
-        'question1Label' => 'Apa tujuan utama Anda mengunjungi laman Stasiun Klimatologi Riau hari ini?',
-        'question1Placeholder' => 'Tuliskan tujuan disini',
-        'question1Icon' => 'fas fa-bullseye text-sky-400 text-lg',
-        'question2Label' => 'Apakah Anda berhasil menemukan data atau informasi yang Anda cari?',
-        'question2Placeholder' => 'Tuliskan jawaban disini',
-        'question2Icon' => 'fas fa-search text-cyan-400 text-lg',
-        'question3Label' => 'Saran & masukan untuk Stasiun Klimatologi Riau agar lebih baik:',
-        'question3Placeholder' => 'Tuliskan saran atau kendala disini',
-        'question3Icon' => 'fas fa-lightbulb text-yellow-400 text-xl mt-2',
         'submitIcon' => 'fas fa-paper-plane',
         'submitLabel' => 'Kirim Feedback',
         'logoUrl' => asset('assets/images/bmkg-logo-2.png')

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeedbackQuestion;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -43,7 +45,13 @@ class HomeController extends Controller
             'KoordinatFormat' => '3,52 LS - 128,67 BT',
         ];
 
-        return view('masyarakat.index', compact('prakiraanCuacaRiau', 'gempa'));
+        // Fetch active feedback questions
+        $feedbackQuestions = FeedbackQuestion::where('is_active', true)
+            ->with('options')
+            ->orderBy('order')
+            ->get();
+
+        return view('masyarakat.index', compact('prakiraanCuacaRiau', 'gempa', 'feedbackQuestions'));
         
     }
 
@@ -73,7 +81,7 @@ class HomeController extends Controller
                     'kondisi' => $prakiraan['weather_desc'] ?? '-',
                 ];
             } catch (\Exception $e) {
-                \Log::error("Gagal ambil data cuaca untuk {$kode}: " . $e->getMessage());
+                Log::error("Gagal ambil data cuaca untuk {$kode}: " . $e->getMessage());
                 return null;
             }
         });
