@@ -37,8 +37,8 @@
 
         <div class="max-w-6xl mx-auto px-4 lg:px-8">
             @include('components.before-login.layanan.cek-ketersediaan-map', [
-                'jenisAlat' => $jenisAlat,
-                'titikAlat' => $titikAlat,
+                'jenisAlat' => $jenisAlat ?? [],
+                'titikAlat' => $titikAlat ?? [],
                 'imgBaseUrl' => asset('assets/images/'),
             ])
         </div>
