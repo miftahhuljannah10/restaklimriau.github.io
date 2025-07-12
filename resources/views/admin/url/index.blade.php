@@ -30,8 +30,7 @@
     {{-- Breadcrumb --}}
     <x-main.layouts.breadcrumb :items="[
         ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
-        ['title' => 'URL Management', 'url' => '#'],
-        ['title' => 'URL ' . ucfirst($type)]
+        ['title' => 'URL', 'url'. ucfirst($type) => route('url.index', $type)],
     ]" />
 
     {{-- Modern Data Table --}}
