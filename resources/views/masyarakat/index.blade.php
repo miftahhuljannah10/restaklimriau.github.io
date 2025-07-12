@@ -49,5 +49,10 @@
         // Data akan diisi dari controller
         'gempa' => $gempa ?? null
     ])
-    @include('components.before-login.homepage.kualitas-udara-section')
+    @include('components.before-login.homepage.kualitas-udara-section', [
+        'kualitasUdara' => $kualitasUdara ?? null
+    ])
+    @include('components.before-login.homepage.highlight-berita', [
+        'highlightBerita' => $highlightBerita ?? []
+    ])
 @endsection

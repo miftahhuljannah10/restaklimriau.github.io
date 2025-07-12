@@ -164,7 +164,7 @@
     @stack('styles')
 </head>
 
-<body class="bg-gradient-to-br from-slate-50 to-blue-50 font-montserrat">
+<body class="bg-white font-montserrat">
     @include('components.before-login.header')
 
     <main>

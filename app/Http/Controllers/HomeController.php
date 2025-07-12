@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\BeritaArtikel;
 
 class HomeController extends Controller
 {
@@ -98,6 +99,32 @@ class HomeController extends Controller
                 'icon' => '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="44" rx="16" ry="10" fill="#78909C"/><ellipse cx="28" cy="40" rx="14" ry="9" fill="#B0BEC5"/></svg>',
             ],
         ];
-        return view('masyarakat.index', compact('gempa', 'prakiraanCuacaRiau'));
+        $highlightBerita = [
+            (object)[
+                'id' => 'berita-1',
+                'judul' => 'Stasiun Klimatologi Riau Luncurkan Sistem Peringatan Dini Terbaru',
+                'isi' => 'Stasiun Klimatologi Riau resmi meluncurkan sistem peringatan dini terbaru untuk meningkatkan kesiapsiagaan masyarakat menghadapi cuaca ekstrem.',
+                'gambar' => '/assets/images/berita2.png',
+            ],
+            (object)[
+                'id' => 'berita-2',
+                'judul' => 'Workshop Pelatihan Interpretasi Data Cuaca untuk Petani Riau',
+                'isi' => 'BMKG Riau mengadakan workshop pelatihan interpretasi data cuaca untuk membantu petani memahami prakiraan cuaca dan meningkatkan hasil panen.',
+                'gambar' => '/assets/images/berita2.png',
+            ],
+            (object)[
+                'id' => 'berita-3',
+                'judul' => 'BMKG Riau Gelar Sosialisasi Adaptasi Perubahan Iklim',
+                'isi' => 'Sosialisasi adaptasi perubahan iklim digelar untuk meningkatkan pemahaman masyarakat tentang pentingnya mitigasi dan adaptasi iklim.',
+                'gambar' => '/assets/images/berita2.png',
+            ],
+            (object)[
+                'id' => 'berita-4',
+                'judul' => 'Peringatan Dini Cuaca Ekstrem di Riau',
+                'isi' => 'BMKG Riau mengeluarkan peringatan dini cuaca ekstrem yang berpotensi terjadi di beberapa wilayah Riau dalam waktu dekat.',
+                'gambar' => '/assets/images/berita2.png',
+            ],
+        ];
+        return view('masyarakat.index', compact('gempa', 'prakiraanCuacaRiau', 'highlightBerita'));
     }
 }

@@ -1,7 +1,7 @@
 {{-- Komponen Kualitas Udara (PM2.5) --}}
-<div class="bg-white pb-10 md:pb-20 py-12">
-    <div class="mx-auto max-w-6xl px-0 md:px-6 lg:px-10 xl:px-0 bg-white relative">
-        <div class="flex justify-between px-6 md:px-0">
+<div class="bg-white ">
+    <div class="mx-auto max-w-6xl px-0 md:px-6 lg:px-10 xl:px-0 bg-white relative pt-10">
+        <div class="flex justify-between px-6 md:px-0 ">
             <h2 class="text-xl md:text-[24px] md:leading-[33px] lg:text-[32px] lg:leading-[48px] font-bold gradient-text">
                 Grafik riwayat PM 2.5 07 Jul 2025 di Pekanbaru
             </h2>
