@@ -68,13 +68,13 @@
                     </div>
 
                     <div class="flex items-center space-x-3">
-                        {{-- <x-main.buttons.action-button href="{{ route('url.create', $type) }}" variant="primary">
+                        <x-main.buttons.action-button href="{{ route('url.create', $type) }}" variant="primary">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 4v16m8-8H4" />
                             </svg>
                             Tambah URL
-                        </x-main.buttons.action-button> --}}
+                        </x-main.buttons.action-button>
 
                         <button type="button" id="refreshBtn"
                             class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
