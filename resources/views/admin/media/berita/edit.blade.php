@@ -1,10 +1,5 @@
-<x-layouts.admin title="Edit {{ $type == 'berita' ? 'Berita' : 'Artikel' }}">
-    <x-main.layouts.breadcrumb :items="[
-        ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
-        ['title' => 'Media'],
-        ['title' => ucfirst($type), 'url' => route('admin.media.berita.index', $type)],
-        ['title' => 'Edit'],
-    ]" />
+<x-layouts.admin title="Edit {{ $type == 'berita' ? 'Berita' : 'Artikel' }}"
+    subtitle="Mengubah {{ strtolower($type == 'berita' ? 'berita' : 'artikel') }} dalam sistem">
 
     @push('styles')
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -51,13 +46,26 @@
         </style>
     @endpush
 
-    <x-main.cards.content-card title="Edit {{ $type == 'berita' ? 'Berita' : 'Artikel' }}">
-        <x-slot:header>
-            <x-main.buttons.action-button variant="secondary" icon="arrow-left"
-                href="{{ route('admin.media.berita.index', $type) }}">
-                Kembali
-            </x-main.buttons.action-button>
-        </x-slot:header>
+    {{-- breadcrumb --}}
+    <x-main.layouts.breadcrumb :items="[
+        ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+        ['title' => 'Media'],
+        ['title' => $type == 'berita' ? 'Berita' : 'Artikel', 'url' => route('admin.media.berita.index', $type)],
+        ['title' => 'Edit ' . ($type == 'berita' ? 'Berita' : 'Artikel')],
+    ]" />
+
+    <div class="container mx-auto px-4 py-6">
+        <div class="mb-6">
+            <a href="{{ route('admin.media.berita.index', $type) }}"
+                class="text-blue-600 hover:underline flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Kembali ke Daftar {{ $type == 'berita' ? 'Berita' : 'Artikel' }}
+            </a>
+        </div>
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
@@ -179,7 +187,7 @@
                                     </label>
                                 </div>
 
-                                <div id="thumbnail-update-container" class="hidden">
+                                <div id="thumbnail-update-container" class="">
                                     <!-- Thumbnail Method Selector -->
                                     <div class="mb-4">
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Pilih
@@ -451,277 +459,337 @@
                 </div>
             </form>
         </div>
-        </div>
+    </div>
 
-        <!-- Gallery Item Template (Hidden) -->
-        <template id="gallery-item-template">
-            <div class="gallery-item mb-4 pb-4 border-b border-gray-200 last:border-0">
-                <div class="flex justify-between items-center mb-2">
-                    <label class="block text-sm font-medium text-gray-700">Gambar Baru #INDEX</label>
-                    <button type="button" class="remove-gallery-btn text-red-500 hover:text-red-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="mb-3">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">URL Gambar <span
-                            class="text-red-500">*</span></label>
-                    <input type="url" name="gallery_urls[]" placeholder="https://example.com/gallery-image.jpg"
-                        class="gallery-url-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                </div>
-                <div class="gallery-preview mb-3 hidden">
-                    <img src="" alt="Preview" class="max-h-32 rounded">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Caption Gambar</label>
-                    <input type="text" name="gallery_captions[]" placeholder="Deskripsi gambar"
-                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                </div>
+    <!-- Gallery Item Template (Hidden) -->
+    <template id="gallery-item-template">
+        <div class="gallery-item mb-4 pb-4 border-b border-gray-200 last:border-0">
+            <div class="flex justify-between items-center mb-2">
+                <label class="block text-sm font-medium text-gray-700">Gambar #INDEX</label>
+                <button type="button" class="remove-gallery-btn text-red-500 hover:text-red-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
             </div>
-        </template>
-    </x-main.cards.content-card>
-</x-layouts.admin>
+            <div class="mb-3">
+                <label class="block text-sm font-medium text-gray-700 mb-1">URL Gambar <span
+                        class="text-red-500">*</span></label>
+                <input type="url" name="gallery_urls[]" placeholder="https://example.com/gallery-image.jpg"
+                    class="gallery-url-input w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+            </div>
+            <div class="gallery-preview mb-3 hidden">
+                <img src="" alt="Preview" class="max-h-32 rounded">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Caption Gambar</label>
+                <input type="text" name="gallery_captions[]" placeholder="Deskripsi gambar"
+                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+            </div>
+        </div>
+    </template>
+    @push('scripts')
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <!-- Froala Editor -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.4/css/froala_editor.pkgd.min.css"
+            rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.4/js/froala_editor.pkgd.min.js"></script>
 
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-    <script>
-        $(document).ready(function() {
-            let editorInstance;
+        <script>
+            $(document).ready(function() {
+                let editorInstance; // Ini akan menampung instance Froala
+                let editorType = 'none';
 
-            // Initialize Select2
-            $('#kategori_id').select2({
-                placeholder: "-- Pilih Kategori --",
-                width: '100%'
-            });
+                // Initialize Select2
+                $('#kategori_id').select2({
+                    placeholder: "-- Pilih Kategori --",
+                    width: '100%'
+                });
 
-            // Initialize CKEditor
-            ClassicEditor
-                .create(document.querySelector('#isi_editor'), {
-                    toolbar: [
-                        'heading', '|',
-                        'bold', 'italic', 'link', '|',
-                        'bulletedList', 'numberedList', '|',
-                        'blockQuote', 'insertTable', '|',
-                        'mediaEmbed', '|',
-                        'undo', 'redo'
-                    ],
-                    heading: {
-                        options: [{
-                                model: 'paragraph',
-                                title: 'Paragraf',
-                                class: 'ck-heading_paragraph'
+                // Initialize Froala Editor
+                if (typeof FroalaEditor !== 'undefined') {
+                    editorInstance = new FroalaEditor('#isi_editor', {
+                        height: 400,
+                        toolbarButtons: {
+                            moreText: {
+                                buttons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript',
+                                    'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor',
+                                    'inlineClass', 'inlineStyle', 'clearFormatting'
+                                ]
                             },
-                            {
-                                model: 'heading2',
-                                view: 'h2',
-                                title: 'Heading 2',
-                                class: 'ck-heading_heading2'
+                            moreParagraph: {
+                                buttons: ['alignLeft', 'alignCenter', 'alignRight', 'alignJustify', 'formatOL',
+                                    'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight',
+                                    'outdent', 'indent', 'quote'
+                                ]
                             },
-                            {
-                                model: 'heading3',
-                                view: 'h3',
-                                title: 'Heading 3',
-                                class: 'ck-heading_heading3'
+                            moreRich: {
+                                buttons: ['insertLink', 'insertImage', 'insertVideo', 'insertTable',
+                                    'emoticons', 'fontAwesome', 'specialCharacters', 'embedly',
+                                    'insertFile', 'insertHR'
+                                ]
                             },
-                            {
-                                model: 'heading4',
-                                view: 'h4',
-                                title: 'Heading 4',
-                                class: 'ck-heading_heading4'
+                            moreMisc: {
+                                buttons: ['undo', 'redo', 'fullscreen', 'print', 'getPDF', 'spellChecker',
+                                    'selectAll', 'html', 'help'
+                                ]
                             }
-                        ]
-                    }
-                })
-                .then(editor => {
-                    editorInstance = editor;
-                    console.log('CKEditor initialized successfully');
-
-                    editor.model.document.on('change:data', () => {
-                        document.querySelector('#isi_editor').value = editor.getData();
+                        },
+                        // Events
+                        events: {
+                            initialized: function() {
+                                editorType = 'froala';
+                                console.log('Froala Editor initialized');
+                            },
+                            contentChanged: function() {
+                                // Konten otomatis disimpan ke textarea oleh Froala
+                            }
+                        }
                     });
-                })
-                .catch(error => {
-                    console.error('CKEditor initialization error:', error);
+                } else {
+                    console.error('Froala Editor not loaded!');
+                    editorType = 'textarea';
+                    $('#isi_editor').addClass('h-96').attr('placeholder', 'Gunakan HTML markup untuk formatting');
+                }
+
+                // Toggle thumbnail update fields
+                $('#update_thumbnail').on('change', function() {
+                    if (this.checked) {
+                        $('#thumbnail-update-container').removeClass('hidden').show();
+                    } else {
+                        $('#thumbnail-update-container').addClass('hidden').hide();
+                    }
                 });
 
-            // Toggle thumbnail update fields
-            $('#update_thumbnail').on('change', function() {
-                $('#thumbnail-update-container').toggleClass('hidden', !this.checked);
-            });
-
-            // Thumbnail type selection
-            $(document).on('change', '.thumbnail-method', function() {
-                const type = $(this).val();
-
-                // Update active class
-                $('.thumbnail-method-option').removeClass('media-method-active');
-                $(this).closest('label').find('.thumbnail-method-option').addClass('media-method-active');
-
-                // Show/hide containers
-                if (type === 'url') {
-                    $('#thumbnail-url-container').removeClass('hidden');
-                    $('#thumbnail-upload-container').addClass('hidden');
-                } else {
-                    $('#thumbnail-url-container').addClass('hidden');
-                    $('#thumbnail-upload-container').removeClass('hidden');
+                // Show thumbnail update container by default if checkbox is checked
+                if ($('#update_thumbnail').is(':checked')) {
+                    $('#thumbnail-update-container').removeClass('hidden').show();
                 }
-            });
 
-            // Thumbnail URL preview
-            $(document).on('input', '#thumbnail_url', function() {
-                const url = $(this).val();
-                if (url) {
-                    $('#thumbnail-url-img').attr('src', url).on('error', function() {
-                        $(this).attr('src',
-                            'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkdhZ2FsIG1lbXVhdCBnYW1iYXI8L3RleHQ+PC9zdmc+'
-                        );
-                    });
-                    $('#thumbnail-url-preview').removeClass('hidden');
-                } else {
-                    $('#thumbnail-url-preview').addClass('hidden');
-                }
-            });
+                // Thumbnail type selection
+                $(document).on('change', '.thumbnail-method', function() {
+                    const type = $(this).val();
 
-            // Thumbnail file preview
-            $(document).on('change', '#thumbnail', function() {
-                const file = this.files[0];
-                if (file) {
-                    if (file.size > 2 * 1024 * 1024) {
-                        alert('Ukuran file terlalu besar! Maksimal 2MB.');
-                        $(this).val('');
-                        return;
+                    // Update active class
+                    $('.thumbnail-method-option').removeClass('media-method-active');
+                    $(this).closest('label').find('.thumbnail-method-option').addClass('media-method-active');
+
+                    // Show/hide containers
+                    if (type === 'url') {
+                        $('#thumbnail-url-container').removeClass('hidden').show();
+                        $('#thumbnail-upload-container').addClass('hidden').hide();
+                    } else {
+                        $('#thumbnail-url-container').addClass('hidden').hide();
+                        $('#thumbnail-upload-container').removeClass('hidden').show();
                     }
-
-                    if (!file.type.match('image.*')) {
-                        alert('File harus berupa gambar!');
-                        $(this).val('');
-                        return;
-                    }
-
-                    let reader = new FileReader();
-                    reader.onload = function(event) {
-                        $('#thumbnail-preview').removeClass('hidden');
-                        $('#thumbnail-img').attr('src', event.target.result);
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    $('#thumbnail-preview').addClass('hidden');
-                    $('#thumbnail-img').attr('src', '');
-                }
-            });
-
-            // Gallery URL preview
-            $(document).on('input', '.gallery-url-input', function() {
-                const url = $(this).val();
-                const $item = $(this).closest('.gallery-item');
-                const $preview = $item.find('.gallery-preview');
-                const $img = $preview.find('img');
-
-                if (url) {
-                    $img.attr('src', url).on('error', function() {
-                        $(this).attr('src',
-                            'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkdhZ2FsIG1lbXVhdCBnYW1iYXI8L3RleHQ+PC9zdmc+'
-                        );
-                    });
-                    $preview.removeClass('hidden');
-                } else {
-                    $preview.addClass('hidden');
-                }
-            });
-
-            // Add gallery item
-            let galleryCount =
-                {{ $item->galeri->count() + (old('gallery_urls') ? count(old('gallery_urls')) : 0) }};
-
-            $('#add-gallery-btn').on('click', function() {
-                galleryCount++;
-                const template = $('#gallery-item-template').html().replace(/INDEX/g, galleryCount);
-                $('#gallery-container').append(template);
-                $('#empty-gallery-message').addClass('hidden');
-            });
-
-            // Remove gallery item
-            $(document).on('click', '.remove-gallery-btn', function() {
-                $(this).closest('.gallery-item').remove();
-
-                if ($('.gallery-item').length === 0) {
-                    $('#empty-gallery-message').removeClass('hidden');
-                }
-
-                // Update the numbering
-                $('.gallery-item').each(function(index) {
-                    $(this).find('label:first').text(`Gambar Baru #${index + 1}`);
                 });
-            });
 
-            // Form submission handler
-            $('form').on('submit', function(e) {
-                if (editorInstance) {
-                    const editorData = editorInstance.getData();
-                    document.querySelector('#isi_editor').value = editorData;
+                // Initialize thumbnail method (default to URL)
+                $('.thumbnail-method[value="url"]').prop('checked', true).trigger('change');
 
-                    if (!editorData.trim()) {
+                // Thumbnail URL preview
+                $(document).on('input', '#thumbnail_url', function() {
+                    const url = $(this).val();
+                    if (url) {
+                        $('#thumbnail-url-img').attr('src', url).on('error', function() {
+                            $(this).attr('src',
+                                'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkdhZ2FsIG1lbXVhdCBnYW1iYXI8L3RleHQ+PC9zdmc+'
+                            );
+                        });
+                        $('#thumbnail-url-preview').removeClass('hidden');
+                    } else {
+                        $('#thumbnail-url-preview').addClass('hidden');
+                    }
+                });
+
+                // Thumbnail file preview
+                $(document).on('change', '#thumbnail', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        // Validasi file size (max 2MB)
+                        if (file.size > 2 * 1024 * 1024) {
+                            alert('Ukuran file terlalu besar! Maksimal 2MB.');
+                            $(this).val('');
+                            return;
+                        }
+
+                        // Validasi file type
+                        if (!file.type.match('image.*')) {
+                            alert('File harus berupa gambar!');
+                            $(this).val('');
+                            return;
+                        }
+
+                        let reader = new FileReader();
+                        reader.onload = function(event) {
+                            $('#thumbnail-preview').removeClass('hidden');
+                            $('#thumbnail-img').attr('src', event.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        $('#thumbnail-preview').addClass('hidden');
+                        $('#thumbnail-img').attr('src', '');
+                    }
+                });
+
+                // Gallery URL preview
+                $(document).on('input', '.gallery-url-input', function() {
+                    const url = $(this).val();
+                    const $item = $(this).closest('.gallery-item');
+                    const $preview = $item.find('.gallery-preview');
+                    const $img = $preview.find('img');
+
+                    if (url) {
+                        $img.attr('src', url).on('error', function() {
+                            $(this).attr('src',
+                                'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkdhZ2FsIG1lbXVhdCBnYW1iYXI8L3RleHQ+PC9zdmc+'
+                            );
+                        });
+                        $preview.removeClass('hidden');
+                    } else {
+                        $preview.addClass('hidden');
+                    }
+                });
+
+                // Add gallery item
+                let galleryCount =
+                    {{ $item->galeri->count() + (old('gallery_urls') ? count(old('gallery_urls')) : 0) }};
+
+                $('#add-gallery-btn').on('click', function() {
+                    galleryCount++;
+                    const template = $('#gallery-item-template').html().replace(/INDEX/g, galleryCount);
+                    $('#gallery-container').append(template);
+                    $('#empty-gallery-message').addClass('hidden');
+                });
+
+                // Remove gallery item
+                $(document).on('click', '.remove-gallery-btn', function() {
+                    $(this).closest('.gallery-item').remove();
+
+                    if ($('.gallery-item').length === 0) {
+                        $('#empty-gallery-message').removeClass('hidden');
+                    }
+
+                    // Update the numbering
+                    $('.gallery-item').each(function(index) {
+                        $(this).find('label:first').text(`Gambar #${index + 1}`);
+                    });
+                });
+
+                // Form submission handler
+                // Form submission handler - YANG DIUBAH
+                $('form').on('submit', function(e) {
+                    console.log('Form submission started, editor type:', editorType);
+
+                    // Handle content validation based on editor type
+                    if (editorType === 'froala' && editorInstance) {
+                        try {
+                            const editorData = editorInstance.html.get();
+                            console.log('Froala Editor data:', editorData);
+
+                            if (!editorData || !editorData.trim() || editorData === '<p><br></p>') {
+                                e.preventDefault();
+                                alert('Isi konten tidak boleh kosong!');
+                                return false;
+                            }
+                        } catch (error) {
+                            console.error('Error getting Froala Editor data:', error);
+                        }
+                    } else {
+                        // Fallback untuk textarea biasa
+                        const textareaData = $('#isi_editor').val();
+                        console.log('Textarea data:', textareaData);
+
+                        if (!textareaData.trim()) {
+                            e.preventDefault();
+                            alert('Isi konten tidak boleh kosong!');
+                            return false;
+                        }
+                    }
+
+
+                    // Validate form data
+                    const judul = $('#judul').val();
+                    const kategori = $('#kategori_id').val();
+                    const penulis = $('#penulis').val();
+
+                    if (!judul.trim()) {
                         e.preventDefault();
-                        alert('Isi konten tidak boleh kosong!');
+                        alert('Judul tidak boleh kosong!');
+                        $('#judul').focus();
+                        return false;
+                    }
+
+                    if (!kategori) {
+                        e.preventDefault();
+                        alert('Kategori harus dipilih!');
+                        $('#kategori_id').focus();
+                        return false;
+                    }
+
+                    if (!penulis.trim()) {
+                        e.preventDefault();
+                        alert('Penulis tidak boleh kosong!');
+                        $('#penulis').focus();
+                        return false;
+                    }
+
+                    // Validate thumbnail if updating
+                    if ($('#update_thumbnail').is(':checked')) {
+                        const thumbnailType = $('input[name="thumbnail_type"]:checked').val();
+                        if (thumbnailType === 'url') {
+                            const thumbnailUrl = $('#thumbnail_url').val();
+                            if (!thumbnailUrl.trim()) {
+                                e.preventDefault();
+                                alert('URL thumbnail tidak boleh kosong!');
+                                $('#thumbnail_url').focus();
+                                return false;
+                            }
+                        } else if (thumbnailType === 'upload') {
+                            const thumbnailFile = $('#thumbnail')[0].files.length;
+                            if (thumbnailFile === 0) {
+                                e.preventDefault();
+                                alert('File thumbnail harus dipilih!');
+                                return false;
+                            }
+                        }
+                    }
+
+                    // Validate gallery URLs if any
+                    let hasInvalidGalleryUrl = false;
+                    $('.gallery-url-input').each(function() {
+                        const url = $(this).val();
+                        if (url && !isValidUrl(url)) {
+                            hasInvalidGalleryUrl = true;
+                            $(this).focus();
+                            return false;
+                        }
+                    });
+
+                    if (hasInvalidGalleryUrl) {
+                        e.preventDefault();
+                        alert('URL galeri tidak valid!');
+                        return false;
+                    }
+
+                    console.log('Form validation passed, submitting...');
+                    $(this).find('button[type="submit"]').prop('disabled', true).text('Menyimpan...');
+                });
+
+
+                // Helper function to validate URL
+                function isValidUrl(string) {
+                    try {
+                        new URL(string);
+                        return true;
+                    } catch (_) {
                         return false;
                     }
                 }
-
-                // Validate form data
-                const judul = $('#judul').val();
-                const kategori = $('#kategori_id').val();
-                const isi = document.querySelector('#isi_editor').value;
-
-                if (!judul.trim()) {
-                    e.preventDefault();
-                    alert('Judul tidak boleh kosong!');
-                    $('#judul').focus();
-                    return false;
-                }
-
-                if (!kategori) {
-                    e.preventDefault();
-                    alert('Kategori harus dipilih!');
-                    $('#kategori_id').focus();
-                    return false;
-                }
-
-                if (!isi.trim()) {
-                    e.preventDefault();
-                    alert('Isi konten tidak boleh kosong!');
-                    return false;
-                }
-
-                // Validate thumbnail if updating
-                if ($('#update_thumbnail').is(':checked')) {
-                    const thumbnailType = $('input[name="thumbnail_type"]:checked').val();
-                    if (thumbnailType === 'url') {
-                        const thumbnailUrl = $('#thumbnail_url').val();
-                        if (!thumbnailUrl.trim()) {
-                            e.preventDefault();
-                            alert('URL thumbnail tidak boleh kosong!');
-                            $('#thumbnail_url').focus();
-                            return false;
-                        }
-                    } else if (thumbnailType === 'upload') {
-                        const thumbnailFile = $('#thumbnail')[0].files.length;
-                        if (thumbnailFile === 0) {
-                            e.preventDefault();
-                            alert('File thumbnail harus dipilih!');
-                            return false;
-                        }
-                    }
-                }
-
-                // Disable submit button to prevent double submission
-                $(this).find('button[type="submit"]').prop('disabled', true).text('Menyimpan...');
             });
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
+</x-layouts.admin>

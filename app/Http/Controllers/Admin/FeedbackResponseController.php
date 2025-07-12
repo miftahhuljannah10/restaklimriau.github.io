@@ -33,6 +33,7 @@ class FeedbackResponseController extends Controller
 
     public function bulkDelete(Request $request)
     {
+        dd($request->all());
         // Debug logging
         Log::info('Bulk delete request received', [
             'request_data' => $request->all(),
@@ -75,14 +76,18 @@ class FeedbackResponseController extends Controller
         try {
             // Use transaction for safety
             DB::transaction(function () {
-                // Delete all feedback answers first (foreign key constraint)
-                DB::table('feedback_answers')->truncate();
-                // Then truncate feedback responses
-                DB::table('feedback_responses')->truncate();
+                // First, delete all feedback answers (foreign key constraint)
+                DB::table('feedback_answers')->delete();
+                // Then delete all feedback responses
+                DB::table('feedback_responses')->delete();
+
+                // Reset auto-increment to 1 for both tables
+                DB::statement('ALTER TABLE feedback_answers AUTO_INCREMENT = 1');
+                DB::statement('ALTER TABLE feedback_responses AUTO_INCREMENT = 1');
             });
 
             return redirect()->route('admin.feedback.responses.index')
-                ->with('success', 'Semua data feedback berhasil dihapus.');
+                ->with('success', 'Semua data feedback berhasil dihapus dan ID direset.');
         } catch (\Exception $e) {
             return redirect()->route('admin.feedback.responses.index')
                 ->with('error', 'Gagal menghapus semua data: ' . $e->getMessage());

@@ -14,7 +14,7 @@ class FeedbackController extends Controller
             ->with('options')
             ->orderBy('order')
             ->get();
-        return view('feedback.form', compact('questions'));
+        return view('admin.feedback.form', compact('questions'));
     }
 
     public function store(Request $request)

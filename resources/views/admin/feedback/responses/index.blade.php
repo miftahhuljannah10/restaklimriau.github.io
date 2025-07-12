@@ -33,7 +33,7 @@
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="ids" id="bulkDeleteIds">
-                        <button type="submit"
+                        <button type="button" id="bulkDeleteBtn"
                             class="inline-flex items-center px-4 py-2 border border-red-500 rounded-lg text-sm font-medium text-red-600 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-150">
                             <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -44,11 +44,7 @@
                         </button>
                     </form>
 
-                    {{-- Debug Test Button --}}
-                    <button type="button" onclick="testCheckboxes()"
-                        class="inline-flex items-center px-4 py-2 border border-blue-500 rounded-lg text-sm font-medium text-blue-600 bg-white hover:bg-blue-50">
-                        Test Checkbox
-                    </button>
+
 
                     {{-- Truncate All Data --}}
                     <form action="{{ route('admin.feedback.responses.truncate') }}" method="POST"
@@ -188,91 +184,24 @@
 
     @push('scripts')
         <script>
-            // Test function for debugging checkboxes
-            function testCheckboxes() {
-                var ids = [];
-                $('.rowCheckbox:checked').each(function() {
-                    ids.push($(this).val());
-                });
-                alert('Selected IDs: ' + JSON.stringify(ids) + '\nTotal: ' + ids.length);
-            }
-
-            // Truncate confirmation function
-            function confirmTruncate() {
-                const confirmMessage = 'PERINGATAN: Anda akan menghapus SEMUA data feedback secara permanen!\n\n' +
-                    'Tindakan ini tidak dapat dibatalkan dan akan:\n' +
-                    '- Menghapus semua data feedback responses\n' +
-                    '- Menghapus semua data answers terkait\n' +
-                    '- Reset auto-increment ID ke 1\n\n' +
-                    'Ketik "HAPUS SEMUA" untuk melanjutkan:';
-
-                const userInput = prompt(confirmMessage);
-
-                if (userInput === "HAPUS SEMUA") {
-                    return confirm(
-                        'Apakah Anda benar-benar yakin ingin menghapus SEMUA data feedback? Tindakan ini tidak dapat dibatalkan!'
-                        );
-                } else {
-                    alert('Penghapusan dibatalkan. Anda harus mengetik "HAPUS SEMUA" dengan benar.');
-                    return false;
-                }
-            }
-
             $(document).ready(function() {
-                var table = $('#responsesTabel').DataTable({
-                    order: [
-                        [1, 'desc']
-                    ], // sort by ID column
-                    pageLength: 25,
-                    lengthMenu: [10, 25, 50, 100],
-                    language: {
-                        search: 'Cari:',
-                        lengthMenu: 'Tampilkan _MENU_ entri',
-                        info: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ entri',
-                        infoEmpty: 'Tidak ada data',
-                        paginate: {
-                            first: 'Pertama',
-                            last: 'Terakhir',
-                            next: 'Berikutnya',
-                            previous: 'Sebelumnya'
-                        },
-                        zeroRecords: 'Tidak ditemukan data yang cocok',
-                    },
-                    columnDefs: [{
-                            orderable: false,
-                            targets: 0
-                        } // disable sort on checkbox column
-                    ]
-                });
-
-                // Select all checkboxes - simplified version for debugging
-                $('#selectAll').on('click', function() {
-                    var checked = this.checked;
-                    $('.rowCheckbox').prop('checked', checked);
-                });
-
-                // Bulk delete form submission - simplified version
-                $('#bulkDeleteForm').on('submit', function(e) {
-                    e.preventDefault();
-
+                // Saat klik tombol hapus terpilih
+                $('#bulkDeleteBtn').on('click', function() {
                     var ids = [];
                     $('.rowCheckbox:checked').each(function() {
                         ids.push($(this).val());
                     });
 
-                    console.log('Form submitted, selected IDs:', ids);
+                    console.log('Terpilih:', ids);
 
                     if (ids.length === 0) {
                         alert('Pilih minimal satu data untuk dihapus.');
-                        return false;
+                        return;
                     }
 
-                    if (confirm('Yakin hapus ' + ids.length + ' data terpilih?')) {
+                    if (confirm('Yakin ingin menghapus ' + ids.length + ' data terpilih?')) {
                         $('#bulkDeleteIds').val(JSON.stringify(ids));
-                        console.log('Hidden input value:', $('#bulkDeleteIds').val());
-
-                        // Actually submit the form
-                        $(this)[0].submit();
+                        $('#bulkDeleteForm').submit();
                     }
                 });
             });
