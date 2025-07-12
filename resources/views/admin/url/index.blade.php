@@ -171,7 +171,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-center">
                                     <x-main.datatables.action-buttons
                                         :editUrl="route('url.edit', ['type' => $type, 'id' => $url->id])"
-                                        {{-- :deleteAction="route('url.destroy', ['type' => $type, 'id' => $url->id])" --}}
+                                        :deleteAction="route('url.destroy', ['type' => $type, 'id' => $url->id])"
                                         :itemId="$url->id"
                                         :itemName="$url->url" />
                                 </td>
