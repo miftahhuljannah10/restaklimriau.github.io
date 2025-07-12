@@ -12,13 +12,10 @@
 <div class="flex justify-center mb-2 animate-slide-up">
     <div class="w-full max-w-[800px] relative">
         <div class="absolute -inset-6 rounded-3xl blur-lg opacity-30 animate-pulse-slow"></div>
-        <iframe
-            class="relative w-full h-[450px] rounded-3xl"
-            src="{{ $video_url ?? 'https://www.youtube.com/embed/PKJpW0Od0Ks?rel=0' }}"
-            title="{{ $video_title ?? 'Stasiun Klimatologi Riau' }}"
-            frameborder="0"
+        <iframe class="relative w-full h-[450px] rounded-3xl"
+            src="{{ $video_url ?? '-' }}"
+            title="{{ $video_title ?? 'Stasiun Klimatologi Riau' }}" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-        ></iframe>
+            allowfullscreen></iframe>
     </div>
 </div>

@@ -23,6 +23,8 @@ class Url extends Model
             'survey' => 'Link Survey',
             'google_form' => 'Google Form',
             'youtube_video' => 'YouTube Video',
+            'kantor_operasional' => 'Kantor Operasional',
+            'kantor_administrasi' => 'Kantor Administrasi',
         ];
     }
 }

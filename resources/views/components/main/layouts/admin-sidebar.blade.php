@@ -441,7 +441,22 @@
                         </a>
                     </li>
                 </ul>
-
+                <ul x-show="open && !sidebarCollapsed" x-transition class="mt-1 ml-8 space-y-1 bg-gray-900">
+                    <li>
+                        <a href="{{ route('url.index', 'kantor_operasional') }}"
+                            class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 {{ request()->routeIs('url.*') && request()->segment(3) == 'kantor_operasional' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-blue-500' }}">
+                            URL Kantor Operasional
+                        </a>
+                    </li>
+                </ul>
+                <ul x-show="open && !sidebarCollapsed" x-transition class="mt-1 ml-8 space-y-1 bg-gray-900">
+                    <li>
+                        <a href="{{ route('url.index', 'kantor_administrasi') }}"
+                            class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 {{ request()->routeIs('url.*') && request()->segment(3) == 'kantor_administrasi' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-blue-500' }}">
+                            URL Kantor Administrasi
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             {{-- Divider --}}

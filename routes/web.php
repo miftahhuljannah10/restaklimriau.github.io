@@ -25,6 +25,8 @@ use App\Http\Controllers\Admin\SuratKeluarController;
 use App\Http\Controllers\Admin\BukuTamuController;
 use App\Http\Controllers\Masyarakat\BeritaController;
 use App\Http\Controllers\Admin\PegawaiDashboardController;
+use App\Http\Controllers\Admin\VisiMisiController;
+use App\Http\Controllers\Masyarakat\ProfilPerusahaanController;
 
 Route::get('/', function () {
     return view('masyarakat.index');
@@ -68,12 +70,8 @@ Route::get('/media', function () {
 Route::get('/produk', function () {
     return view('masyarakat.produk');
 });
-Route::get('/profil', function (\Illuminate\Http\Request $request) {
-    $section = $request->query('section', 'tentang');
-    return view('masyarakat.profil', [
-        'activeSection' => $section
-    ]);
-})->name('profil');
+Route::get('/profil', [ProfilPerusahaanController::class, 'index'])->name('profil');
+
 Route::get('/profil-detail', function () {
     return view('masyarakat.profil-detail');
 });
@@ -337,6 +335,8 @@ Route::get('/berita/{slug}', [App\Http\Controllers\Masyarakat\BeritaController::
 Route::get('/buletin', [App\Http\Controllers\Masyarakat\BuletinController::class, 'index'])->name('buletin.index');
 // kontak
 Route::get('/kontak', [App\Http\Controllers\Masyarakat\KontakController::class, 'index'])->name('kontak.index');
+// profil perusahaan
+
 
 
 
