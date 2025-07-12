@@ -93,7 +93,7 @@
                             </label>
                             <input type="text" id="tarif" name="tarif" value="{{ old('tarif') }}"
                                 class="block w-full px-3 py-2 border rounded-md bg-white focus:outline-none focus:ring-2 transition duration-200 @error('tarif') border-red-500 focus:ring-red-500 @else border-gray-300 focus:ring-blue-500 @enderror"
-                                placeholder="Misal: Rp. 70.000,-" required>
+                                placeholder="Misal:  70000 (Hanya Angka)" required>
                             @error('tarif')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
