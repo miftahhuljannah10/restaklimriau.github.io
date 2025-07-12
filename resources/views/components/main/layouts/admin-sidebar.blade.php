@@ -321,12 +321,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 text-gray-400 hover:bg-gray-800 hover:text-blue-500">
-                            Rapat
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ route('admin.tata-usaha.buku-tamu.index') }}"
                             class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 {{ request()->routeIs('admin.tata-usaha.buku-tamu.*') ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-blue-500' }}">
                             Buku Tamu
