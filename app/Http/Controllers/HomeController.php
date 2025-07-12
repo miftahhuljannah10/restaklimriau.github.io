@@ -52,7 +52,6 @@ class HomeController extends Controller
             ->get();
 
         return view('masyarakat.index', compact('prakiraanCuacaRiau', 'gempa', 'feedbackQuestions'));
-        
     }
 
     private function getCuacaWilayah($kode, $nama)

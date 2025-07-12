@@ -94,7 +94,7 @@
                                 Toggle Status
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Aksi
                             </th>
                         </tr>
@@ -132,11 +132,12 @@
                                         </button>
                                     </form>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <x-main.datatables.action-buttons :editUrl="route('admin.feedback.questions.edit', $question)"
-                                    :deleteAction="route('admin.feedback.questions.destroy', $question)"
-                                    
-                                    </x-main.datatables.action-buttons>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    <x-main.datatables.action-buttons
+                                        :editUrl="route('admin.feedback.questions.edit', $question)"
+                                        :deleteAction="route('admin.feedback.questions.destroy', $question)"
+                                        :itemId="$question->id"
+                                        :itemName="$question->question_text" />
                                 </td>
                             </tr>
                         @empty
