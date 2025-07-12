@@ -22,6 +22,7 @@ class Url extends Model
             'nol_rupiah' => 'Link Nol Rupiah',
             'survey' => 'Link Survey',
             'google_form' => 'Google Form',
+            'youtube_video' => 'YouTube Video',
         ];
     }
 }

@@ -247,7 +247,7 @@
                             Nol Rupiah
                         </a>
                     </li>
-                    {{-- google form --}}
+
                     <li>
                         <a href="{{ route('url.index', 'google_form') }}"
                             class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 {{ request()->routeIs('url.*') && request()->segment(3) == 'google_form' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-blue-500' }}">
@@ -395,15 +395,12 @@
                             Buletin
                         </a>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 text-gray-400 hover:bg-gray-800 hover:text-blue-500">
-                            Profile Perusahaan
-                        </a>
-                    </li>
                 </ul>
             </li>
-            <li x-data="{ open: {{ str_contains($currentRoute, 'kontak') ? 'true' : 'false' }} }">
+
+            {{-- Profil Perusahaan --}}
+            {{-- Kontak, Visi Misi, URL YouTube --}}
+            <li x-data="{ open: {{ str_contains($currentRoute, 'kontak') || str_contains($currentRoute, 'visimisi') || str_contains($currentRoute, 'url') ? 'true' : 'false' }} }">
                 <button @click="open = !open"
                     class="group flex items-center w-full gap-3 px-3 py-2.5 rounded-lg transition-colors duration-200 text-gray-300 hover:bg-gray-800 hover:text-blue-500">
                     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -428,12 +425,19 @@
                         </a>
                     </li>
                 </ul>
-                {{-- visi misi --}}
                 <ul x-show="open && !sidebarCollapsed" x-transition class="mt-1 ml-8 space-y-1 bg-gray-900">
                     <li>
                         <a href="{{ route('admin.visimisi.index') }}"
                             class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 {{ request()->routeIs('admin.visimisi.*') ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-blue-500' }}">
                             Visi Misi
+                        </a>
+                    </li>
+                </ul>
+                <ul x-show="open && !sidebarCollapsed" x-transition class="mt-1 ml-8 space-y-1 bg-gray-900">
+                    <li>
+                        <a href="{{ route('url.index', 'youtube_video') }}"
+                            class="block px-3 py-2 text-sm rounded-lg transition-colors duration-200 {{ request()->routeIs('url.*') && request()->segment(3) == 'youtube_video' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-blue-500' }}">
+                            URL YouTube
                         </a>
                     </li>
                 </ul>

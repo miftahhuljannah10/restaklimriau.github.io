@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,9 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('url_tabel_menu_type', function (Blueprint $table) {
-            //
-        });
+        DB::statement("ALTER TABLE url_tabel MODIFY COLUMN menu_type ENUM('nol_rupiah', 'survey', 'google_form', 'youtube_video')");
     }
 
     /**
@@ -21,8 +20,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('url_tabel_menu_type', function (Blueprint $table) {
-            //
-        });
+        DB::statement("ALTER TABLE url_tabel MODIFY COLUMN menu_type ENUM('nol_rupiah', 'survey', 'google_form')");
     }
 };
