@@ -32,6 +32,7 @@
             [ 'tahun' => '2014', 'teks' => 'Awal mula operasional oleh Stasiun Meteorologi Sultan Syarif Kasim II', 'icon' => 'fa-play', 'bg' => 'bg-yellow-500', 'border' => 'border-yellow-500' ],
             [ 'tahun' => '2017', 'teks' => 'Susunan Organisasi Tata Kerja (SOTK) Khusus Klimatologi di Provinsi Riau resmi berdiri pada bulan April 2017 dengan nama Stasiun Klimatologi Tambang', 'icon' => 'fa-flag', 'bg' => 'bg-green-500', 'border' => 'border-green-500' ],
             [ 'tahun' => '2019', 'teks' => 'Stasiun Klimatologi Tambang berubah nama menjadi Stasiun Klimatologi Kampar. Penjajakan dan awal mulanya pembuatan kantor pelayanan administrasi di Kota Pekanbaru.', 'icon' => 'fa-exchange-alt', 'bg' => 'bg-purple-500', 'border' => 'border-purple-500' ],
+            [ 'tahun' => '2022', 'teks' => 'Berdasarkan Peraturan Badan Meteorologi, Klimatologi, dan Geofisika Nomor 1 Tahun 2022, Stasiun Klimatologi Kampar berubah nama menjadi Stasiun Klimatologi Riau.', 'icon' => 'fa-file-alt', 'bg' => 'bg-blue-500', 'border' => 'border-blue-500' ],
             [ 'tahun' => 'Sekarang', 'teks' => 'Stasiun Klimatologi Riau terus berkembang memberikan pelayanan terbaik dengan teknologi modern dan SDM yang kompeten untuk melayani masyarakat Riau.', 'icon' => 'fa-star', 'bg' => 'bg-pink-500', 'border' => 'border-pink-500' ],
         ]
     ];

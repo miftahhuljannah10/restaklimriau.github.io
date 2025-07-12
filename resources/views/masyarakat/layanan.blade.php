@@ -43,7 +43,7 @@
                 'number' => 3,
                 'title' => 'Info Ke Pemohon',
                 'desc' => [
-                    'Pemohon Wajib Mengisi Survey Kepuasan Masyarakat',
+                    'Pemohon Wajib Mengisi Survey Kepuasan Masyarakat dan',
                     'Pemohon Menerima Hasil Permohonan',
                 ],
             ],

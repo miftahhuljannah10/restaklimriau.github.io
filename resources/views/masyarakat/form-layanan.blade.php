@@ -45,7 +45,7 @@
                 'alert_icon_color' => 'text-amber-500',
                 'alert_title' => 'Layanan Berbayar',
                 'alert_title_color' => 'text-amber-800',
-                'alert_desc' => 'Layanan ini adalah layanan berbayar sesuai dengan Peraturan Pemerintah No. 47 Tahun 2018.',
+                'alert_desc' => 'Layanan ini adalah layanan berbayar sesuai dengan Peraturan Pemerintah No. 47 Tahun 2018; dan Peraturan Badan Meteorologi, Klimatologi, dan Geofisika No. 4 Tahun 2022.',
                 'alert_desc_color' => 'text-amber-700',
                 'desc' => 'Ketentuan tarif dapat dilihat di <a href="/tarif-pnbp" class="text-sky-600 underline hover:text-sky-500 font-medium">Menu Tarif PNBP</a>. Lakukan pembayaran setelah mengisi form di Menu Pembayaran.',
                 'jenis_bg' => 'bg-blue-50',
@@ -87,7 +87,7 @@
                 'alert_icon_color' => 'text-green-500',
                 'alert_title' => 'Tarif Rp. 0,00 (Gratis)',
                 'alert_title_color' => 'text-green-800',
-                'alert_desc' => 'Berdasarkan Peraturan Badan Meteorologi, Klimatologi, dan Geofisika No. 12 Tahun 2019 dan No. 20 Tahun 2014.',
+                'alert_desc' => 'Berdasarkan Peraturan Badan Meteorologi, Klimatologi, dan Geofisika No. 20 Tahun 2014; Peraturan Badan Meteorologi, Klimatologi, dan Geofisika No. 12 Tahun 2019; dan Peraturan Badan Meteorologi, Klimatologi, dan Geofisika No. 4 Tahun 2022.',
                 'alert_desc_color' => 'text-green-700',
                 'desc' => '',
                 'jenis_bg' => '', // Tidak ada section jenis layanan di screenshot instansi
@@ -127,7 +127,7 @@
                 'alert_icon_color' => 'text-green-500',
                 'alert_title' => 'Tarif Rp. 0,00 (Gratis)',
                 'alert_title_color' => 'text-green-800',
-                'alert_desc' => 'Khusus untuk Pendidikan dan Penelitian Non-Komersial berdasarkan Peraturan BMKG No. 12 Tahun 2019 dan No. 20 Tahun 2014.',
+                'alert_desc' => 'Berdasarkan Peraturan Badan Meteorologi, Klimatologi, dan Geofisika No. 20 Tahun 2014; Peraturan Badan Meteorologi, Klimatologi, dan Geofisika No. 12 Tahun 2019; dan Peraturan Badan Meteorologi, Klimatologi, dan Geofisika No. 4 Tahun 2022.',
                 'alert_desc_color' => 'text-green-700',
                 'desc' => '',
                 'jenis_bg' => '', // Tidak ada section jenis layanan di screenshot mahasiswa
