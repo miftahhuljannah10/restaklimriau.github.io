@@ -29,4 +29,12 @@ class Provinsi extends Model
                 ->whereIn('provinsi_id', [$this->id]);
         })->get();
     }
+
+    /**
+     * Accessor for nama attribute to provide consistent naming
+     */
+    public function getNamaAttribute()
+    {
+        return $this->nama_provinsi;
+    }
 }

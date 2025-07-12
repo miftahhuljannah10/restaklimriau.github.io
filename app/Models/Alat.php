@@ -50,4 +50,10 @@ class Alat extends Model
     {
         return $this->belongsTo(Kecamatan::class);
     }
+
+    // relasi ke tabel alat_curah_hujan
+    public function curahHujan()
+    {
+        return $this->hasOne(AlatCurahHujan::class, 'nomor_pos', 'nomor_pos');
+    }
 }

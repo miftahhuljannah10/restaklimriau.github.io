@@ -16,10 +16,10 @@ class KategoriBeritaArtikelController extends Controller
     public function index()
     {
         $categories = KategoriBeritaArtikel::withCount([
-            'berita as berita_count' => function($query) {
+            'berita as berita_count' => function ($query) {
                 $query->where('jenis', 'berita');
             },
-            'berita as artikel_count' => function($query) {
+            'berita as artikel_count' => function ($query) {
                 $query->where('jenis', 'artikel');
             }
         ])->orderBy('nama', 'asc')->get();
@@ -101,5 +101,91 @@ class KategoriBeritaArtikelController extends Controller
         $kategoriBeritaArtikel->delete();
         return redirect()->route('admin.kategori-berita-artikel.index')
             ->with('success', 'Kategori berhasil dihapus.');
+    }
+
+    /**
+     * Show all berita for this category
+     */
+    public function showBerita(Request $request, KategoriBeritaArtikel $kategoriBeritaArtikel)
+    {
+        $query = BeritaArtikel::with(['kategori', 'thumbnail'])
+            ->where('jenis', 'berita')
+            ->where('kategori_id', $kategoriBeritaArtikel->id);
+
+        // Handle search
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('penulis', 'like', "%{$search}%")
+                    ->orWhere('isi', 'like', "%{$search}%");
+            });
+        }
+
+        // Handle status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->get('status'));
+        }
+
+        // Handle featured filter
+        if ($request->filled('featured')) {
+            $query->where('featured', $request->get('featured') == '1');
+        }
+
+        // Order by latest
+        $query->latest();
+
+        // Paginate results
+        $perPage = $request->get('per_page', 10);
+        $items = $query->paginate($perPage)->withQueryString();
+        $type = 'berita';
+
+        // Get categories for filter dropdown (not needed when filtering by specific category, but for consistency)
+        $categories = KategoriBeritaArtikel::orderBy('nama')->get();
+
+        return view('admin.media.berita.index', compact('items', 'type', 'kategoriBeritaArtikel', 'categories'));
+    }
+
+    /**
+     * Show all artikel for this category
+     */
+    public function showArtikel(Request $request, KategoriBeritaArtikel $kategoriBeritaArtikel)
+    {
+        $query = BeritaArtikel::with(['kategori', 'thumbnail'])
+            ->where('jenis', 'artikel')
+            ->where('kategori_id', $kategoriBeritaArtikel->id);
+
+        // Handle search
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('penulis', 'like', "%{$search}%")
+                    ->orWhere('isi', 'like', "%{$search}%");
+            });
+        }
+
+        // Handle status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->get('status'));
+        }
+
+        // Handle featured filter
+        if ($request->filled('featured')) {
+            $query->where('featured', $request->get('featured') == '1');
+        }
+
+        // Order by latest
+        $query->latest();
+
+        // Paginate results
+        $perPage = $request->get('per_page', 10);
+        $items = $query->paginate($perPage)->withQueryString();
+        $type = 'artikel';
+
+        // Get categories for filter dropdown (not needed when filtering by specific category, but for consistency)
+        $categories = KategoriBeritaArtikel::orderBy('nama')->get();
+
+        return view('admin.media.berita.index', compact('items', 'type', 'kategoriBeritaArtikel', 'categories'));
     }
 }

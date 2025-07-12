@@ -24,4 +24,12 @@ class Kabupaten extends Model
     {
         return $this->belongsTo(Provinsi::class);
     }
+
+    /**
+     * Accessor for nama attribute to provide consistent naming
+     */
+    public function getNamaAttribute()
+    {
+        return $this->nama_kabupaten;
+    }
 }

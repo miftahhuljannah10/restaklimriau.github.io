@@ -111,7 +111,10 @@
                                 <option value="Per Buku" {{ old('satuan') === 'Per Buku' ? 'selected' : '' }}>Per Buku</option>
                                 <option value="Per Atlas" {{ old('satuan') === 'Per Atlas' ? 'selected' : '' }}>Per Atlas</option>
                                 <option value="Per Stasiun/Tahun" {{ old('satuan') === 'Per Stasiun/Tahun' ? 'selected' : '' }}>Per Stasiun/Tahun</option>
+                                <option value="Per Stasiun/Bulan" {{ old('satuan') === 'Per Stasiun/Bulan' ? 'selected' : '' }}>Per Stasiun/Bulan</option>
+                                <option value="Per Stasiun/Hari" {{ old('satuan') === 'Per Stasiun/Hari' ? 'selected' : '' }}>Per Stasiun/Hari</option>
                                 <option value="Per Lokasi" {{ old('satuan') === 'Per Lokasi' ? 'selected' : '' }}>Per Lokasi</option>
+
                             </select>
                             @error('satuan')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

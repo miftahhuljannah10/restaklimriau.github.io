@@ -73,7 +73,7 @@ Contoh pemanggilan dinamis dari view utama:
             </div>
         </div>
         <div class="px-8 py-4 border-t bg-white text-left">
-            <button onclick="window.location.href='/layanan'" class="inline-flex items-center gap-2 text-sky-500 hover:text-sky-600 transition-colors font-montserrat">
+            <button onclick="window.location.href='/cek-ketersediaan-data'" class="inline-flex items-center gap-2 text-sky-500 hover:text-sky-600 transition-colors font-montserrat">
                 <i class="fas fa-arrow-left"></i>
                 <span class="font-medium font-montserrat">Kembali</span>
             </button>

@@ -49,6 +49,11 @@ class BeritaArtikelController extends Controller
             $query->where('featured', $request->get('featured') == '1');
         }
 
+        // Handle category filter
+        if ($request->filled('kategori_id')) {
+            $query->where('kategori_id', $request->get('kategori_id'));
+        }
+
         // Order by latest
         $query->latest();
 
@@ -56,7 +61,10 @@ class BeritaArtikelController extends Controller
         $perPage = $request->get('per_page', 10);
         $items = $query->paginate($perPage)->withQueryString();
 
-        return view('admin.media.berita.index', compact('items', 'type'));
+        // Get categories for filter dropdown
+        $categories = KategoriBeritaArtikel::orderBy('nama')->get();
+
+        return view('admin.media.berita.index', compact('items', 'type', 'categories'));
     }
 
     public function publicIndex()

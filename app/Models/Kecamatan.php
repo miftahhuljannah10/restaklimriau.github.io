@@ -24,4 +24,12 @@ class Kecamatan extends Model
     {
         return $this->kabupaten->provinsi();
     }
+
+    /**
+     * Accessor for nama attribute to provide consistent naming
+     */
+    public function getNamaAttribute()
+    {
+        return $this->nama_kecamatan;
+    }
 }

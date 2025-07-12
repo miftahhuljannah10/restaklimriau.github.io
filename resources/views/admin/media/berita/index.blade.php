@@ -1,7 +1,20 @@
-<x-layouts.admin title="{{ ucfirst($type) }}" subtitle="Kelola {{ $type }} website Stasiun Klimatologi Riau">
+<x-layouts.admin
+    title="{{ ucfirst($type) }} {{ isset($kategoriBeritaArtikel) ? '- ' . $kategoriBeritaArtikel->nama : '' }}"
+    subtitle="Kelola {{ $type }} website Stasiun Klimatologi Riau">
 
     {{-- Breadcrumb --}}
-    <x-main.layouts.breadcrumb :items="[['title' => 'Media', 'url' => '#'], ['title' => ucfirst($type)]]" />
+    @if (isset($kategoriBeritaArtikel))
+        <x-main.layouts.breadcrumb :items="[
+            ['title' => 'Kategori Management', 'url' => route('admin.kategori-berita-artikel.index')],
+            [
+                'title' => $kategoriBeritaArtikel->nama,
+                'url' => route('admin.kategori-berita-artikel.show', $kategoriBeritaArtikel),
+            ],
+            ['title' => ucfirst($type)],
+        ]" />
+    @else
+        <x-main.layouts.breadcrumb :items="[['title' => 'Media', 'url' => '#'], ['title' => ucfirst($type)]]" />
+    @endif
 
     {{-- Custom CSS --}}
     <style>
@@ -62,10 +75,59 @@
 
         {{-- Header --}}
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+            @if (isset($kategoriBeritaArtikel))
+                {{-- Category Filter Header --}}
+                <div class="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mr-2"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <div>
+                                <h4 class="text-sm font-semibold text-blue-900">Filter Kategori Aktif</h4>
+                                <p class="text-sm text-blue-700">Menampilkan {{ $type }} dalam kategori: <span
+                                        class="font-medium">{{ $kategoriBeritaArtikel->nama }}</span></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="{{ route('admin.kategori-berita-artikel.show', $kategoriBeritaArtikel) }}"
+                                class="inline-flex items-center px-3 py-2 border border-blue-300 shadow-sm text-sm font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Kembali ke Detail Kategori
+                            </a>
+                            <a href="{{ route('admin.media.berita.index', $type) }}"
+                                class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Hapus Filter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <div class="flex items-center justify-between mb-4">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Data {{ ucfirst($type) }}</h3>
-                    <p class="text-sm text-gray-600">Kelola {{ $type }} website Stasiun Klimatologi Riau</p>
+                    <h3 class="text-lg font-semibold text-gray-900">Data {{ ucfirst($type) }}
+                        @if (isset($kategoriBeritaArtikel))
+                            <span class="text-blue-600">- {{ $kategoriBeritaArtikel->nama }}</span>
+                        @endif
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        @if (isset($kategoriBeritaArtikel))
+                            Menampilkan {{ $type }} dalam kategori {{ $kategoriBeritaArtikel->nama }}
+                        @else
+                            Kelola {{ $type }} website Stasiun Klimatologi Riau
+                        @endif
+                    </p>
                 </div>
                 <div class="flex items-center space-x-2 text-sm text-gray-500">
                     <span>Total: {{ method_exists($items, 'total') ? $items->total() : $items->count() }}
@@ -76,27 +138,170 @@
             {{-- Quick Actions --}}
             <div
                 class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 sm:space-x-4">
-                <div class="flex-1 max-w-md">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
+                <div class="flex-1 max-w-2xl">
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                        {{-- Search Input --}}
+                        <div class="relative flex-1">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <form method="GET" id="filterForm"
+                                action="{{ isset($kategoriBeritaArtikel) ? route('admin.kategori-berita-artikel.' . $type, $kategoriBeritaArtikel) : route('admin.media.berita.index', $type) }}">
+                                <input type="text" name="search" value="{{ request('search') }}"
+                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Cari judul, penulis, atau kategori...">
+                                {{-- Hidden inputs untuk filter lain --}}
+                                <input type="hidden" name="kategori_id" value="{{ request('kategori_id') }}">
+                                <input type="hidden" name="status" value="{{ request('status') }}">
+                                <input type="hidden" name="featured" value="{{ request('featured') }}">
+                                <input type="hidden" name="per_page" value="{{ request('per_page', 10) }}">
+                            </form>
                         </div>
-                        <form method="GET" action="{{ route('admin.media.berita.index', $type) }}">
-                            <input type="text" name="search" value="{{ request('search') }}"
-                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Cari judul, penulis, atau kategori...">
-                        </form>
+
+                        {{-- Filter Dropdowns --}}
+                        @if (!isset($kategoriBeritaArtikel))
+                            <div class="flex space-x-2">
+                                {{-- Category Filter --}}
+                                <select name="kategori_filter" id="kategoriFilter"
+                                    onchange="applyFilter('kategori_id', this.value)"
+                                    class="block w-40 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm {{ request('kategori_id') ? 'bg-blue-50 border-blue-300' : '' }}">
+                                    <option value="">Semua Kategori</option>
+                                    @if (isset($categories))
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                {{ request('kategori_id') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->nama }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+
+                                {{-- Status Filter --}}
+                                <select name="status_filter" id="statusFilter"
+                                    onchange="applyFilter('status', this.value)"
+                                    class="block w-32 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm {{ request('status') ? 'bg-green-50 border-green-300' : '' }}">
+                                    <option value="">Semua Status</option>
+                                    <option value="publish" {{ request('status') == 'publish' ? 'selected' : '' }}>
+                                        Dipublikasi</option>
+                                    <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft
+                                    </option>
+                                    <option value="archived" {{ request('status') == 'archived' ? 'selected' : '' }}>
+                                        Diarsipkan</option>
+                                </select>
+
+                                {{-- Featured Filter --}}
+                                <select name="featured_filter" id="featuredFilter"
+                                    onchange="applyFilter('featured', this.value)"
+                                    class="block w-32 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm {{ request('featured') !== null && request('featured') !== '' ? 'bg-yellow-50 border-yellow-300' : '' }}">
+                                    <option value="">Semua</option>
+                                    <option value="1" {{ request('featured') == '1' ? 'selected' : '' }}>Featured
+                                    </option>
+                                    <option value="0" {{ request('featured') == '0' ? 'selected' : '' }}>
+                                        Non-Featured</option>
+                                </select>
+
+                                {{-- Clear Filter Button --}}
+                                @if (request()->hasAny(['kategori_id', 'status', 'featured']))
+                                    <button type="button" onclick="clearAllFilters()"
+                                        class="inline-flex items-center px-3 py-2 border border-red-300 shadow-sm text-sm font-medium rounded-lg text-red-700 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-200"
+                                        title="Hapus semua filter">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                @endif
+                            </div>
+                        @endif
                     </div>
+
+                    {{-- Active Filters Display --}}
+                    @if (request()->hasAny(['search', 'kategori_id', 'status', 'featured']) && !isset($kategoriBeritaArtikel))
+                        <div class="flex flex-wrap items-center gap-2 mt-3">
+                            <span class="text-sm text-gray-600">Filter aktif:</span>
+
+                            @if (request('search'))
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    Pencarian: "{{ request('search') }}"
+                                    <button type="button" onclick="removeFilter('search')"
+                                        class="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full text-blue-400 hover:bg-blue-200 hover:text-blue-600">
+                                        <svg class="w-2 h-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                            <path stroke-linecap="round" stroke-width="1.5" d="m1 1 6 6m0-6-6 6" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            @endif
+
+                            @if (request('kategori_id') && isset($categories))
+                                @php
+                                    $selectedCategory = $categories->firstWhere('id', request('kategori_id'));
+                                @endphp
+                                @if ($selectedCategory)
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                        Kategori: {{ $selectedCategory->nama }}
+                                        <button type="button" onclick="removeFilter('kategori_id')"
+                                            class="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full text-indigo-400 hover:bg-indigo-200 hover:text-indigo-600">
+                                            <svg class="w-2 h-2" stroke="currentColor" fill="none"
+                                                viewBox="0 0 8 8">
+                                                <path stroke-linecap="round" stroke-width="1.5"
+                                                    d="m1 1 6 6m0-6-6 6" />
+                                            </svg>
+                                        </button>
+                                    </span>
+                                @endif
+                            @endif
+
+                            @if (request('status'))
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    Status: {{ ucfirst(request('status')) }}
+                                    <button type="button" onclick="removeFilter('status')"
+                                        class="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full text-green-400 hover:bg-green-200 hover:text-green-600">
+                                        <svg class="w-2 h-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                            <path stroke-linecap="round" stroke-width="1.5" d="m1 1 6 6m0-6-6 6" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            @endif
+
+                            @if (request('featured'))
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                    {{ request('featured') == '1' ? 'Featured' : 'Non-Featured' }}
+                                    <button type="button" onclick="removeFilter('featured')"
+                                        class="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full text-yellow-400 hover:bg-yellow-200 hover:text-yellow-600">
+                                        <svg class="w-2 h-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                            <path stroke-linecap="round" stroke-width="1.5" d="m1 1 6 6m0-6-6 6" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            @endif
+
+                            <button type="button" onclick="clearAllFilters()"
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 hover:bg-gray-200">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Hapus Semua
+                            </button>
+                        </div>
+                    @endif
                 </div>
 
                 <div class="flex items-center space-x-3">
                     <x-main.buttons.action-button href="{{ route('admin.media.berita.create', $type) }}"
                         variant="primary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v16m8-8H4" />
                         </svg>
                         Tambah {{ ucfirst($type) }}
                     </x-main.buttons.action-button>
@@ -118,7 +323,8 @@
         @if (session('success'))
             <div class="mx-6 mt-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md flex items-center"
                 role="alert">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                    fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                         clip-rule="evenodd" />
@@ -130,7 +336,8 @@
         @if (session('error'))
             <div class="mx-6 mt-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md flex items-center"
                 role="alert">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                    fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                         clip-rule="evenodd" />
@@ -438,6 +645,35 @@
                         alert('Masukkan nomor halaman yang valid (1-' + maxPage + ')');
                         pageInput.focus();
                     }
+                };
+
+                // Filter functions
+                window.applyFilter = function(filterName, filterValue) {
+                    const url = new URL(window.location);
+                    if (filterValue === '' || filterValue === null) {
+                        url.searchParams.delete(filterName);
+                    } else {
+                        url.searchParams.set(filterName, filterValue);
+                    }
+                    url.searchParams.set('page', 1); // Reset to first page
+                    window.location.href = url.toString();
+                };
+
+                window.removeFilter = function(filterName) {
+                    const url = new URL(window.location);
+                    url.searchParams.delete(filterName);
+                    url.searchParams.set('page', 1); // Reset to first page
+                    window.location.href = url.toString();
+                };
+
+                window.clearAllFilters = function() {
+                    const url = new URL(window.location);
+                    // Keep only the type parameter and essential navigation params
+                    const newUrl = new URL(url.origin + url.pathname);
+                    if (url.searchParams.get('per_page')) {
+                        newUrl.searchParams.set('per_page', url.searchParams.get('per_page'));
+                    }
+                    window.location.href = newUrl.toString();
                 };
             });
         </script>

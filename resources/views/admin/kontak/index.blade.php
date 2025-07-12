@@ -10,12 +10,12 @@
                     <h3 class="text-lg font-semibold text-gray-900">Daftar Kontak</h3>
                     <p class="text-sm text-gray-600">Kelola semua kontak dan jam operasional yang tampil di halaman publik</p>
                 </div>
-                {{-- <x-main.buttons.action-button href="{{ route('admin.kontak.create') }}" variant="primary">
+                <x-main.buttons.action-button href="{{ route('admin.kontak.create') }}" variant="primary">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                     Tambah Kontak
-                </x-main.buttons.action-button> --}}
+                </x-main.buttons.action-button>
             </div>
 
             <div class="table-container">

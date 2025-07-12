@@ -27,12 +27,15 @@ use App\Http\Controllers\Masyarakat\BeritaController;
 use App\Http\Controllers\Admin\PegawaiDashboardController;
 use App\Http\Controllers\Admin\VisiMisiController;
 use App\Http\Controllers\Masyarakat\ProfilPerusahaanController;
+use App\Http\Controllers\Masyarakat\CekKetersediaanDataController;
+use App\Models\Alat;
 
 Route::get('/', function () {
     return view('masyarakat.index');
 });
 
 use App\Http\Controllers\AlatController;
+use App\Http\Controllers\CekKetersediaanDataController as ControllersCekKetersediaanDataController;
 use App\Http\Controllers\HomeController;
 
 
@@ -78,9 +81,12 @@ Route::get('/profil-detail', function () {
 Route::get('/tarif-pnbp', function () {
     return view('masyarakat.tarif-pnbp');
 });
-Route::get('/cek-ketersediaan-data', function () {
-    return view('masyarakat.cek-ketersediaan-data');
-});
+
+Route::get('/cek-ketersediaan-data', [CekKetersediaanDataController::class, 'index'])
+    ->name('cek-ketersediaan-data.index');
+Route::get('/masyarakat/detail-alat/{nomor_pos}', [CekKetersediaanDataController::class, 'show'])
+    ->name('cek-ketersediaan-data.show');
+
 Route::get('/perubahan-iklim', function () {
     return view('masyarakat.perubahan-iklim');
 });
@@ -189,6 +195,18 @@ Route::middleware(['auth', 'role:pemimpin,pegawai'])->group(function () {
             'update' => 'admin.kategori-berita-artikel.update',
             'destroy' => 'admin.kategori-berita-artikel.destroy',
         ]);
+
+    // Routes untuk melihat semua berita/artikel berdasarkan kategori
+    Route::get(
+        '/admin/kategori-berita-artikel/{kategoriBeritaArtikel}/berita',
+        [KategoriBeritaArtikelController::class, 'showBerita']
+    )
+        ->name('admin.kategori-berita-artikel.berita');
+    Route::get(
+        '/admin/kategori-berita-artikel/{kategoriBeritaArtikel}/artikel',
+        [KategoriBeritaArtikelController::class, 'showArtikel']
+    )
+        ->name('admin.kategori-berita-artikel.artikel');
     Route::prefix('admin/berita')->name('admin.media.berita.')->group(function () {
 
         Route::get('/{type?}', [BeritaArtikelController::class, 'index'])->name('index');
@@ -359,13 +377,4 @@ Route::get('/produk/detail-produk', function () {
         'topik' => 'Agroklimat',
         'sumber' => 'BMKG',
     ]);
-});
-Route::get('/masyarakat/detail-alat/{nomor_pos}', function ($nomor_pos) {
-    // Ambil data alat dari database atau sumber lain secara dinamis
-    // Contoh:
-    // $alat = Alat::where('id_pos', $nomor_pos)->firstOrFail();
-    // return view('masyarakat.detail-alat', compact('alat'));
-
-    // Sementara, tampilkan halaman kosong atau pesan jika belum ada implementasi
-    return view('masyarakat.detail-alat');
 });
